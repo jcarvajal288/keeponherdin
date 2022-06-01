@@ -1,0 +1,9 @@
+backend/target
+backend/lib
+backend/classes
+backend/checkouts
+*.jar
+*.class
+/.lein-*
+/.nrepl-port
+.idea/
