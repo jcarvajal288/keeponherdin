@@ -1,10 +1,13 @@
-
 (ns backend.migrations
-  (:require [migratus.core :as migratus]))
+  (:require [migratus.core :as migratus]
+            [backend.database :refer :all]))
+
+(def connection-uri
+  (format "%s:%s?user=%s&password=%s" subprotocol subname user password))
 
 (def config {:store :database
              :migration-dir "migrations"
-             :db {:connection-uri "jdbc:postgresql://localhost:5432/keeponherdin_dev?user=keeponherdin_dev&password=keeponherdin_dev"}})
+             :db {:connection-uri connection-uri}})
 
 ;initialize the database using the 'init.sql' script
 (migratus/init config)

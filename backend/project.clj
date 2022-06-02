@@ -4,6 +4,7 @@
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [compojure "1.6.1"]
+                 [korma "0.5.0-RC1"]
                  [migratus "1.3.6"]
                  [org.clojure/java.jdbc "0.7.12"]
                  [org.postgresql/postgresql "42.3.4"]
