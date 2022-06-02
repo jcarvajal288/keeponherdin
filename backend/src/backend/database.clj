@@ -1,16 +1,13 @@
-(ns backend.database
-  (:require [korma.db :as korma]))
+(ns backend.database)
 
 (def user "keeponherdin_dev")
 (def password "keeponherdin_dev")
 (def subprotocol "jdbc:postgresql")
 (def subname "//localhost:5432/keeponherdin_dev")
 
-(def db-connection-info
+(def db-spec
   {:classname "org.postgresql.Driver"
    :subprotocol subprotocol
    :user user
    :password password
    :subname subname})
-
-(korma/defdb db db-connection-info)
