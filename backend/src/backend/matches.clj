@@ -10,4 +10,5 @@
 
 (defn create-match [match]
   (let [conn (jdbc/connection db/db-spec)]
-    (jdbc/atomic conn db-create-match! conn match)))
+    (jdbc/atomic conn
+      (db-create-match! conn match))))

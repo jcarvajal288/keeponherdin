@@ -6,8 +6,12 @@
 (def subname "//localhost:5432/keeponherdin_dev")
 
 (def db-spec
-  {:classname "org.postgresql.Driver"
-   :subprotocol subprotocol
+  {:dbtype "postgresql"
+   :classname "org.postgresql.Driver"
+   :subprotocol "postgresql"
+   :dbname "keeponherdin_dev"
    :user user
    :password password
-   :subname subname})
+   :port 5432
+   :subname subname
+   :hostname "localhost"})
