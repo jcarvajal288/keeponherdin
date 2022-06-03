@@ -1,14 +1,15 @@
 (ns backend.matches
   (:require [backend.database :as db]
             [hugsql.core :as hugsql]
-            [jdbc.core :as jdbc]
-            [hugsql.adapter.clojure-jdbc :as cj-adapter]
+            [next.jdbc :as jdbc]
+            [hugsql.adapter.next-jdbc :as cj-adapter]
             ))
 
 (hugsql/def-db-fns "backend/matches.sql"
-                   {:adapter (cj-adapter/hugsql-adapter-clojure-jdbc)})
+                   {:adapter (cj-adapter/hugsql-adapter-next-jdbc)})
+
+(hugsql/def-sqlvec-fns "backend/matches.sql")
 
 (defn create-match [match]
-  (let [conn (jdbc/connection db/db-spec)]
-    (jdbc/atomic conn
-      (db-create-match! conn match))))
+  (let [conn (jdbc/get-datasource db/db-spec)]
+    (jdbc/execute! conn (db-create-match!-sqlvec match))))

@@ -5,7 +5,7 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [compojure "1.6.1"]
                  [com.layerware/hugsql-core "0.5.3"]
-                 [com.layerware/hugsql-adapter-clojure-jdbc "0.5.3"]
+                 [com.layerware/hugsql-adapter-next-jdbc "0.5.3"]
                  [metosin/ring-http-response "0.9.3"]
                  [migratus "1.3.6"]
                  [org.clojure/java.jdbc "0.7.12"]

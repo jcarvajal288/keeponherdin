@@ -2,6 +2,7 @@ backend/target
 backend/lib
 backend/classes
 backend/checkouts
+backend/.nrepl-port
 *.jar
 *.class
 /.lein-*
