@@ -1,13 +1,14 @@
-(ns backend.handler-test
+(ns backend.matches-test
   (:require [clojure.test :refer :all]
-            [cheshire.core :refer [generate-string]]
+            [backend.matches :refer :all]
+            [cheshire.core :as ch]
             [backend.handler :refer :all]))
 
 (deftest handle-create-match-success
   (testing "201 - returns an integer id"
     (is (= (handle-create-match
              [#:matches{:id 26}]) {:status 201
-                                   :body (generate-string {:id 26})
+                                   :body (ch/generate-string {:id 26})
                                    :headers {"Content-Type" "application/json"
                                              "Location" "matches/26"}}))))
 (deftest handle-create-match-failure
@@ -17,7 +18,7 @@
                                           :headers {"Content-Type" "application/json"}}))))
 
 ; Mock function example
-;[ring.mock.request :as mock]
+; [ring.mock.request :as mock]
 ; =====================
 ;(def mock-match {:player1 "Vixy"
 ;                 :character1 "Velvet"
