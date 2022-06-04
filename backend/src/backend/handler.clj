@@ -16,7 +16,7 @@
     (let [body (:body request)
           matches (if (sequential? body) body [body])]
       (if (matches-valid? matches)
-        (-> (:body request)
+        (-> matches
             (labelled-vector-transform)
             (insert-matches!)
             (handle-insert-matches))

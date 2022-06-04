@@ -36,26 +36,9 @@
   [matches]
   {:matches (vec (map #(map val %) matches))})
 
-(defn insert-match! [match]
-  (let [conn (jdbc/get-datasource db/db-spec)]
-    (jdbc/execute! conn (db-insert-match!-sqlvec match))))
-
-(defn handle-insert-match [result]
-  (let [id (:matches/id (first result))]
-    (if (number? id)
-      (content-type
-        (created
-          (str "matches/" id)
-          (ch/generate-string {:id id}))
-        "application/json")
-      (content-type
-        (internal-server-error result)
-        "application/json"))))
-
 (defn insert-matches! [matches]
-  (do (println matches)
   (let [conn (jdbc/get-datasource db/db-spec)]
-    (jdbc/execute! conn (db-insert-matches!-sqlvec matches)))))
+    (jdbc/execute! conn (db-insert-matches!-sqlvec matches))))
 
 (defn handle-insert-matches [result]
   (let [ids (map :matches/id result)]

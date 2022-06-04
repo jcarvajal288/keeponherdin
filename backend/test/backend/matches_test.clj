@@ -34,20 +34,6 @@
             ['("Vixy" "Velvet" "Oscar" "Pom" false "00:45:32")
              '("Grunkle" "Tianhuo" "Javamorris" "Arizona" true "01:23:35")]}))))
 
-(deftest handle-insert-match-success
-  (testing "201 - returns an integer id"
-    (is (= (handle-insert-match
-             [#:matches{:id 26}]) {:status 201
-                                   :body (ch/generate-string {:id 26})
-                                   :headers {"Content-Type" "application/json"
-                                             "Location" "matches/26"}}))))
-
-(deftest handle-insert-match-failure
-  (testing "500 - returns an error message"
-    (is (= (handle-insert-match "error") {:status 500
-                                          :body "error"
-                                          :headers {"Content-Type" "application/json"}}))))
-
 (deftest handle-insert-matches-success
   (testing "201 - returns integer ids"
     (is (= (handle-insert-matches [#:matches{:id 26} #:matches{:id 48}])
