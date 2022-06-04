@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=keeponherdin_dev
+      - POSTGRES_PASSWORD=keeponherdin_dev
+      - POSTGRES_DB=keeponherdin_dev
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+#  db-test:
+#    image: postgres:14.1-alpine
+#    restart: always
+#    environment:
+#      - POSTGRES_USER=keeponherdin_dev
+#      - POSTGRES_PASSWORD=keeponherdin_dev
+#      - POSTGRES_DB=keeponherdin_dev
+#    ports:
+#      - '6543:6543'
+volumes:
+  db:
+    driver: local
