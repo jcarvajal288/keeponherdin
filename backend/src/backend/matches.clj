@@ -23,8 +23,11 @@
                                        :match/did_p1_win
                                        :match/start_time]))
 
-(defn matches-valid? [body]
-  (sp/valid? :match/match body))
+(defn match-valid? [match]
+  (sp/valid? :match/match match))
+
+(defn matches-valid? [matches]
+  (every? match-valid? matches))
 
 (defn labelled-vector-transform
   "Turns a vector of match maps into the form

@@ -13,7 +13,7 @@
   (GET "/api/matches/:id" [] "TODO: return single match")
 
   (POST "/api/matches" request
-    (if (matches-valid? (:body request))
+    (if (match-valid? (:body request))
       (handle-insert-matches (insert-matches! (:body request)))
       (content-type (bad-request "Malformed matches received.") "application/json")))
 

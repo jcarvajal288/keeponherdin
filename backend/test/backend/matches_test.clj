@@ -7,13 +7,20 @@
             [ring.mock.request :as mock]
             [clojure.spec.alpha :as sp]))
 
-(deftest test-matches-valid?
+(deftest test-match-valid?
   (testing "match body validations"
-    (is (false? (matches-valid? {})))
-    (is (false? (matches-valid? (dissoc data/single-match :player1))))
-    (is (false? (matches-valid? (assoc data/single-match :start_time "badtimestamp"))))
-    (is (true? (matches-valid? data/single-match))
+    (is (false? (match-valid? {})))
+    (is (false? (match-valid? (dissoc data/single-match :player1))))
+    (is (false? (match-valid? (assoc data/single-match :start_time "badtimestamp"))))
+    (is (true? (match-valid? data/single-match))
         (sp/explain-str :match/match data/single-match))))
+
+(deftest test-matches-valid?
+  (testing "validations on match vectors"
+    (is (false? (matches-valid? [{}])))
+    (is (true? (matches-valid? [data/single-match])))
+    (is (true? (matches-valid? data/two-matches)))
+    (is (false? (matches-valid? (conj data/two-matches (dissoc data/single-match :player1)))))))
 
 (deftest test-labelled-vector-transform
   (testing "test match map transform into a labelled vector"
@@ -47,5 +54,5 @@
       (let [response (app (-> (mock/request :post "/api/matches")
                               (mock/json-body {})))]
         (is (= response {:status 400
-                         :body "Malformed match received."
+                         :body "Malformed matches received."
                          :headers {"Content-Type" "application/json"}}))))))
