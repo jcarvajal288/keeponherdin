@@ -12,6 +12,10 @@
   (GET "/api/matches/:id" [] "TODO: return single match")
 
   (POST "/api/matches" request
+    (-> (:body request)
+        (match-body-valid?)
+        (create-match)
+        (handle-create-match))
     (handle-create-match (create-match (:body request))))
 
   (PUT "/api/matches/:id" [] "TODO: update a match")
