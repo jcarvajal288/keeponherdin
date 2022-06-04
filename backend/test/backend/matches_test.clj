@@ -3,23 +3,29 @@
             [backend.handler :refer :all]
             [backend.matches :refer :all]
             [cheshire.core :as ch]
+            [resources.data.matches-data :as data]
             [ring.mock.request :as mock]
             [clojure.spec.alpha :as sp]))
 
-(def mock-match {:player1 "Vixy"
-                 :character1 "Velvet"
-                 :player2 "Oscar"
-                 :character2 "Pom"
-                 :did_p1_win false
-                 :start_time "00:45:32"})
-
-(deftest test-match-body-valid?
+(deftest test-matches-valid?
   (testing "match body validations"
-    (is (false? (match-body-valid? {})))
-    (is (false? (match-body-valid? (dissoc mock-match :player1))))
-    (is (false? (match-body-valid? (assoc mock-match :start_time "badtimestamp"))))
-    (is (true? (match-body-valid? mock-match))
-        (sp/explain-str :match/match mock-match))))
+    (is (false? (matches-valid? {})))
+    (is (false? (matches-valid? (dissoc data/single-match :player1))))
+    (is (false? (matches-valid? (assoc data/single-match :start_time "badtimestamp"))))
+    (is (true? (matches-valid? data/single-match))
+        (sp/explain-str :match/match data/single-match))))
+
+(deftest test-labelled-vector-transform
+  (testing "test match map transform into a labelled vector"
+    (is (= (labelled-vector-transform [{}])
+           {:matches ['()]}))
+    (is (= (labelled-vector-transform [data/single-match])
+           {:matches
+            ['("Vixy" "Velvet" "Oscar" "Pom" false "00:45:32")]}))
+    (is (= (labelled-vector-transform data/two-matches)
+           {:matches
+            ['("Vixy" "Velvet" "Oscar" "Pom" false "00:45:32")
+             '("Grunkle" "Tianhuo" "Javamorris" "Arizona" true "01:23:35")]}))))
 
 (deftest handle-insert-match-success
   (testing "201 - returns an integer id"

@@ -23,8 +23,15 @@
                                        :match/did_p1_win
                                        :match/start_time]))
 
-(defn match-body-valid? [body]
+(defn matches-valid? [body]
   (sp/valid? :match/match body))
+
+(defn labelled-vector-transform
+  "Turns a vector of match maps into the form
+  {:matches[(player1_value character1_value...) (player1_value character2_value...)}
+  in order to pass into db-insert-match! which requires that form"
+  [matches]
+  {:matches (vec (map #(map val %) matches))})
 
 (defn insert-match! [match]
   (let [conn (jdbc/get-datasource db/db-spec)]
@@ -35,4 +42,11 @@
     (if (number? id)
       (content-type (created (str "matches/" id) (ch/generate-string {:id id})) "application/json")
       (content-type (internal-server-error result) "application/json"))))
+
+(defn insert-matches! [matches]
+  (let [conn (jdbc/get-datasource db/db-spec)]
+    (jdbc/execute! conn (db-insert-matches!-sqlvec matches))))
+
+(defn handle-insert-matches [result]
+  nil)
 
