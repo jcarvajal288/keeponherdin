@@ -13,7 +13,6 @@
                  :did_p1_win false
                  :start_time "00:45:32"})
 
-
 (deftest test-match-body-valid?
   (testing "match body validations"
     (is (false? (match-body-valid? {})))
@@ -22,23 +21,23 @@
     (is (true? (match-body-valid? mock-match))
         (sp/explain-str :match/match mock-match))))
 
-(deftest handle-create-match-success
+(deftest handle-insert-match-success
   (testing "201 - returns an integer id"
-    (is (= (handle-create-match
+    (is (= (handle-insert-match
              [#:matches{:id 26}]) {:status 201
                                    :body (ch/generate-string {:id 26})
                                    :headers {"Content-Type" "application/json"
                                              "Location" "matches/26"}}))))
 
-(deftest handle-create-match-failure
+(deftest handle-insert-match-failure
   (testing "500 - returns an error message"
-    (is (= (handle-create-match "error") {:status 500
+    (is (= (handle-insert-match "error") {:status 500
                                           :body "error"
                                           :headers {"Content-Type" "application/json"}}))))
 
 (deftest reject-empty-match-body
   (testing "200 - POST /api/matches success"
-    (with-redefs [create-match! (fn [x] [#:matches{:id "Test shouldn't have gotten this far"}])]
+    (with-redefs [insert-match! (fn [#_x] [#:matches{:id "Test shouldn't have gotten this far"}])]
       (let [response (app (-> (mock/request :post "/api/matches")
                               (mock/json-body {})))]
         (is (= response {:status 400

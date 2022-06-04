@@ -26,11 +26,11 @@
 (defn match-body-valid? [body]
   (sp/valid? :match/match body))
 
-(defn create-match! [match]
+(defn insert-match! [match]
   (let [conn (jdbc/get-datasource db/db-spec)]
-    (jdbc/execute! conn (db-create-match!-sqlvec match))))
+    (jdbc/execute! conn (db-insert-match!-sqlvec match))))
 
-(defn handle-create-match [result]
+(defn handle-insert-match [result]
   (let [id (:matches/id (first result))]
     (if (number? id)
       (content-type (created (str "matches/" id) (ch/generate-string {:id id})) "application/json")
