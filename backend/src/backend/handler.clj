@@ -13,9 +13,14 @@
   (GET "/api/matches/:id" [] "TODO: return single match")
 
   (POST "/api/matches" request
-    (if (match-valid? (:body request))
-      (handle-insert-matches (insert-matches! (:body request)))
-      (content-type (bad-request "Malformed matches received.") "application/json")))
+    (let [body (:body request)
+          matches (if (sequential? body) body [body])]
+      (if (matches-valid? matches)
+        (-> (:body request)
+            (labelled-vector-transform)
+            (insert-matches!)
+            (handle-insert-matches))
+        (content-type (bad-request "Malformed matches received.") "application/json"))))
 
   (PUT "/api/matches/:id" [] "TODO: update a match")
 

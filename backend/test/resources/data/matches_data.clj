@@ -14,3 +14,5 @@
                    :character2 "Arizona"
                    :did_p1_win true
                    :start_time "01:23:35"}])
+
+(def malformed-match-list (conj two-matches (dissoc single-match :player1)))

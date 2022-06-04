@@ -31,8 +31,8 @@
 
 (defn labelled-vector-transform
   "Turns a vector of match maps into the form
-  {:matches[(player1_value character1_value...) (player1_value character2_value...)}
-  in order to pass into db-insert-match! which requires that form"
+  {:matches[(player1_value character1_value...) (player1_value character2_value...)]}
+  in order to pass into db-insert-matches! which requires that form."
   [matches]
   {:matches (vec (map #(map val %) matches))})
 
@@ -43,13 +43,30 @@
 (defn handle-insert-match [result]
   (let [id (:matches/id (first result))]
     (if (number? id)
-      (content-type (created (str "matches/" id) (ch/generate-string {:id id})) "application/json")
-      (content-type (internal-server-error result) "application/json"))))
+      (content-type
+        (created
+          (str "matches/" id)
+          (ch/generate-string {:id id}))
+        "application/json")
+      (content-type
+        (internal-server-error result)
+        "application/json"))))
 
 (defn insert-matches! [matches]
+  (do (println matches)
   (let [conn (jdbc/get-datasource db/db-spec)]
-    (jdbc/execute! conn (db-insert-matches!-sqlvec matches))))
+    (jdbc/execute! conn (db-insert-matches!-sqlvec matches)))))
 
 (defn handle-insert-matches [result]
-  nil)
+  (let [ids (map :matches/id result)]
+    (if (every? number? ids)
+      (content-type
+        (created
+          (str "matches/" (first ids))
+          (ch/generate-string {:ids ids}))
+        "application/json")
+      (content-type
+        (internal-server-error result)
+        "application/json")))
+  )
 

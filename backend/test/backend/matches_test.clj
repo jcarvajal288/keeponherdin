@@ -20,7 +20,7 @@
     (is (false? (matches-valid? [{}])))
     (is (true? (matches-valid? [data/single-match])))
     (is (true? (matches-valid? data/two-matches)))
-    (is (false? (matches-valid? (conj data/two-matches (dissoc data/single-match :player1)))))))
+    (is (false? (matches-valid? data/malformed-match-list)))))
 
 (deftest test-labelled-vector-transform
   (testing "test match map transform into a labelled vector"
@@ -48,11 +48,56 @@
                                           :body "error"
                                           :headers {"Content-Type" "application/json"}}))))
 
-(deftest reject-empty-match-body
-  (testing "200 - POST /api/matches success"
-    (with-redefs [insert-match! (fn [#_x] [#:matches{:id "Test shouldn't have gotten this far"}])]
+(deftest handle-insert-matches-success
+  (testing "201 - returns integer ids"
+    (is (= (handle-insert-matches [#:matches{:id 26} #:matches{:id 48}])
+           {:status 201
+            :body (ch/generate-string {:ids [26 48]})
+            :headers {"Content-Type" "application/json"
+                      "Location" "matches/26"}}))))
+
+(deftest handle-insert-matches-failure
+  (testing "500 - returns an error message"
+    (is (= (handle-insert-matches "error")
+           {:status 500
+            :body "error"
+            :headers {"Content-Type" "application/json"}}))))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+; CONTRACT TESTS
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(deftest accept-single-match
+  (testing "201 - POST /api/matches single match"
+    (with-redefs [insert-matches! (fn [_] [#:matches{:id 26}])]
       (let [response (app (-> (mock/request :post "/api/matches")
-                              (mock/json-body {})))]
-        (is (= response {:status 400
-                         :body "Malformed matches received."
-                         :headers {"Content-Type" "application/json"}}))))))
+                              (mock/json-body data/single-match)))]
+        (is (= response {:status 201
+                         :body (ch/generate-string {:ids [26]})
+                         :headers {"Content-Type" "application/json"
+                                   "Location" "http://localhost/api/matches/26"}}))))))
+
+(deftest accept-multiple-matches
+  (testing "201 - POST /api/matches single match"
+    (with-redefs [insert-matches! (fn [_] [#:matches{:id 36} #:matches{:id 48}])]
+      (let [response (app (-> (mock/request :post "/api/matches")
+                              (mock/json-body data/two-matches)))]
+        (is (= response {:status 201
+                         :body (ch/generate-string {:ids [36 48]})
+                         :headers {"Content-Type" "application/json"
+                                   "Location" "http://localhost/api/matches/36"}}))))))
+
+(deftest reject-malformed-match-body
+  (testing "400 - POST /api/matches empty body"
+    (with-redefs [insert-matches! (fn [_] [#:matches{:id "Test shouldn't have gotten this far"}])]
+      (let [blank-response (app (-> (mock/request :post "/api/matches")
+                              (mock/json-body {})))
+            malformed-response (app (-> (mock/request :post "/api/matches")
+                                        (mock/json-body data/malformed-match-list)))
+            ]
+        (is (= blank-response {:status 400
+                               :body "Malformed matches received."
+                               :headers {"Content-Type" "application/json"}}))
+        (is (= malformed-response {:status 400
+                                   :body "Malformed matches received."
+                                   :headers {"Content-Type" "application/json"}}))))))
