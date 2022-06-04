@@ -38,7 +38,7 @@
 
 (deftest reject-empty-match-body
   (testing "200 - POST /api/matches success"
-    (with-redefs [create-match (fn [x] [#:matches{:id "Test shouldn't have gotten this far"}])]
+    (with-redefs [create-match! (fn [x] [#:matches{:id "Test shouldn't have gotten this far"}])]
       (let [response (app (-> (mock/request :post "/api/matches")
                               (mock/json-body {})))]
         (is (= response {:status 400

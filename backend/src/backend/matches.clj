@@ -26,7 +26,7 @@
 (defn match-body-valid? [body]
   (sp/valid? :match/match body))
 
-(defn create-match [match]
+(defn create-match! [match]
   (let [conn (jdbc/get-datasource db/db-spec)]
     (jdbc/execute! conn (db-create-match!-sqlvec match))))
 

@@ -14,7 +14,7 @@
 
   (POST "/api/matches" request
     (if (match-body-valid? (:body request))
-      (handle-create-match (create-match (:body request)))
+      (handle-create-match (create-match! (:body request)))
       (content-type (bad-request "Malformed match received.") "application/json")))
 
   (PUT "/api/matches/:id" [] "TODO: update a match")
