@@ -12,7 +12,7 @@
     (if (number? id)
       (content-type
         (created (str "matches/" id) (generate-string {:id id}))
-        "application/json")
+                 "application/json")
       (content-type (internal-server-error result) "application/json"))))
 
 (defroutes app-routes
