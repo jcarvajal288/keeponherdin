@@ -3,7 +3,8 @@
             [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
-            [ring.middleware.json :as json]))
+            [ring.middleware.json :as json]
+            [ring.util.http-response :refer :all]))
 
 (defroutes app-routes
 
@@ -12,11 +13,9 @@
   (GET "/api/matches/:id" [] "TODO: return single match")
 
   (POST "/api/matches" request
-    (-> (:body request)
-        (match-body-valid?)
-        (create-match)
-        (handle-create-match))
-    (handle-create-match (create-match (:body request))))
+    (if (match-body-valid? (:body request))
+      (handle-create-match (create-match (:body request)))
+      (content-type (bad-request "Malformed match received.") "application/json")))
 
   (PUT "/api/matches/:id" [] "TODO: update a match")
 

@@ -36,7 +36,7 @@
                                           :body "error"
                                           :headers {"Content-Type" "application/json"}}))))
 
-(deftest create-match-endpoint-response
+(deftest reject-empty-match-body
   (testing "200 - POST /api/matches success"
     (with-redefs [create-match (fn [x] [#:matches{:id "Test shouldn't have gotten this far"}])]
       (let [response (app (-> (mock/request :post "/api/matches")
