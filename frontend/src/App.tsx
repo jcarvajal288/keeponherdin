@@ -1,5 +1,5 @@
 import {ReactElement, useState} from 'react'
-import MatchList from './MatchList'
+import { MatchList } from './MatchList'
 import './App.css'
 
 const App = (): ReactElement => {

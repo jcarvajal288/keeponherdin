@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import MatchList from "../src/MatchList";
-import { render, screen } from '@testing-library/react';
+import { MatchList, Match } from "../src/MatchList";
+import {render, screen} from '@testing-library/react';
 
 /**
  * @vitest-environment jsdom
  */
+
+import matches from "./resources/sampleMatches.json";
 
 describe('MatchList', () => {
 
@@ -14,8 +16,9 @@ describe('MatchList', () => {
         );
     };
 
-    it('displays "Match"', () => {
+    it('displays existing matches', () => {
         renderMatchList();
-        expect(screen.findByText("Match"));
+        expect(screen.getByText("Bob")).toBeDefined();
+        expect(screen.getByText("Tianhuo")).toBeDefined();
     })
 });
