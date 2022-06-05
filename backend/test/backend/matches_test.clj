@@ -87,3 +87,27 @@
         (is (= malformed-response {:status 400
                                    :body "Malformed matches received."
                                    :headers {"Content-Type" "application/json"}}))))))
+
+(deftest select-zero-matches
+  (testing "200 - GET /api/matches no matches"
+    (with-redefs [select-all-matches (fn [] [])]
+      (let [response (app (-> (mock/request :get "/api/matches")))]
+        (is (= response {:status 200
+                         :body (ch/generate-string [])
+                         :headers {"Content-Type" "application/json"}}))))))
+
+(deftest select-one-matches
+  (testing "200 - GET /api/matches one matches"
+    (with-redefs [select-all-matches (fn [] data/single-match)]
+      (let [response (app (-> (mock/request :get "/api/matches")))]
+        (is (= response {:status 200
+                         :body (ch/generate-string data/single-match)
+                         :headers {"Content-Type" "application/json"}}))))))
+
+(deftest select-two-matches
+  (testing "200 - GET /api/matches one matches"
+    (with-redefs [select-all-matches (fn [] data/two-matches)]
+      (let [response (app (-> (mock/request :get "/api/matches")))]
+        (is (= response {:status 200
+                         :body (ch/generate-string data/two-matches)
+                         :headers {"Content-Type" "application/json"}}))))))

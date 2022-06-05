@@ -8,7 +8,8 @@
 
 (defroutes app-routes
 
-  (GET "/api/matches" [] "TODO: return all matches")
+  (GET "/api/matches" []
+    (content-type (ok (select-all-matches)) "application/json"))
 
   (GET "/api/matches/:id" [] "TODO: return single match")
 

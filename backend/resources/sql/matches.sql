@@ -12,6 +12,10 @@ INSERT INTO matches
 VALUES :tuple*:matches
 RETURNING id;
 
+-- :name db-select-all-matches :? :*
+-- :doc Get all matches
+SELECT * FROM matches;
+
 -- :name db-get-match :? :1
 -- :doc retrieves a match record given the id
 SELECT * FROM matches

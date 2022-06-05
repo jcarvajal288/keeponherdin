@@ -50,6 +50,9 @@
         "application/json")
       (content-type
         (internal-server-error result)
-        "application/json")))
-  )
+        "application/json"))))
+
+(defn select-all-matches []
+  (let [conn (jdbc/get-datasource db/db-spec)]
+    (jdbc/execute! conn (db-select-all-matches-sqlvec))))
 
