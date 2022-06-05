@@ -36,6 +36,12 @@
   [matches]
   {:matches (vec (map #(map val %) matches))})
 
+(defn validate-insert-matches-body [body]
+  (let [matches (if (sequential? body) body [body])]
+    (if (matches-valid? matches)
+      matches
+      (throw (IllegalArgumentException. "Empty match body or malformed matches received.")))))
+
 (defn insert-matches! [matches]
   (let [conn (jdbc/get-datasource db/db-spec)]
     (jdbc/execute! conn (db-insert-matches!-sqlvec matches))))

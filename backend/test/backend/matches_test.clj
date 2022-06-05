@@ -34,6 +34,11 @@
             ['("Vixy" "Velvet" "Oscar" "Pom" false "00:45:32")
              '("Grunkle" "Tianhuo" "Javamorris" "Arizona" true "01:23:35")]}))))
 
+(deftest test-validate-insert-matches-body
+  (testing " test validating the request before passing it to the rest of the request handler"
+    (is (thrown? IllegalArgumentException (validate-insert-matches-body {})))
+    (is (thrown? IllegalArgumentException (validate-insert-matches-body data/malformed-match-list)))))
+
 (deftest handle-insert-matches-success
   (testing "201 - returns integer ids"
     (is (= (handle-insert-matches [#:matches{:id 26} #:matches{:id 48}])
@@ -79,13 +84,12 @@
       (let [blank-response (app (-> (mock/request :post "/api/matches")
                               (mock/json-body {})))
             malformed-response (app (-> (mock/request :post "/api/matches")
-                                        (mock/json-body data/malformed-match-list)))
-            ]
+                                        (mock/json-body data/malformed-match-list)))]
         (is (= blank-response {:status 400
-                               :body "Malformed matches received."
+                               :body "Empty match body or malformed matches received."
                                :headers {"Content-Type" "application/json"}}))
         (is (= malformed-response {:status 400
-                                   :body "Malformed matches received."
+                                   :body "Empty match body or malformed matches received."
                                    :headers {"Content-Type" "application/json"}}))))))
 
 (deftest select-zero-matches

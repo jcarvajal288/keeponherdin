@@ -14,16 +14,18 @@
   (GET "/api/matches/:id" [] "TODO: return single match")
 
   (POST "/api/matches" request
-    (let [body (:body request)
-          matches (if (sequential? body) body [body])]
-      (if (matches-valid? matches)
-        (-> matches
-            (labelled-vector-transform)
-            (insert-matches!)
-            (handle-insert-matches))
-        (content-type (bad-request "Malformed matches received.") "application/json"))))
+    (try
+      (-> (:body request)
+          (validate-insert-matches-body)
+          (labelled-vector-transform)
+          (insert-matches!)
+          (handle-insert-matches))
+    (catch IllegalArgumentException ex
+      (content-type (bad-request (.getMessage ex)) "application/json"))
+    (catch Exception ex
+      (content-type (internal-server-error (.getMessage ex)) "application/json"))))
 
-  (PUT "/api/matches/:id" [] "TODO: update a match")
+(PUT "/api/matches/:id" [] "TODO: update a match")
 
   (DELETE "/api/matches/:id" [] "TODO: delete a match")
 
