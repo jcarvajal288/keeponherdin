@@ -1,16 +1,17 @@
 import {ReactElement, useState} from 'react'
+import {Match, MatchRow} from "./MatchRow";
+import {Box} from "@mui/material";
 
-export type Match = {
-    player1: string;
-    character1: string;
-    player2: string;
-    character2: string;
-    did_p1_win: boolean;
-    start_time: string;
+export type MatchListProps = {
+    matches: Match[];
 }
 
-export const MatchList = (): ReactElement => {
+export const MatchList = ({matches}: MatchListProps): ReactElement => {
     return (
-        <h1>Match</h1>
+        <Box>
+            {matches.map((match) => (
+                <MatchRow match={match} />
+            ))}
+        </Box>
     )
 }

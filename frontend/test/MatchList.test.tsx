@@ -1,24 +1,55 @@
 import { describe, expect, it } from 'vitest'
-import { MatchList, Match } from "../src/MatchList";
+import { MatchList } from "../src/MatchList";
 import {render, screen} from '@testing-library/react';
+import {Match} from "../src/MatchRow";
 
 /**
  * @vitest-environment jsdom
  */
 
-import matches from "./resources/sampleMatches.json";
+//import matches from "./resources/sampleMatches.json";
+
+const matches: Match[] = [
+    {
+        player1: "Vixy",
+        character1: "Velvet",
+        player2: "Oscar",
+        character2: "Pom",
+        did_p1_win: false,
+        start_time: "00:30:12"
+    },
+    {
+        player1: "Barlowe",
+        character1: "Tianhuo",
+        player2: "Amaron",
+        character2: "Oleander",
+        did_p1_win: true,
+        start_time: "00:45:32"
+    },
+    {
+        player1: "Fresh",
+        character1: "Paprika",
+        player2: "DigitalDog",
+        character2: "Shanty",
+        did_p1_win: true,
+        start_time: "01:05:32"
+    },
+]
+
 
 describe('MatchList', () => {
 
-    const renderMatchList = () => {
+    const renderMatchList = (matches: Match[]) => {
         return render(
-            <MatchList/>
+            <MatchList matches={matches}/>
         );
     };
 
-    it('displays existing matches', () => {
-        renderMatchList();
-        expect(screen.getByText("Bob")).toBeDefined();
-        expect(screen.getByText("Tianhuo")).toBeDefined();
+    it('displays several matches', () => {
+        renderMatchList(matches);
+        expect(screen.getAllByTestId('match-row')).toHaveLength(matches.length);
+        expect(screen.getByText("Vixy")).toBeDefined();
+        expect(screen.getByText("Barlowe")).toBeDefined();
+        expect(screen.getByText("Fresh")).toBeDefined();
     })
 });
