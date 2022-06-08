@@ -1,18 +1,24 @@
-(ns backend.database)
+(ns backend.database
+  (:require [environ.core :refer [env]]))
 
-(def user "keeponherdin_dev")
-(def password "keeponherdin_dev")
-(def subprotocol "jdbc:postgresql")
-(def subname "//localhost:5432/keeponherdin_dev")
+(def dbtype (env :database-type))
+(def classname (env :database-classname))
+(def subprotocol (env :database-subprotocol))
+(def dbname (env :database-name))
+(def user (env :database-user))
+(def password (env :database-password))
+(def port (env :database-port))
+(def subname (env :database-subname))
+(def hostname (env :database-hostname))
 
 (def db-spec
-  {:dbtype "postgresql"
-   :classname "org.postgresql.Driver"
-   :subprotocol "postgresql"
-   :dbname "keeponherdin_dev"
+  {:dbtype dbtype
+   :classname classname
+   :subprotocol subprotocol
+   :dbname dbname
    :user user
    :password password
-   :port 5432
+   :port port
    :subname subname
-   :hostname "localhost"})
+   :hostname hostname})
 

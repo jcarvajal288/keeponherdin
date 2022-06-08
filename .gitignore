@@ -3,6 +3,7 @@ backend/lib
 backend/classes
 backend/checkouts
 backend/.nrepl-port
+backend/profiles.clj
 *.jar
 *.class
 /.lein-*

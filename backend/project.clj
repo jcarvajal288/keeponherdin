@@ -7,6 +7,7 @@
                  [compojure "1.6.3"]
                  [com.layerware/hugsql-core "0.5.3"]
                  [com.layerware/hugsql-adapter-next-jdbc "0.5.3"]
+                 [environ "1.2.0"]
                  [metosin/ring-http-response "0.9.3"]
                  [migratus "1.3.6"]
                  [org.postgresql/postgresql "42.3.4"]
@@ -15,11 +16,15 @@
                  [ring/ring-defaults "0.3.3"]
                  [ring/ring-json "0.5.1"]]
   :plugins [[lein-ring "0.12.6"]
-            [migratus-lein "0.7.3"]]
+            [migratus-lein "0.7.3"]
+            [lein-environ "1.2.0"]]
   :ring {:handler backend.handler/app}
-  :migratus {:store :database
-             :migration-dir "migrations/"
-             :db {:connection-uri "jdbc:postgresql://localhost:5432/keeponherdin_dev?user=keeponherdin_dev&password=keeponherdin_dev"}}
-  :profiles
-  {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring/ring-mock "0.4.0"]]}})
+  :profiles {:dev [:project/dev :profiles/dev]
+             :test [:project/test :profiles/test]
+             :profiles/dev {}
+             :profiles/test {}
+             :project/dev {:dependencies [[javax.servlet/servlet-api "2.5"]
+                                           [ring/ring-mock "0.4.0"]]}
+             :project/test {:dependencies [[javax.servlet/servlet-api "2.5"]
+                                           [ring/ring-mock "0.4.0"]]}
+             })
