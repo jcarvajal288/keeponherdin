@@ -4,9 +4,9 @@ services:
     image: postgres:14.1-alpine
     restart: always
     environment:
-      - POSTGRES_USER=keeponherdin_dev
-      - POSTGRES_PASSWORD=keeponherdin_dev
-      - POSTGRES_DB=keeponherdin_dev
+      - POSTGRES_USER=${DEV_DB_USER}
+      - POSTGRES_PASSWORD=${DEV_DB_PASSWORD}
+      - POSTGRES_DB=${DEV_DB}
     ports:
       - '5432:5432'
     volumes:
@@ -15,9 +15,9 @@ services:
 #    image: postgres:14.1-alpine
 #    restart: always
 #    environment:
-#      - POSTGRES_USER=keeponherdin_dev
-#      - POSTGRES_PASSWORD=keeponherdin_dev
-#      - POSTGRES_DB=keeponherdin_dev
+#      - POSTGRES_USER=${DEV_DB_USER}
+#      - POSTGRES_PASSWORD=${DEV_DB_PASSWORD}
+#      - POSTGRES_DB=${DEV_DB}
 #    ports:
 #      - '6543:6543'
 volumes:
