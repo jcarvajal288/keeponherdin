@@ -1,0 +1,4 @@
+task testBackend(type:Exec) {
+    workingDir './backend'
+    commandLine 'lein', 'test'
+}

@@ -5,9 +5,11 @@ backend/checkouts
 backend/.nrepl-port
 backend/profiles.clj
 backend/.lein-env
+backend/.lein-failures
 .env
 *.jar
 *.class
 /.lein-*
 /.nrepl-port
 .idea/
+.gradle
