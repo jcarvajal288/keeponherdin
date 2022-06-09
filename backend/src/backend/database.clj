@@ -8,7 +8,6 @@
 (def user (env :database-user))
 (def password (env :database-password))
 (def port (env :database-port))
-(def subname (env :database-subname))
 (def hostname (env :database-hostname))
 
 (def db-spec
@@ -19,6 +18,6 @@
    :user user
    :password password
    :port port
-   :subname subname
-   :hostname hostname})
+   :subname (format "//%s:%s/%s" hostname port dbname)
+   :host hostname})
 

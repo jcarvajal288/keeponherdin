@@ -4,6 +4,8 @@ backend/classes
 backend/checkouts
 backend/.nrepl-port
 backend/profiles.clj
+backend/.lein-env
+.env
 *.jar
 *.class
 /.lein-*

@@ -4,7 +4,8 @@
             [cheshire.core :as ch]
             [hugsql.core :as hugsql]
             [next.jdbc :as jdbc]
-            [ring.util.http-response :refer :all]))
+            [ring.util.http-response :refer :all]
+            [taoensso.timbre :as log]))
 
 (hugsql/def-sqlvec-fns "sql/matches.sql")
 
@@ -60,5 +61,6 @@
 
 (defn select-all-matches []
   (let [conn (jdbc/get-datasource db/db-spec)]
+    (log/debug (str "conn: " conn))
     (jdbc/execute! conn (db-select-all-matches-sqlvec))))
 
