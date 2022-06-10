@@ -37,7 +37,9 @@
 (deftest test-validate-insert-matches-body
   (testing " test validating the request before passing it to the rest of the request handler"
     (is (thrown? IllegalArgumentException (validate-insert-matches-body {})))
-    (is (thrown? IllegalArgumentException (validate-insert-matches-body data/malformed-match-list)))))
+    (is (thrown? IllegalArgumentException (validate-insert-matches-body data/malformed-match-list)))
+    (is (= (validate-insert-matches-body data/single-match) [data/single-match]))
+    (is (= (validate-insert-matches-body data/two-matches) data/two-matches))))
 
 (deftest handle-insert-matches-success
   (testing "201 - returns integer ids"
