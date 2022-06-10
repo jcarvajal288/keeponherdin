@@ -2,3 +2,15 @@ task testBackend(type:Exec) {
     workingDir './backend'
     commandLine 'lein', 'test'
 }
+
+task buildBackendUberJar(type:Exec) {
+    dependsOn tasks.testBackend
+    workingDir './backend'
+    commandLine 'lein', 'do', 'clean,', 'ring', 'uberjar'
+}
+
+task buildBackendContainer(type:Exec) {
+    dependsOn tasks.buildBackendUberJar
+    workingDir './backend'
+    commandLine 'docker', 'build', '-t', 'keeponherdin-backend', '.'
+}

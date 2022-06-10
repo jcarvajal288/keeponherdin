@@ -1,9 +1,8 @@
-FROM    clojure:lein
-COPY    . /app
+FROM    openjdk:17-oracle
 WORKDIR /app
-RUN     lein deps
-CMD     lein ring server-headless 8000
-
+COPY    target/backend-standalone.jar /app/backend.jar
 EXPOSE 8000
+CMD     java -jar backend.jar
+
 
 

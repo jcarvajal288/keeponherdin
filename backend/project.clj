@@ -13,10 +13,13 @@
                  [migratus "1.3.6"]
                  [org.postgresql/postgresql "42.3.4"]
                  [org.slf4j/slf4j-log4j12 "2.0.0-alpha7"]
+                 [ring/ring-jetty-adapter "1.6.1"]
                  [ring/ring-core "1.9.5"]
                  [ring/ring-defaults "0.3.3"]
                  [ring/ring-json "0.5.1"]]
+  :uberjar-name "backend-standalone.jar"
   :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/log4j-factory"]
+  :main backend.handler
   :plugins [[lein-ring "0.12.6"]
             [migratus-lein "0.7.3"]
             [lein-environ "1.2.0"]]

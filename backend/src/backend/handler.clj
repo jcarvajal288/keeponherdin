@@ -2,6 +2,8 @@
   (:require [backend.matches :refer :all]
             [compojure.core :refer :all]
             [compojure.route :as route]
+            [environ.core :refer [env]]
+            [ring.adapter.jetty :refer :all]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.json :as json]
             [ring.util.http-response :refer :all]))
@@ -36,3 +38,6 @@
   (wrap-defaults api-defaults)
   (json/wrap-json-body {:keywords? true})
   (json/wrap-json-response)))
+
+(defn -main []
+  (run-jetty app {:port (or (env :ring-port) 8000)}))

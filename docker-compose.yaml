@@ -4,16 +4,24 @@ services:
     image: keeponherdin-backend
     restart: always
     environment:
+      - DATABASE_TYPE=${DB_TYPE}
+      - DATABASE_CLASSNAME=${DB_CLASSNAME}
+      - DATABASE_SUBPROTOCOL=${DB_SUBPROTOCOL}
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_PASSWORD=${DB_PASSWORD}
+      - DATABASE_PORT=${DB_PORT}
       - DATABASE_HOSTNAME=db
+      - PORT=${RING_PORT}
     ports:
       - "8000:8000"
   db:
     image: postgres:14.1-alpine
     restart: always
     environment:
-      - POSTGRES_USER=${DEV_DB_USER}
-      - POSTGRES_PASSWORD=${DEV_DB_PASSWORD}
-      - POSTGRES_DB=${DEV_DB}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     ports:
       - '5432:5432'
     volumes:
