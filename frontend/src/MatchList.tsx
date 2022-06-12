@@ -1,6 +1,6 @@
 import {ReactElement, useState} from 'react'
 import {Match, MatchRow} from "./MatchRow";
-import {Box} from "@mui/material";
+import {Box, Divider, Stack} from "@mui/material";
 
 export type MatchListProps = {
     matches: Match[];
@@ -8,10 +8,17 @@ export type MatchListProps = {
 
 export const MatchList = ({matches}: MatchListProps): ReactElement => {
     return (
-        <Box>
-            {matches.map((match) => (
-                <MatchRow match={match} />
-            ))}
+        <Box
+            padding='50px'
+        >
+            <Stack
+                direction='column'
+                divider={<Divider orientation='horizontal' flexItem />}
+            >
+                {matches.map((match: Match) => (
+                    <MatchRow match={match} />
+                ))}
+            </Stack>
         </Box>
     )
 }

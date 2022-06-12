@@ -22,8 +22,8 @@ describe("MatchRow", () => {
     it('displays the match data', () => {
         renderMatchRow(testMatch);
         expect(screen.getByText("Vixy")).toBeDefined();
-        expect(screen.getByText("Velvet")).toBeDefined();
+        expect(screen.getByAltText("Velvet")).toBeDefined();
+        expect(screen.getByAltText("Pom")).toBeDefined();
         expect(screen.getByText("Oscar")).toBeDefined();
-        expect(screen.getByText("Pom")).toBeDefined();
     })
 });

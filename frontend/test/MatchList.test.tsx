@@ -7,8 +7,6 @@ import {Match} from "../src/MatchRow";
  * @vitest-environment jsdom
  */
 
-//import matches from "./resources/sampleMatches.json";
-
 const matches: Match[] = [
     {
         player1: "Vixy",
