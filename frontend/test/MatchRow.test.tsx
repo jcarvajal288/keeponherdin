@@ -25,5 +25,6 @@ describe("MatchRow", () => {
         expect(screen.getByAltText("Velvet")).toBeDefined();
         expect(screen.getByAltText("Pom")).toBeDefined();
         expect(screen.getByText("Oscar")).toBeDefined();
+        expect(screen.getByTestId("OndemandVideoIcon")).toBeDefined()
     })
 });

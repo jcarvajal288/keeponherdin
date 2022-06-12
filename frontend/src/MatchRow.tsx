@@ -1,5 +1,6 @@
 import { ReactElement} from "react";
 import {Box, Stack, Typography} from "@mui/material";
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 
 export type Match = {
     player1: string;
@@ -41,17 +42,29 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
     return (
         <>
             <Stack
-                data-testid='match-row'
                 direction='row'
-                justifyContent='center'
-                alignItems='center'
-                padding='5px'
+                data-testid='match-row'
+                justifyContent='space-between'
             >
-                <Typography>{match.player1}</Typography>
-                <CharacterIcon character={match.character1} />
-                <Typography>VS</Typography>
-                <CharacterIcon character={match.character2} />
-                <Typography>{match.player2}</Typography>
+                <Box/>
+                <Stack
+                    data-testid='match-data'
+                    direction='row'
+                    alignItems='center'
+                >
+                    <Typography>{match.player1}</Typography>
+                    <CharacterIcon character={match.character1} />
+                    <Typography>VS</Typography>
+                    <CharacterIcon character={match.character2} />
+                    <Typography>{match.player2}</Typography>
+                </Stack>
+                <Stack
+                    direction='row'
+                    justifyContent='flex-end'
+                    alignItems='center'
+                >
+                    <OndemandVideoIcon titleAccess='Go To VOD'/>
+                </Stack>
             </Stack>
         </>
     )
