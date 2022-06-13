@@ -1,6 +1,7 @@
 import { ReactElement} from "react";
 import {Box, Stack, Typography} from "@mui/material";
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
 export type Match = {
     player1: string;
@@ -44,25 +45,45 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
             <Stack
                 direction='row'
                 data-testid='match-row'
-                justifyContent='space-between'
+                padding='5px'
             >
-                <Box/>
                 <Stack
-                    data-testid='match-data'
                     direction='row'
+                    width='100%'
                     alignItems='center'
+                    justifyContent='end'
                 >
+                     {match.did_p1_win
+                         ? <EmojiEventsIcon
+                             titleAccess='Player 1 Wins'
+                             sx={{color: 'orange'}}
+                         />
+                         : <Box/>}
                     <Typography>{match.player1}</Typography>
                     <CharacterIcon character={match.character1} />
-                    <Typography>VS</Typography>
-                    <CharacterIcon character={match.character2} />
-                    <Typography>{match.player2}</Typography>
+                </Stack>
+                <Stack direction='column' justifyContent='center'>
+                    <Typography>vs</Typography>
                 </Stack>
                 <Stack
                     direction='row'
-                    justifyContent='flex-end'
+                    width='100%'
                     alignItems='center'
+                    justifyContent='space-between'
                 >
+                    <Stack
+                        alignItems='center'
+                        direction='row'
+                    >
+                        <CharacterIcon character={match.character2} />
+                        <Typography>{match.player2}</Typography>
+                        {match.did_p1_win
+                            ? <Box/>
+                            : <EmojiEventsIcon
+                                titleAccess='Player 2 Wins'
+                                sx={{color: 'orange'}}
+                            />}
+                    </Stack>
                     <OndemandVideoIcon titleAccess='Go To VOD'/>
                 </Stack>
             </Stack>
