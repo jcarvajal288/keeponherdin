@@ -1,12 +1,19 @@
-import {ReactElement, useState} from 'react'
+import {ReactElement, useEffect, useState} from 'react'
 import {Match, MatchRow} from "./MatchRow";
 import {Box, Divider, Stack} from "@mui/material";
 
 export type MatchListProps = {
-    matches: Match[];
+    getMatches: () => Promise<Match[]>;
 }
 
-export const MatchList = ({matches}: MatchListProps): ReactElement => {
+export const MatchList = ({getMatches}: MatchListProps): ReactElement => {
+
+    const [matches, setMatches] = useState<Match[]>([])
+
+    useEffect(() => {
+        getMatches().then(setMatches)
+    }, [getMatches])
+
     return (
         <Box
             padding='50px'

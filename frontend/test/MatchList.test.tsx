@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { MatchList } from "../src/MatchList";
+import {MatchList, MatchListProps} from "../src/MatchList";
 import {render, screen} from '@testing-library/react';
 import {Match} from "../src/MatchRow";
 
@@ -37,15 +37,18 @@ const matches: Match[] = [
 
 describe('MatchList', () => {
 
-    const renderMatchList = (matches: Match[]) => {
+    const renderMatchList = (props: Partial<MatchListProps> = {}) => {
         return render(
-            <MatchList matches={matches}/>
+            <MatchList
+                getMatches={() => Promise.resolve([])}
+                {...props}
+            />
         );
     };
 
-    it('displays several matches', () => {
-        renderMatchList(matches);
-        expect(screen.getAllByTestId('match-row')).toHaveLength(matches.length);
+    it('displays several matches', async () => {
+        renderMatchList({ getMatches: () => Promise.resolve(matches) });
+        expect(await screen.findAllByTestId('match-row')).toHaveLength(matches.length);
         expect(screen.getByText("Vixy")).toBeDefined();
         expect(screen.getByText("Barlowe")).toBeDefined();
         expect(screen.getByText("Fresh")).toBeDefined();
