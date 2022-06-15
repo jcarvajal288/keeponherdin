@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest "
+    "test": "vitest",
+    "test-run": "vitest run"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",

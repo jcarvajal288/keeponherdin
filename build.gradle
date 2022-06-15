@@ -3,6 +3,16 @@ task testBackend(type:Exec) {
     commandLine 'lein', 'test'
 }
 
+task testFrontend(type:Exec) {
+    workingDir './frontend'
+    commandLine 'yarn', 'test-run'
+}
+
+task testAll {
+    dependsOn tasks.testBackend
+    dependsOn tasks.testFrontend
+}
+
 task buildBackendUberJar(type:Exec) {
     dependsOn tasks.testBackend
     workingDir './backend'
