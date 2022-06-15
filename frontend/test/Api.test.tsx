@@ -48,7 +48,7 @@ describe('Api', () => {
     })
 
     it('getMatches returns existing matches', async () => {
-        mockServer.use(rest.get('/api/matches', (req, res, ctx) => res(ctx.json(matches))));
+        mockServer.use(rest.get('http://localhost:8000/api/matches', (req, res, ctx) => res(ctx.json(matches))));
         const { result } = renderHook(() => useApi());
         await expect(result.current.getMatches()).resolves.toEqual(matches);
     })
