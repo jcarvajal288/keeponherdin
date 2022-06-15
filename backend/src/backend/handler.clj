@@ -4,6 +4,7 @@
             [compojure.route :as route]
             [environ.core :refer [env]]
             [ring.adapter.jetty :refer :all]
+            [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.json :as json]
             [ring.util.http-response :refer :all]))
@@ -37,7 +38,9 @@
   (-> app-routes
   (wrap-defaults api-defaults)
   (json/wrap-json-body {:keywords? true})
-  (json/wrap-json-response)))
+  (json/wrap-json-response)
+  (wrap-cors :access-control-allow-origin [#".*"]
+             :access-control-allow-methods [:get :put :post :delete])))
 
 (defn -main []
   (run-jetty app {:port (or (env :ring-port) 8000)}))
