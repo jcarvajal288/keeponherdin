@@ -16,7 +16,7 @@ export const HeaderBar = (): ReactElement => {
                     fontSize='20px'
                     fontWeight='bold'
                 >
-                    Keep On Herdin'
+                    Can't Escape From Crossup Flop
                 </Typography>
             </Stack>
         </AppBar>

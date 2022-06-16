@@ -5,6 +5,6 @@ import {render, screen} from "@testing-library/react";
 describe('Header Bar', () =>  {
     it('UI elements', () => {
         render(<App/>)
-        expect(screen.getByText("Keep On Herdin'")).toBeDefined();
+        expect(screen.getByText("Can't Escape From Crossup Flop")).toBeDefined();
     });
 });
