@@ -19,8 +19,25 @@ task buildBackendUberJar(type:Exec) {
     commandLine 'lein', 'do', 'clean,', 'ring', 'uberjar'
 }
 
+task buildFrontend(type:Exec) {
+    dependsOn tasks.testFrontend
+    workingDir './frontend'
+    commandLine 'yarn', 'build'
+}
+
 task buildBackendContainer(type:Exec) {
     dependsOn tasks.buildBackendUberJar
     workingDir './backend'
     commandLine 'docker', 'build', '-t', 'keeponherdin-backend', '.'
+}
+
+task buildFrontendContainer(type:Exec) {
+    dependsOn tasks.buildFrontend
+    workingDir './frontend'
+    commandLine 'docker', 'build', '-t', 'keeponherdin-frontend', '.'
+}
+
+task buildAllContainers {
+    dependsOn tasks.buildBackendContainer
+    dependsOn tasks.buildFrontendContainer
 }
