@@ -1,11 +1,12 @@
-(ns backend.matches
+(ns backend.matches_test
   (:require [clojure.test :refer :all]
             [backend.handler :refer :all]
             [backend.matches :refer :all]
             [cheshire.core :as ch]
             [resources.data.matches-data :as data]
             [ring.mock.request :as mock]
-            [clojure.spec.alpha :as sp]))
+            [clojure.spec.alpha :as sp]
+            [taoensso.timbre :as log]))
 
 (deftest test-match-valid?
   (testing "match body validations"
@@ -28,11 +29,11 @@
            {:matches ['()]}))
     (is (= (labelled-vector-transform [data/single-match])
            {:matches
-            ['("Vixy" "Velvet" "Oscar" "Pom" false "00:45:32")]}))
+            ['("Vixy" "Velvet" "Oscar" "Pom" false "00h45m32s")]}))
     (is (= (labelled-vector-transform data/two-matches)
            {:matches
-            ['("Vixy" "Velvet" "Oscar" "Pom" false "00:45:32")
-             '("Grunkle" "Tianhuo" "Javamorris" "Arizona" true "01:23:35")]}))))
+            ['("Vixy" "Velvet" "Oscar" "Pom" false "00h45m32s")
+             '("Grunkle" "Tianhuo" "Javamorris" "Arizona" true "01h23m35s")]}))))
 
 (deftest test-validate-insert-matches-body
   (testing " test validating the request before passing it to the rest of the request handler"
@@ -55,6 +56,10 @@
            {:status 500
             :body "error"
             :headers {"Content-Type" "application/json"}}))))
+
+(deftest test-random-matches
+  (testing "testing data/random-matches"
+    (is (= (count (data/random-matches 3)) 3))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; CONTRACT TESTS
@@ -117,21 +122,3 @@
         (is (= response {:status 200
                          :body (ch/generate-string data/two-matches)
                          :headers {"Content-Type" "application/json"}}))))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; DATABASE TESTS
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(deftest insert-and-retrieve
-  (testing "insert and retrieve a single match"
-    (let [response (app (-> (mock/request :post "/api/matches")
-                            (mock/json-body data/single-match)))
-          post-result-ids (-> response (:body) (ch/parse-string true) (:ids))
-          get-response (app (-> (mock/request :get "/api/matches")))
-          all-matches (-> get-response (:body) (ch/parse-string true))
-          result-match (first (filter #(= (first post-result-ids) (:id %)) all-matches))
-          ]
-      (is (= (:status response) 201))
-      (is (= (count post-result-ids) 1))
-      (is (number? (first post-result-ids)))
-      (is (= (dissoc result-match :id) data/single-match)))))
