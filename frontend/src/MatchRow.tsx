@@ -1,5 +1,5 @@
 import { ReactElement} from "react";
-import {Box, Stack, Typography} from "@mui/material";
+import {Box, Paper, Stack, Typography} from "@mui/material";
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import arizonaIcon from '/resources/images/Arizona_Icon.jpg'
@@ -53,12 +53,16 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                 direction='row'
                 data-testid='match-row'
                 padding='5px'
+                alignItems='center'
+                component={Paper}
+                bgcolor='#E4E4E4'
             >
                 <Stack
                     direction='row'
                     width='100%'
                     alignItems='center'
                     justifyContent='end'
+                    maxWidth='35%'
                 >
                      {match.did_p1_win
                          ? <EmojiEventsIcon
@@ -66,7 +70,7 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                              sx={{color: 'orange'}}
                          />
                          : <Box/>}
-                    <Typography>{match.player1}</Typography>
+                    <Typography noWrap>{match.player1}</Typography>
                     <CharacterIcon character={match.character1} />
                 </Stack>
                 <Stack direction='column' justifyContent='center'>
@@ -81,9 +85,13 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                     <Stack
                         alignItems='center'
                         direction='row'
+                        position='absolute'
+                        maxWidth='35%'
                     >
                         <CharacterIcon character={match.character2} />
-                        <Typography>{match.player2}</Typography>
+                        <Typography
+                            noWrap
+                        >{match.player2}</Typography>
                         {match.did_p1_win
                             ? <Box/>
                             : <EmojiEventsIcon
@@ -91,8 +99,8 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                                 sx={{color: 'orange'}}
                             />}
                     </Stack>
-                    <OndemandVideoIcon titleAccess='Go To VOD'/>
                 </Stack>
+                <OndemandVideoIcon titleAccess='Go To VOD'/>
             </Stack>
         </>
     )

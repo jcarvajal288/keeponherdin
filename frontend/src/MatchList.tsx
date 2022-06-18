@@ -20,7 +20,7 @@ export const MatchList = ({getMatches}: MatchListProps): ReactElement => {
         >
             <Stack
                 direction='column'
-                divider={<Divider orientation='horizontal' flexItem />}
+                // divider={<Divider orientation='horizontal' flexItem />}
             >
                 {matches.map((match: Match) => (
                     <MatchRow match={match} />
