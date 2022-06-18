@@ -19,12 +19,6 @@ task buildBackendUberJar(type:Exec) {
     commandLine 'lein', 'do', 'clean,', 'ring', 'uberjar'
 }
 
-task buildFrontend(type:Exec) {
-    dependsOn tasks.testFrontend
-    workingDir './frontend'
-    commandLine 'yarn', 'build'
-}
-
 task buildBackendContainer(type:Exec) {
     dependsOn tasks.buildBackendUberJar
     workingDir './backend'
@@ -32,7 +26,7 @@ task buildBackendContainer(type:Exec) {
 }
 
 task buildFrontendContainer(type:Exec) {
-    dependsOn tasks.buildFrontend
+    dependsOn tasks.testFrontend
     workingDir './frontend'
     commandLine 'docker', 'build', '-t', 'keeponherdin-frontend', '.'
 }
@@ -40,4 +34,33 @@ task buildFrontendContainer(type:Exec) {
 task buildAllContainers {
     dependsOn tasks.buildBackendContainer
     dependsOn tasks.buildFrontendContainer
+}
+
+task deployBackend {
+    dependsOn tasks.buildBackendContainer
+    doLast {
+        exec {
+            commandLine 'docker', 'tag', 'keeponherdin-backend:latest', DOCKER_REPO_URL + 'keeponherdin-backend:latest'
+        }
+        exec {
+            commandLine 'docker', 'push', DOCKER_REPO_URL + 'keeponherdin-backend:latest'
+        }
+    }
+}
+
+task deployFrontend {
+    dependsOn tasks.buildFrontendContainer
+    doLast{
+        exec {
+            commandLine 'docker', 'tag', 'keeponherdin-frontend:latest', DOCKER_REPO_URL + 'keeponherdin-frontend:latest'
+        }
+        exec {
+            commandLine 'docker', 'push', DOCKER_REPO_URL + 'keeponherdin-frontend:latest'
+        }
+    }
+}
+
+task deployAll(type:Exec) {
+    dependsOn tasks.deployBackend
+    dependsOn tasks.deployFrontend
 }
