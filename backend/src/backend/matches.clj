@@ -13,7 +13,7 @@
                                    {:builder-fn next.jdbc.result-set/as-unqualified-maps})})
 (hugsql/def-sqlvec-fns "sql/matches.sql")
 
-(def start-time-regex #"^(\d+:)?[0-5][0-9]:[0-5][0-9]$")
+(def start-time-regex #"^(\d+h)?[0-5][0-9]m[0-5][0-9]s$")
 (sp/def :match/start-time-type #(re-matches start-time-regex %))
 (sp/def :match/player1 string?)
 (sp/def :match/character1 string?)
