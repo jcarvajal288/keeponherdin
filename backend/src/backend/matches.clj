@@ -11,6 +11,7 @@
 (hugsql/def-db-fns "sql/matches.sql"
                        {:adapter (next-adapter/hugsql-adapter-next-jdbc
                                    {:builder-fn next.jdbc.result-set/as-unqualified-maps})})
+(hugsql/def-sqlvec-fns "sql/matches.sql")
 
 (def start-time-regex #"^(\d+:)?[0-5][0-9]:[0-5][0-9]$")
 (sp/def :match/start-time-type #(re-matches start-time-regex %))
@@ -48,8 +49,7 @@
 
 (defn insert-matches! [matches]
   (let [conn (jdbc/get-datasource db/db-spec)]
-    ;(jdbc/execute! conn (db-insert-matches! matches))))
-    (db-insert-matches! conn matches)))
+    (jdbc/execute! conn (db-insert-matches!-sqlvec matches))))
 
 (defn handle-insert-matches [result]
   (let [ids (map :matches/id result)]
@@ -65,6 +65,5 @@
 
 (defn select-all-matches []
   (let [conn (jdbc/get-datasource db/db-spec)]
-    (log/debug (str "conn: " conn))
     (db-select-all-matches conn)))
 

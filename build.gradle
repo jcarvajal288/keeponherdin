@@ -60,7 +60,7 @@ task deployFrontend {
     }
 }
 
-task deployAll(type:Exec) {
+task deployAll {
     dependsOn tasks.deployBackend
     dependsOn tasks.deployFrontend
 }

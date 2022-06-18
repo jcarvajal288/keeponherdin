@@ -28,7 +28,7 @@
     (catch Exception ex
       (content-type (internal-server-error (.getMessage ex)) "application/json"))))
 
-(PUT "/api/matches/:id" [] "TODO: update a match")
+  (PUT "/api/matches/:id" [] "TODO: update a match")
 
   (DELETE "/api/matches/:id" [] "TODO: delete a match")
 

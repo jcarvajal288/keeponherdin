@@ -1,4 +1,4 @@
-(ns backend.matches-test
+(ns backend.matches
   (:require [clojure.test :refer :all]
             [backend.handler :refer :all]
             [backend.matches :refer :all]
@@ -117,3 +117,21 @@
         (is (= response {:status 200
                          :body (ch/generate-string data/two-matches)
                          :headers {"Content-Type" "application/json"}}))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; DATABASE TESTS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(deftest insert-and-retrieve
+  (testing "insert and retrieve a single match"
+    (let [response (app (-> (mock/request :post "/api/matches")
+                            (mock/json-body data/single-match)))
+          post-result-ids (-> response (:body) (ch/parse-string true) (:ids))
+          get-response (app (-> (mock/request :get "/api/matches")))
+          all-matches (-> get-response (:body) (ch/parse-string true))
+          result-match (first (filter #(= (first post-result-ids) (:id %)) all-matches))
+          ]
+      (is (= (:status response) 201))
+      (is (= (count post-result-ids) 1))
+      (is (number? (first post-result-ids)))
+      (is (= (dissoc result-match :id) data/single-match)))))
