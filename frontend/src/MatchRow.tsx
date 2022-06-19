@@ -58,6 +58,7 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                     width='100%'
                     maxWidth='50%'
                     flexDirection='row-reverse'
+                    bgcolor='green'
                 >
                     <CharacterIcon character={match.character1} />
                     <Typography
@@ -77,8 +78,10 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                 </Stack>
                 <Stack
                     direction='row'
+                    width='100%'
                     maxWidth='40%'
                     alignItems='center'
+                    bgcolor='red'
                 >
                     <CharacterIcon character={match.character2} />
                     <Typography
@@ -92,8 +95,16 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                             titleAccess='Player 2 Wins'
                             sx={{color: 'orange'}}
                         />}
+                    <Stack
+                        direction='row'
+                        width='20%'
+                        alignItems='center'
+                        justifyContent='end'
+                        bgcolor='white'
+                    >
+                        <OndemandVideoIcon titleAccess='Go To VOD'/>
+                    </Stack>
                 </Stack>
-                {/*<OndemandVideoIcon titleAccess='Go To VOD'/>*/}
             </Stack>
         </>
         // <>
