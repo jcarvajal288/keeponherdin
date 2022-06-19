@@ -52,56 +52,94 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
             <Stack
                 direction='row'
                 data-testid='match-row'
-                padding='5px'
-                alignItems='center'
-                component={Paper}
-                bgcolor='#E4E4E4'
             >
                 <Stack
-                    direction='row'
                     width='100%'
-                    alignItems='center'
-                    justifyContent='end'
-                    maxWidth='35%'
+                    maxWidth='50%'
+                    bgcolor='red'
+                    flexDirection='row-reverse'
                 >
-                     {match.did_p1_win
-                         ? <EmojiEventsIcon
-                             titleAccess='Player 1 Wins'
-                             sx={{color: 'orange'}}
-                         />
-                         : <Box/>}
-                    <Typography noWrap>{match.player1}</Typography>
-                    <CharacterIcon character={match.character1} />
+                    <Typography
+                        noWrap
+                    >
+                        {match.player1}
+                    </Typography>
                 </Stack>
-                <Stack direction='column' justifyContent='center'>
+                <Stack>
                     <Typography>vs</Typography>
                 </Stack>
                 <Stack
-                    direction='row'
-                    width='100%'
-                    alignItems='center'
-                    justifyContent='space-between'
+                    maxWidth='40%'
                 >
-                    <Stack
-                        alignItems='center'
-                        direction='row'
-                        position='absolute'
-                        maxWidth='35%'
+                    <Typography
+                        noWrap
                     >
-                        <CharacterIcon character={match.character2} />
-                        <Typography
-                            noWrap
-                        >{match.player2}</Typography>
-                        {match.did_p1_win
-                            ? <Box/>
-                            : <EmojiEventsIcon
-                                titleAccess='Player 2 Wins'
-                                sx={{color: 'orange'}}
-                            />}
-                    </Stack>
+                        {match.player2}
+                    </Typography>
                 </Stack>
-                <OndemandVideoIcon titleAccess='Go To VOD'/>
             </Stack>
         </>
+        // <>
+        //     <Stack
+        //         direction='row'
+        //         data-testid='match-row'
+        //         padding='5px'
+        //         alignItems='center'
+        //         component={Paper}
+        //         bgcolor='#E4E4E4'
+        //     >
+        //         <Stack
+        //             direction='row'
+        //             width='100%'
+        //             alignItems='center'
+        //             justifyContent='flex-end'
+        //         >
+        //             <Stack
+        //                 direction='row'
+        //                 maxWidth='80%'
+        //             >
+        //                 {match.did_p1_win
+        //                     ? <EmojiEventsIcon
+        //                         titleAccess='Player 1 Wins'
+        //                         sx={{color: 'orange'}}
+        //                     />
+        //                     : <Box/>}
+        //                 <Typography noWrap>{match.player1}</Typography>
+        //                 <CharacterIcon character={match.character1} />
+        //             </Stack>
+        //         </Stack>
+        //         <Stack
+        //             direction='column'
+        //             display='flex'
+        //         >
+        //             <Typography>vs</Typography>
+        //         </Stack>
+        //         <Stack
+        //             direction='row'
+        //             width='100%'
+        //             alignItems='center'
+        //             justifyContent='space-between'
+        //         >
+        //             <Stack
+        //                 alignItems='center'
+        //                 direction='row'
+        //                 position='absolute'
+        //                 maxWidth='40%'
+        //             >
+        //                 <CharacterIcon character={match.character2} />
+        //                 <Typography
+        //                     noWrap
+        //                 >{match.player2}</Typography>
+        //                 {match.did_p1_win
+        //                     ? <Box/>
+        //                     : <EmojiEventsIcon
+        //                         titleAccess='Player 2 Wins'
+        //                         sx={{color: 'orange'}}
+        //                     />}
+        //             </Stack>
+        //         </Stack>
+        //         <OndemandVideoIcon titleAccess='Go To VOD'/>
+        //     </Stack>
+        // </>
     )
 }
