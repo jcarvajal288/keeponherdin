@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {render, screen} from '@testing-library/react';
-import {Tournament, TournamentTable} from "../src/TournamentTable";
+import {Tournament, TournamentTable} from "../../src/tournaments/TournamentTable";
 
 const tournament: Tournament = {
     title: "Rodeo Regional #100",

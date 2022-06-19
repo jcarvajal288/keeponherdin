@@ -1,11 +1,8 @@
-import {ReactElement, useEffect, useState} from 'react'
-import { MatchList } from './MatchList'
+import {ReactElement} from 'react'
 import './App.css'
 import {useApi} from "./Api";
 import {HeaderBar} from "./HeaderBar";
-import {TournamentList} from "./TournamentList";
-
-// import matches from "../test/resources/sampleMatches.json";
+import {TournamentList} from "./tournaments/TournamentList";
 
 const App = (): ReactElement => {
     const { getMatches, getTournaments} = useApi();
@@ -13,7 +10,6 @@ const App = (): ReactElement => {
     return (
         <>
             <HeaderBar/>
-            {/*<MatchList getMatches={getMatches}/>*/}
             <TournamentList getTournaments={getTournaments}/>
         </>
     )

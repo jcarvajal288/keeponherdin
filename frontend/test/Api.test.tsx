@@ -1,6 +1,6 @@
 import {afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { setupServer } from 'msw/node';
-import {Match} from "../src/MatchRow";
+import {Match} from "../src/tournaments/MatchRow";
 import {rest} from "msw";
 import {renderHook} from "@testing-library/react";
 import {useApi} from "../src/Api";

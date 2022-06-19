@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import {MatchList, MatchListProps} from "../src/MatchList";
+import {MatchList, MatchListProps} from "../../src/tournaments/MatchList";
 import {render, screen} from '@testing-library/react';
-import {Match} from "../src/MatchRow";
+import {Match} from "../../src/tournaments/MatchRow";
 
 
 /**

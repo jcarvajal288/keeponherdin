@@ -1,7 +1,7 @@
-import {Match} from "./MatchRow";
+import {Match} from "./tournaments/MatchRow";
 import {useCallback} from "react";
 import axios, {AxiosResponse} from "axios";
-import {Tournament} from "./TournamentTable";
+import {Tournament} from "./tournaments/TournamentTable";
 
 type Api = {
     getMatches: () => Promise<Match[]>;

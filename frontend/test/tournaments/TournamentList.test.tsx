@@ -1,7 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {render, screen} from '@testing-library/react';
-import {Tournament} from "../src/TournamentTable";
-import {TournamentList, TournamentListProps} from "../src/TournamentList";
+import {Tournament} from "../../src/tournaments/TournamentTable";
+import {TournamentList, TournamentListProps} from "../../src/tournaments/TournamentList";
 
 /**
  * @vitest-environment jsdom
