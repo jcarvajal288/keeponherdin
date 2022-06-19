@@ -3,16 +3,10 @@ import {Match, MatchRow} from "./MatchRow";
 import {Box, Divider, Stack} from "@mui/material";
 
 export type MatchListProps = {
-    getMatches: () => Promise<Match[]>;
+    matches: Match[];
 }
 
-export const MatchList = ({getMatches}: MatchListProps): ReactElement => {
-
-    const [matches, setMatches] = useState<Match[]>([]);
-
-    useEffect(() => {
-        getMatches().then(setMatches)
-    }, [getMatches])
+export const MatchList = ({matches}: MatchListProps): ReactElement => {
 
     return (
         <Box

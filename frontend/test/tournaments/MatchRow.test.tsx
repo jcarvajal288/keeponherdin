@@ -9,7 +9,8 @@ const testMatches: Match[] = [
         player2: "Oscar",
         character2: "Pom",
         did_p1_win: true,
-        start_time: "00h45m32s"
+        start_time: "00h45m32s",
+        tournamentId: 1
     },
     {
         player1: "Barlowe",
@@ -17,7 +18,8 @@ const testMatches: Match[] = [
         player2: "Amaron",
         character2: "Oleander",
         did_p1_win: false,
-        start_time: "00h45m32s"
+        start_time: "00h45m32s",
+        tournamentId: 1
     },
 ]
 

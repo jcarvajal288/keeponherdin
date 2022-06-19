@@ -8,14 +8,15 @@ import {Match} from "../../src/tournaments/MatchRow";
  * @vitest-environment jsdom
  */
 
-const matches: Match[] = [
+export const matches: Match[] = [
     {
         player1: "Vixy",
         character1: "Velvet",
         player2: "Oscar",
         character2: "Pom",
         did_p1_win: false,
-        start_time: "00:30:12"
+        start_time: "00:30:12",
+        tournamentId: 1
     },
     {
         player1: "Barlowe",
@@ -23,7 +24,8 @@ const matches: Match[] = [
         player2: "Amaron",
         character2: "Oleander",
         did_p1_win: true,
-        start_time: "00:45:32"
+        start_time: "00:45:32",
+        tournamentId: 1
     },
     {
         player1: "Fresh",
@@ -31,24 +33,22 @@ const matches: Match[] = [
         player2: "DigitalDog",
         character2: "Shanty",
         did_p1_win: true,
-        start_time: "01:05:32"
+        start_time: "01:05:32",
+        tournamentId: 1
     },
 ]
 
 
 describe('MatchList', () => {
 
-    const renderMatchList = (props: Partial<MatchListProps> = {}) => {
+    const renderMatchList = (matches: Match[]) => {
         return render(
-            <MatchList
-                getMatches={() => Promise.resolve([])}
-                {...props}
-            />
+            <MatchList matches={matches} />
         );
     };
 
     it('displays several matches', async () => {
-        renderMatchList({ getMatches: () => Promise.resolve(matches) });
+        renderMatchList(matches);
         expect(await screen.findAllByTestId('match-row')).toHaveLength(matches.length);
         expect(screen.getByText("Vixy")).toBeDefined();
         expect(screen.getByText("Barlowe")).toBeDefined();

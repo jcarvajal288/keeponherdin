@@ -1,569 +1,182 @@
 [
   {
-    "id": 1,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
+    "id": 82,
+    "player1": "Arcanel",
+    "character1": "Paprika",
+    "player2": "Rotorix",
+    "character2": "Paprika",
     "did_p1_win": true,
-    "start_time": "01:03:46"
+    "start_time": "0h47m05s",
+    "tournamentId": 1
   },
   {
-    "id": 2,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
+    "id": 83,
+    "player1": "Poco",
+    "character1": "Shanty",
+    "player2": "Vixy",
+    "character2": "Paprika",
     "did_p1_win": true,
-    "start_time": "01:03:46"
+    "start_time": "2h17m20s",
+    "tournamentId": 1
   },
   {
-    "id": 3,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 4,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 5,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 6,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 7,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 8,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 9,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 10,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 11,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 12,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 13,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 14,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 15,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 16,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 17,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 18,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 19,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 20,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 21,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 22,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 23,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 24,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 25,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 26,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 27,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 28,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 29,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 30,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 31,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 32,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 33,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 34,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 35,
+    "id": 84,
     "player1": "Vixy",
-    "character1": "Velvet",
-    "player2": "Oscar",
-    "character2": "Pom",
-    "did_p1_win": true,
-    "start_time": "00:45:32"
-  },
-  {
-    "id": 36,
-    "player1": "Vixy",
-    "character1": "Velvet",
-    "player2": "Oscar",
-    "character2": "Pom",
-    "did_p1_win": true,
-    "start_time": "00:45:32"
-  },
-  {
-    "id": 37,
-    "player1": "Vixy",
-    "character1": "Velvet",
-    "player2": "Oscar",
-    "character2": "Pom",
-    "did_p1_win": true,
-    "start_time": "00:45:32"
-  },
-  {
-    "id": 38,
-    "player1": "Vixy",
-    "character1": "Velvet",
-    "player2": "Oscar",
-    "character2": "Pom",
-    "did_p1_win": true,
-    "start_time": "00:45:32"
-  },
-  {
-    "id": 39,
-    "player1": "Vixy",
-    "character1": "Velvet",
-    "player2": "Oscar",
-    "character2": "Pom",
-    "did_p1_win": true,
-    "start_time": "00:45:32"
-  },
-  {
-    "id": 40,
-    "player1": "Bob",
     "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
+    "player2": "Sven",
+    "character2": "Oleander",
     "did_p1_win": true,
-    "start_time": "01:03:46"
+    "start_time": "2h08m33s",
+    "tournamentId": 1
   },
   {
-    "id": 41,
-    "player1": "Bob",
+    "id": 85,
+    "player1": "Zale",
     "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
+    "player2": "Vixy",
+    "character2": "Oleander",
+    "did_p1_win": false,
+    "start_time": "3h43m23s",
+    "tournamentId": 1
   },
   {
-    "id": 42,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 43,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 44,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 45,
-    "player1": "Vixy",
-    "character1": "Velvet",
-    "player2": "Oscar",
+    "id": 86,
+    "player1": "Solarnia",
+    "character1": "Oleander",
+    "player2": "Vixy",
     "character2": "Pom",
     "did_p1_win": false,
-    "start_time": "00:45:32"
+    "start_time": "0h15m46s",
+    "tournamentId": 1
   },
   {
-    "id": 46,
-    "player1": "Grunkle",
+    "id": 87,
+    "player1": "Digital_Dog",
+    "character1": "Arizona",
+    "player2": "FiveByFive",
+    "character2": "Oleander",
+    "did_p1_win": true,
+    "start_time": "2h32m21s",
+    "tournamentId": 1
+  },
+  {
+    "id": 88,
+    "player1": "Digital_Dog",
+    "character1": "Shanty",
+    "player2": "FiveByFive",
+    "character2": "Pom",
+    "did_p1_win": false,
+    "start_time": "1h10m46s",
+    "tournamentId": 1
+  },
+  {
+    "id": 89,
+    "player1": "FiveByFive",
+    "character1": "Pom",
+    "player2": "Vixy",
+    "character2": "Paprika",
+    "did_p1_win": true,
+    "start_time": "4h37m33s",
+    "tournamentId": 2
+  },
+  {
+    "id": 90,
+    "player1": "Digital_Dog",
+    "character1": "Velvet",
+    "player2": "Uri",
+    "character2": "Tianhuo",
+    "did_p1_win": false,
+    "start_time": "1h34m38s",
+    "tournamentId": 2
+  },
+  {
+    "id": 91,
+    "player1": "FiveByFive",
     "character1": "Tianhuo",
+    "player2": "Sven",
+    "character2": "Velvet",
+    "did_p1_win": true,
+    "start_time": "3h06m20s",
+    "tournamentId": 2
+  },
+  {
+    "id": 92,
+    "player1": "Bubbleboots",
+    "character1": "Arizona",
+    "player2": "MrAsiago",
+    "character2": "Tianhuo",
+    "did_p1_win": false,
+    "start_time": "0h42m43s",
+    "tournamentId": 2
+  },
+  {
+    "id": 93,
+    "player1": "Poco",
+    "character1": "Paprika",
+    "player2": "Derpinator",
+    "character2": "Velvet",
+    "did_p1_win": true,
+    "start_time": "0h13m03s",
+    "tournamentId": 2
+  },
+  {
+    "id": 94,
+    "player1": "Bubbleboots",
+    "character1": "Paprika",
+    "player2": "Mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+    "character2": "Tianhuo",
+    "did_p1_win": true,
+    "start_time": "3h43m15s",
+    "tournamentId": 2
+  },
+  {
+    "id": 95,
+    "player1": "Dem",
+    "character1": "Oleander",
+    "player2": "Digital_Dog",
+    "character2": "Pom",
+    "did_p1_win": true,
+    "start_time": "4h30m31s",
+    "tournamentId": 2
+  },
+  {
+    "id": 96,
+    "player1": "Rotorix",
+    "character1": "Velvet",
+    "player2": "Bubbleboots",
+    "character2": "Tianhuo",
+    "did_p1_win": false,
+    "start_time": "2h21m11s",
+    "tournamentId": 2
+  },
+  {
+    "id": 97,
+    "player1": "Dem",
+    "character1": "Velvet",
+    "player2": "MrAsiago",
+    "character2": "Tianhuo",
+    "did_p1_win": false,
+    "start_time": "4h22m43s",
+    "tournamentId": 2
+  },
+  {
+    "id": 98,
+    "player1": "Solarnia",
+    "character1": "Oleander",
     "player2": "Javamorris",
-    "character2": "arizona",
-    "did_p1_win": true,
-    "start_time": "01:23:35"
-  },
-  {
-    "id": 47,
-    "player1": "Vixy",
-    "character1": "Velvet",
-    "player2": "Oscar",
-    "character2": "Pom",
-    "did_p1_win": false,
-    "start_time": "00:45:32"
-  },
-  {
-    "id": 48,
-    "player1": "Grunkle",
-    "character1": "Tianhuo",
-    "player2": "Javamorris",
-    "character2": "arizona",
-    "did_p1_win": true,
-    "start_time": "01:23:35"
-  },
-  {
-    "id": 49,
-    "player1": "Vixy",
-    "character1": "Velvet",
-    "player2": "Oscar",
-    "character2": "Pom",
-    "did_p1_win": false,
-    "start_time": "00:45:32"
-  },
-  {
-    "id": 50,
-    "player1": "Vixy",
-    "character1": "Velvet",
-    "player2": "Oscar",
-    "character2": "Pom",
-    "did_p1_win": false,
-    "start_time": "00:45:32"
-  },
-  {
-    "id": 51,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 52,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 53,
-    "player1": "Joe",
-    "character1": "Shanty",
-    "player2": "Will",
     "character2": "Paprika",
-    "did_p1_win": false,
-    "start_time": "43:46"
+    "did_p1_win": true,
+    "start_time": "1h41m16s",
+    "tournamentId": 2
   },
   {
-    "id": 54,
-    "player1": "Bob",
+    "id": 99,
+    "player1": "Mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
     "character1": "Tianhuo",
     "player2": "Sam",
     "character2": "Arizona",
     "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 55,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 56,
-    "player1": "Joe",
-    "character1": "Shanty",
-    "player2": "Will",
-    "character2": "Paprika",
-    "did_p1_win": false,
-    "start_time": "43:46"
-  },
-  {
-    "id": 57,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 58,
-    "player1": "Joe",
-    "character1": "Shanty",
-    "player2": "Will",
-    "character2": "Paprika",
-    "did_p1_win": false,
-    "start_time": "43:46"
-  },
-  {
-    "id": 59,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 60,
-    "player1": "Joe",
-    "character1": "Shanty",
-    "player2": "Will",
-    "character2": "Paprika",
-    "did_p1_win": false,
-    "start_time": "43:46"
-  },
-  {
-    "id": 61,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 62,
-    "player1": "Bob",
-    "character1": "Tianhuo",
-    "player2": "Sam",
-    "character2": "Arizona",
-    "did_p1_win": true,
-    "start_time": "01:03:46"
-  },
-  {
-    "id": 63,
-    "player1": "Joe",
-    "character1": "Shanty",
-    "player2": "Will",
-    "character2": "Paprika",
-    "did_p1_win": false,
-    "start_time": "43:46"
+    "start_time": "01h03m46s",
+    "tournamentId": 2
   }
 ]
