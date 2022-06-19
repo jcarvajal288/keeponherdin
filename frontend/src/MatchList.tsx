@@ -8,7 +8,7 @@ export type MatchListProps = {
 
 export const MatchList = ({getMatches}: MatchListProps): ReactElement => {
 
-    const [matches, setMatches] = useState<Match[]>([])
+    const [matches, setMatches] = useState<Match[]>([]);
 
     useEffect(() => {
         getMatches().then(setMatches)
