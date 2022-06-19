@@ -54,29 +54,46 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                 data-testid='match-row'
             >
                 <Stack
+                    alignItems='center'
                     width='100%'
                     maxWidth='50%'
-                    bgcolor='red'
                     flexDirection='row-reverse'
                 >
+                    <CharacterIcon character={match.character1} />
                     <Typography
                         noWrap
                     >
                         {match.player1}
                     </Typography>
+                    {match.did_p1_win
+                        ? <EmojiEventsIcon
+                            titleAccess='Player 1 Wins'
+                            sx={{color: 'orange'}}
+                        />
+                        : <Box/>}
                 </Stack>
-                <Stack>
+                <Stack direction='row' alignItems='center'>
                     <Typography>vs</Typography>
                 </Stack>
                 <Stack
+                    direction='row'
                     maxWidth='40%'
+                    alignItems='center'
                 >
+                    <CharacterIcon character={match.character2} />
                     <Typography
                         noWrap
                     >
                         {match.player2}
                     </Typography>
+                    {match.did_p1_win
+                        ? <Box/>
+                        : <EmojiEventsIcon
+                            titleAccess='Player 2 Wins'
+                            sx={{color: 'orange'}}
+                        />}
                 </Stack>
+                {/*<OndemandVideoIcon titleAccess='Go To VOD'/>*/}
             </Stack>
         </>
         // <>
