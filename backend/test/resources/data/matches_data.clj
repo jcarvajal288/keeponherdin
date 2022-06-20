@@ -1,4 +1,5 @@
-(ns resources.data.matches-data)
+(ns resources.data.matches-data
+  (:require [backend.util :refer :all]))
 
 (def single-match {:player1  "Vixy"
                    :character1 "Velvet"
@@ -68,6 +69,15 @@
   ([num-matches num_tournaments]
     (for [_ (range num-matches)] (random-match num_tournaments))))
 
+(def tournament-names ["Mad Cow Melee"
+                       "The Fauna"
+                       "Glue Cup"
+                       "Rodeo Regional"
+                       "Mexican Mash Series"
+                       "Iron Cattle Tournament"
+                       "Grand Stampede"
+                       "Crayon Cup"])
+
 (def single-tournament {:title "Rodeo Regional #40"
                         :date "2022-05-23"
                         :gameVersion "3.0"
@@ -75,3 +85,15 @@
                         })
 
 (def malformed-tournament (dissoc single-tournament :gameVersion))
+
+(defn random-tournament []
+  (let [year (+ 2017 (rand-int 6))
+        month (+ 1 (rand-int 12))
+        day (cond
+              (= month 2) (+ 1 (rand-int 28))
+              (in? month [1 3 5 7 8 10 12]) (+ 1 (rand-int 31))
+              :else (+ 1 (rand-int 30)))]
+    {:title (rand-nth tournament-names)
+     :date (format "%d-%02d-%02d", year, month, day)
+     :gameVersion (rand-nth ["2.11" "2.14" "3.0"])
+     :tournamentOrganizer (rand-nth player-names)}))

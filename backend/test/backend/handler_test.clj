@@ -6,9 +6,6 @@
             [cheshire.core :as ch]
             [taoensso.timbre :as log]))
 
-(defn in? [item coll]
-  (some #(= item %) coll))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; DATABASE TESTS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
