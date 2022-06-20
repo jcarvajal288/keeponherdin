@@ -7,7 +7,8 @@
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.json :as json]
-            [ring.util.http-response :refer :all]))
+            [ring.util.http-response :refer :all]
+            [taoensso.timbre :as log]))
 
 (defroutes app-routes
 
@@ -26,6 +27,7 @@
     (catch IllegalArgumentException ex
       (content-type (bad-request (.getMessage ex)) "application/json"))
     (catch Exception ex
+      (log/info ex)
       (content-type (internal-server-error (.getMessage ex)) "application/json"))))
 
   (PUT "/api/matches/:id" [] "TODO: update a match")

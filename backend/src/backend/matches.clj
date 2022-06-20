@@ -21,12 +21,14 @@
 (sp/def :match/character2 string?)
 (sp/def :match/did_p1_win boolean?)
 (sp/def :match/start_time :match/start-time-type)
+(sp/def :match/tournament_id number?)
 (sp/def :match/match (sp/keys :req-un [:match/player1
                                        :match/character1
                                        :match/player2
                                        :match/character2
                                        :match/did_p1_win
-                                       :match/start_time]))
+                                       :match/start_time
+                                       :match/tournament_id]))
 
 (defn match-valid? [match]
   (sp/valid? :match/match match))

@@ -1,14 +1,14 @@
 -- :name db-insert-match! :! :<!
 -- :doc inserts a new match record
 INSERT INTO matches
-(player1, character1, player2, character2, did_p1_win, start_time)
-VALUES (:player1, :character1, :player2, :character2, :did_p1_win, :start_time)
+(player1, character1, player2, character2, did_p1_win, start_time, tournament_id)
+VALUES (:player1, :character1, :player2, :character2, :did_p1_win, :start_time, :tournament_id)
 RETURNING id;
 
 -- :name db-insert-matches! :! :n
 -- :doc inserts a tuple of new matches
 INSERT INTO matches
-(player1, character1, player2, character2, did_p1_win, start_time)
+(player1, character1, player2, character2, did_p1_win, start_time, tournament_id)
 VALUES :tuple*:matches
 RETURNING id;
 

@@ -29,11 +29,11 @@
            {:matches ['()]}))
     (is (= (labelled-vector-transform [data/single-match])
            {:matches
-            ['("Vixy" "Velvet" "Oscar" "Pom" false "00h45m32s")]}))
+            ['("Vixy" "Velvet" "Oscar" "Pom" false "00h45m32s" 1)]}))
     (is (= (labelled-vector-transform data/two-matches)
            {:matches
-            ['("Vixy" "Velvet" "Oscar" "Pom" false "00h45m32s")
-             '("Grunkle" "Tianhuo" "Javamorris" "Arizona" true "01h23m35s")]}))))
+            ['("Vixy" "Velvet" "Oscar" "Pom" false "00h45m32s" 1)
+             '("Grunkle" "Tianhuo" "Javamorris" "Arizona" true "01h23m35s" 1)]}))))
 
 (deftest test-validate-insert-matches-body
   (testing " test validating the request before passing it to the rest of the request handler"
@@ -59,7 +59,8 @@
 
 (deftest test-random-matches
   (testing "testing data/random-matches"
-    (is (= (count (data/random-matches 3)) 3))))
+    (is (= (count (data/random-matches 3)) 3))
+    (is (every? #(= (:tournament_id %) 1) (data/random-matches 3 1)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; CONTRACT TESTS
