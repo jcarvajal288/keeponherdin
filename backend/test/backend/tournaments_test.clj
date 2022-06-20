@@ -41,6 +41,9 @@
                              :body "Tournament body is empty or malformed."
                              :headers {"Content-Type" "application/json"}})))))
 
-;(deftest fetch-single-tournament
-;  (testing "fetch a single tournament"
-;    ))
+(deftest fetch-single-tournament
+  (testing "fetch a single tournament"
+    (let [response (app (-> (mock/request :get "/api/tournaments/1")))]
+      (is (= response {:status 200
+                       :body (ch/generate-string data/single-tournament)
+                       :headers {"Content-Type" "application/json"}})))))

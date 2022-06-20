@@ -37,6 +37,14 @@
   (DELETE "/api/matches/:id" [] "TODO: delete a match")
 
 ;;; Tournament routes ;;;
+  (GET "/api/tournaments/:id" []
+    {:status 200
+     :body (ch/generate-string {:title "Rodeo Regional #40"
+                                :date "2022-05-23"
+                                :gameVersion "3.0"
+                                :tournamentOrganizer "Javamorris"})
+     :headers {"Content-Type" "application/json"}})
+
   (POST "/api/tournaments" request
     (if (backend.tournaments/tournament-valid? (:body request))
         ({:status 201
@@ -45,7 +53,7 @@
                     "Location" "http://localhost/api/tournaments/1"}})
         (content-type (bad-request "Tournament body is empty or malformed.") "application/json")))
 
-(route/not-found "Not Found"))
+  (route/not-found "Not Found"))
 
 (def app
   (-> app-routes
