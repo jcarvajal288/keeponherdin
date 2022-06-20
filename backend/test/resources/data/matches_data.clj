@@ -73,3 +73,5 @@
                         :gameVersion "3.0"
                         :tournamentOrganizer "Javamorris"
                         })
+
+(def malformed-tournament (dissoc single-tournament :gameVersion))

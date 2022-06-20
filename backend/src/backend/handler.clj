@@ -2,16 +2,19 @@
   (:require [backend.matches :refer :all]
             [compojure.core :refer :all]
             [compojure.route :as route]
+            [cheshire.core :as ch]
             [environ.core :refer [env]]
             [ring.adapter.jetty :refer :all]
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.json :as json]
             [ring.util.http-response :refer :all]
-            [taoensso.timbre :as log]))
+            [taoensso.timbre :as log]
+            [cheshire.core :as ch]))
 
 (defroutes app-routes
 
+;;; Match routes ;;;
   (GET "/api/matches" []
     (content-type (ok (select-all-matches)) "application/json"))
 
@@ -33,7 +36,16 @@
 
   (DELETE "/api/matches/:id" [] "TODO: delete a match")
 
-  (route/not-found "Not Found"))
+;;; Tournament routes ;;;
+  (POST "/api/tournaments" request
+    (if (backend.tournaments/tournament-valid? (:body request))
+        ({:status 201
+          :body   (ch/generate-string {:id 1})
+          :headers {"Content-Type" "application/json"
+                    "Location" "http://localhost/api/tournaments/1"}})
+        (content-type (bad-request "Tournament body is empty or malformed.") "application/json")))
+
+(route/not-found "Not Found"))
 
 (def app
   (-> app-routes
