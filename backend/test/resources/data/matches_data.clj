@@ -67,3 +67,9 @@
   ([num-matches] (random-matches num-matches 1))
   ([num-matches num_tournaments]
     (for [_ (range num-matches)] (random-match num_tournaments))))
+
+(def single-tournament {:title "Rodeo Regional #40"
+                        :date "2022-05-23"
+                        :gameVersion "3.0"
+                        :tournamentOrganizer "Javamorris"
+                        })

@@ -27,7 +27,6 @@
     (catch IllegalArgumentException ex
       (content-type (bad-request (.getMessage ex)) "application/json"))
     (catch Exception ex
-      (log/info ex)
       (content-type (internal-server-error (.getMessage ex)) "application/json"))))
 
   (PUT "/api/matches/:id" [] "TODO: update a match")
