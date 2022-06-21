@@ -1,5 +1,6 @@
 (ns backend.tournaments
   (:require [clojure.spec.alpha :as sp]
+            [clojure.string :as str]
             [hugsql.core :as hugsql]
             [hugsql.adapter.next-jdbc :as next-adapter]
             [next.jdbc :as jdbc]
@@ -29,19 +30,21 @@
 
 (defn insert-tournament! [tournament]
   (let [conn (jdbc/get-datasource db/db-spec)]
-    (log/info tournament)
     (jdbc/execute! conn (db-insert-tournament!-sqlvec tournament))))
 
 (defn validate-body [body]
   (if (tournament-valid? body)
     body
-    (throw (IllegalArgumentException. "Tournament body is empty or malformed"))))
+    (throw (IllegalArgumentException. "Tournament body is empty or malformed."))))
 
-(defn handle-result [result]
+(defn handle-insert-result [result]
   (let [id (:tournaments/id (first result))]
-    (log/info id)
     (content-type
       (created
         (str "tournaments/" id)
         (ch/generate-string {:id id}))
       "application/json")))
+
+(defn select-all-tournaments []
+  (let [conn (jdbc/get-datasource db/db-spec)]
+    (db-select-all-tournaments conn)))

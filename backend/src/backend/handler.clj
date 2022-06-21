@@ -38,13 +38,10 @@
   (DELETE "/api/matches/:id" [] "TODO: delete a match")
 
 ;;; Tournament routes ;;;
-  (GET "/api/tournaments/:id" []
-    {:status 200
-     :body (ch/generate-string {:title "Rodeo Regional #40"
-                                :date "2022-05-23"
-                                :gameVersion "3.0"
-                                :tournamentOrganizer "Javamorris"})
-     :headers {"Content-Type" "application/json"}})
+  (GET "/api/tournaments" []
+    (let [result-set (tn/select-all-tournaments)]
+      (as-> result-set rs
+            (content-type (ok rs) "application/json"))))
 
   (POST "/api/tournaments" request
     (let [body (:body request)]
@@ -52,7 +49,7 @@
          (-> body
              (tn/validate-body)
              (tn/insert-tournament!)
-             (tn/handle-result))
+             (tn/handle-insert-result))
          (catch IllegalArgumentException ex
            (content-type (bad-request (.getMessage ex)) "application/json"))
          (catch Exception ex

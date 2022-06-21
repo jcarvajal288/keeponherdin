@@ -1,6 +1,7 @@
 (ns backend.tournaments-test
   (:require [backend.tournaments :refer :all]
             [backend.handler :refer :all]
+            [backend.util :as util]
             [cheshire.core :as ch]
             [clojure.spec.alpha :as sp]
             [clojure.test :refer :all]
@@ -20,15 +21,6 @@
 ; CONTRACT TESTS
 ;;;;;;;;;;;;;;;;;;;;;;;
 
-(deftest create-single-tournament
-  (testing "create a single tournament with no matches"
-    (let [response (app (-> (mock/request :post "/api/tournaments")
-                            (mock/json-body data/single-tournament)))]
-      (is (= response {:status 201
-                       :body (ch/generate-string {:id 1})
-                       :headers {"Content-Type" "application/json"
-                                 "Location" "http://localhost/api/tournaments/1"}})))))
-
 (deftest reject-malformed-tournaments
   (testing "reject tournaments that don't fit the spec"
     (let [response (app (-> (mock/request :post "/api/tournaments")
@@ -42,13 +34,6 @@
                              :body "Tournament body is empty or malformed."
                              :headers {"Content-Type" "application/json"}})))))
 
-(deftest fetch-single-tournament
-  (testing "fetch a single tournament"
-    (let [response (app (-> (mock/request :get "/api/tournaments/1")))]
-      (is (= response {:status 200
-                       :body (ch/generate-string data/single-tournament)
-                       :headers {"Content-Type" "application/json"}})))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; INTEGRATION TESTS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -58,7 +43,16 @@
     (let [expected-tournament (data/random-tournament)
           post-response (app (-> (mock/request :post "/api/tournaments")
                                  (mock/json-body expected-tournament)))
-          post-result-id (-> post-response (:body) (ch/parse-string true) (:id))]
-      (log/info post-response)
+          post-result-id (-> post-response (:body) (ch/parse-string true) (:id))
+          get-response (app (-> (mock/request :get (format "/api/tournaments"))))
+          all-tournaments (-> get-response (:body) (ch/parse-string true))
+          returned-tournament (first (filter #(= post-result-id (:id %)) all-tournaments))]
       (is (= (:status post-response) 201))
-      (is (number? post-result-id)))))
+      (is (number? post-result-id))
+      (is (= (:headers post-response) {"Content-Type" "application/json"
+                                       "Location" (format "http://localhost/api/tournaments/%d" post-result-id)}))
+      (is (= (:status get-response) 200))
+      (is (= (:title returned-tournament) (:title expected-tournament)))
+      (is (= (util/strip-date (:date returned-tournament)) (:date expected-tournament)))
+      (is (= (:game_version returned-tournament) (:game_version expected-tournament)))
+      (is (= (:tournament_organizer returned-tournament) (:tournament_organizer expected-tournament))))))

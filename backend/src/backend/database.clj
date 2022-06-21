@@ -23,17 +23,17 @@
    :subname subname
    :host hostname})
 
-(defn log-sqlvec [sqlvec]
-  (log/info (->> sqlvec
-                 (map #(clojure.string/replace (or % "") #"\n" ""))
-                 (clojure.string/join " ; "))))
-
-(defn log-command-fn [this db sqlvec options]
-  (log-sqlvec sqlvec)
-  (condp contains? (:command options)
-    #{:!} (hugsql.adapter/execute this db sqlvec options)
-    #{:? :<!} (hugsql.adapter/query this db sqlvec options)))
-
-(defmethod hugsql.core/hugsql-command-fn :! [sym] `log-command-fn)
-(defmethod hugsql.core/hugsql-command-fn :<! [sym] `log-command-fn)
-(defmethod hugsql.core/hugsql-command-fn :? [sym] `log-command-fn)
+;(defn log-sqlvec [sqlvec]
+;  (log/info (->> sqlvec
+;                 (map #(clojure.string/replace (or % "") #"\n" ""))
+;                 (clojure.string/join " ; "))))
+;
+;(defn log-command-fn [this db sqlvec options]
+;  (log-sqlvec sqlvec)
+;  (condp contains? (:command options)
+;    #{:!} (hugsql.adapter/execute this db sqlvec options)
+;    #{:? :<!} (hugsql.adapter/query this db sqlvec options)))
+;
+;(defmethod hugsql.core/hugsql-command-fn :! [sym] `log-command-fn)
+;(defmethod hugsql.core/hugsql-command-fn :<! [sym] `log-command-fn)
+;(defmethod hugsql.core/hugsql-command-fn :? [sym] `log-command-fn)

@@ -6,3 +6,8 @@ VALUES (:title, to_timestamp(:date, 'YYYY-MM-DD'), :game_version, :tournament_or
 RETURNING id;
 
 --VALUES (:title, to_timestamp(:date, 'YYYY-MM-DD'), :game_version, :tournament_organizer)
+
+-- :name db-select-all-tournaments :? :*
+-- :doc Get all tournaments
+SELECT * FROM tournaments;
+
