@@ -1,5 +1,6 @@
 (ns backend.database
-  (:require [environ.core :refer [env]]))
+  (:require [environ.core :refer [env]]
+            [taoensso.timbre :as log]))
 
 (def dbtype (env :database-type))
 (def classname (env :database-classname))
@@ -22,3 +23,17 @@
    :subname subname
    :host hostname})
 
+(defn log-sqlvec [sqlvec]
+  (log/info (->> sqlvec
+                 (map #(clojure.string/replace (or % "") #"\n" ""))
+                 (clojure.string/join " ; "))))
+
+(defn log-command-fn [this db sqlvec options]
+  (log-sqlvec sqlvec)
+  (condp contains? (:command options)
+    #{:!} (hugsql.adapter/execute this db sqlvec options)
+    #{:? :<!} (hugsql.adapter/query this db sqlvec options)))
+
+(defmethod hugsql.core/hugsql-command-fn :! [sym] `log-command-fn)
+(defmethod hugsql.core/hugsql-command-fn :<! [sym] `log-command-fn)
+(defmethod hugsql.core/hugsql-command-fn :? [sym] `log-command-fn)

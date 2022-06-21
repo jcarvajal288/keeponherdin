@@ -1,6 +1,5 @@
 import {describe, expect, it} from "vitest";
 import {render, screen} from '@testing-library/react';
-import {Match} from "../../src/tournaments/MatchRow";
 import {Tournament, TournamentTable, TournamentTableProps} from "../../src/tournaments/TournamentTable";
 import {matches} from "./MatchList.test";
 
@@ -8,8 +7,8 @@ const tournament: Tournament = {
     id: 1,
     title: "Rodeo Regional #100",
     date: new Date("2022-06-19"),
-    gameVersion: "3.0",
-    tournamentOrganizer: "Javamorris"
+    game_version: "3.0",
+    tournament_organizer: "Javamorris"
 }
 
 describe('TournamentTable', () => {

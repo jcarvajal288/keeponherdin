@@ -80,11 +80,11 @@
 
 (def single-tournament {:title "Rodeo Regional #40"
                         :date "2022-05-23"
-                        :gameVersion "3.0"
-                        :tournamentOrganizer "Javamorris"
+                        :game_version "3.0"
+                        :tournament_organizer "Javamorris"
                         })
 
-(def malformed-tournament (dissoc single-tournament :gameVersion))
+(def malformed-tournament (dissoc single-tournament :game_version))
 
 (defn random-tournament []
   (let [year (+ 2017 (rand-int 6))
@@ -95,5 +95,5 @@
               :else (+ 1 (rand-int 30)))]
     {:title (rand-nth tournament-names)
      :date (format "%d-%02d-%02d", year, month, day)
-     :gameVersion (rand-nth ["2.11" "2.14" "3.0"])
-     :tournamentOrganizer (rand-nth player-names)}))
+     :game_version (rand-nth ["2.11" "2.14" "3.0"])
+     :tournament_organizer (rand-nth player-names)}))

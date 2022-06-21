@@ -5,7 +5,8 @@
             [clojure.spec.alpha :as sp]
             [clojure.test :refer :all]
             [ring.mock.request :as mock]
-            [resources.data.matches-data :as data]))
+            [resources.data.matches-data :as data]
+            [taoensso.timbre :as log]))
 
 (deftest test-tournament-valid?
   (testing "tournament body validations"
@@ -47,3 +48,17 @@
       (is (= response {:status 200
                        :body (ch/generate-string data/single-tournament)
                        :headers {"Content-Type" "application/json"}})))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; INTEGRATION TESTS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(deftest insert-and-retrieve-one-tournament
+  (testing "insert and fetch a random tournament"
+    (let [expected-tournament (data/random-tournament)
+          post-response (app (-> (mock/request :post "/api/tournaments")
+                                 (mock/json-body expected-tournament)))
+          post-result-id (-> post-response (:body) (ch/parse-string true) (:id))]
+      (log/info post-response)
+      (is (= (:status post-response) 201))
+      (is (number? post-result-id)))))

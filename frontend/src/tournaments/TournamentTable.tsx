@@ -7,8 +7,8 @@ export type Tournament = {
     id: number;
     title: string;
     date: Date;
-    gameVersion: string;
-    tournamentOrganizer: string;
+    game_version: string;
+    tournament_organizer: string;
 }
 
 export type TournamentTableProps = {
@@ -39,7 +39,7 @@ export const TournamentTable = ({tournament, getMatches}: TournamentTableProps):
             >
                 <Typography>{tournament.title}</Typography>
                 <Typography>
-                    {`${formatDate(tournament.date)} | ${tournament.gameVersion} | ${tournament.tournamentOrganizer}`}
+                    {`${formatDate(tournament.date)} | ${tournament.game_version} | ${tournament.tournament_organizer}`}
                 </Typography>
                 <MatchList matches={matches} />
             </Stack>

@@ -12,22 +12,22 @@ const tournaments: Tournament[] = [
         id: 1,
         title: "Rodeo Regional #100",
         date: new Date("2022-06-19"),
-        gameVersion: "3.0",
-        tournamentOrganizer: "Javamorris"
+        game_version: "3.0",
+        tournament_organizer: "Javamorris"
     },
     {
         id: 1,
         title: "Mad Cow Melee #56",
         date: new Date("2022-05-10"),
-        gameVersion: "2.11",
-        tournamentOrganizer: "Free"
+        game_version: "2.11",
+        tournament_organizer: "Free"
     },
     {
         id: 1,
         title: "Mexican Mash Series #445",
         date: new Date("2021-11-23"),
-        gameVersion: "2.8.1",
-        tournamentOrganizer: "Vixy"
+        game_version: "2.8.1",
+        tournament_organizer: "Vixy"
     },
 ]
 

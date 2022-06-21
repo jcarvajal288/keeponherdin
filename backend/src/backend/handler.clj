@@ -1,5 +1,6 @@
 (ns backend.handler
   (:require [backend.matches :refer :all]
+            [backend.tournaments :as tn]
             [compojure.core :refer :all]
             [compojure.route :as route]
             [cheshire.core :as ch]
@@ -46,12 +47,16 @@
      :headers {"Content-Type" "application/json"}})
 
   (POST "/api/tournaments" request
-    (if (backend.tournaments/tournament-valid? (:body request))
-        ({:status 201
-          :body   (ch/generate-string {:id 1})
-          :headers {"Content-Type" "application/json"
-                    "Location" "http://localhost/api/tournaments/1"}})
-        (content-type (bad-request "Tournament body is empty or malformed.") "application/json")))
+    (let [body (:body request)]
+      (try
+         (-> body
+             (tn/validate-body)
+             (tn/insert-tournament!)
+             (tn/handle-result))
+         (catch IllegalArgumentException ex
+           (content-type (bad-request (.getMessage ex)) "application/json"))
+         (catch Exception ex
+           (log/info (.getMessage ex))))))
 
   (route/not-found "Not Found"))
 
