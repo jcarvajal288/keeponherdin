@@ -20,10 +20,12 @@
 (sp/def :tournament/date :tournament/date-type)
 (sp/def :tournament/game_version string?)
 (sp/def :tournament/tournament_organizer string?)
+(sp/def :tournament/vod_link string?)
 (sp/def :tournament/tournament (sp/keys :req-un [:tournament/title
                                                  :tournament/date
                                                  :tournament/game_version
-                                                 :tournament/tournament_organizer]))
+                                                 :tournament/tournament_organizer
+                                                 :tournament/vod_link]))
 
 (defn tournament-valid? [tournament]
   (sp/valid? :tournament/tournament tournament))

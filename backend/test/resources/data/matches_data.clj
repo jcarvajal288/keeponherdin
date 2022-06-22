@@ -82,6 +82,7 @@
                         :date "2022-05-23"
                         :game_version "3.0"
                         :tournament_organizer "Javamorris"
+                        :vod_link "https://www.twitch.tv/videos/1134464994"
                         })
 
 (def malformed-tournament (dissoc single-tournament :game_version))
@@ -96,4 +97,6 @@
     {:title (rand-nth tournament-names)
      :date (format "%d-%02d-%02d", year, month, day)
      :game_version (rand-nth ["2.11" "2.14" "3.0"])
-     :tournament_organizer (rand-nth player-names)}))
+     :tournament_organizer (rand-nth player-names)
+     :vod_link "https://www.twitch.tv/videos/1134464994"
+     }))
