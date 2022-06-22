@@ -25,9 +25,11 @@ export const TournamentTable = ({tournament, getMatches}: TournamentTableProps):
     }, [getMatches])
 
     const formatDate = (date: Date) => {
-        const year = date.getFullYear();
-        const month = (date.getMonth()+1).toString().padStart(2, "00");
-        const day = (date.getDate()+1).toString().padStart(2, "00");
+        console.log(date);
+        const isoDate = new Date(date);
+        const year = isoDate.getFullYear();
+        const month = (isoDate.getMonth()+1).toString().padStart(2, "00");
+        const day = (isoDate.getDate()+1).toString().padStart(2, "00");
         return `${year}-${month}-${day}`
     }
 

@@ -10,7 +10,10 @@ const App = (): ReactElement => {
     return (
         <>
             <HeaderBar/>
-            <TournamentList getTournaments={getTournaments}/>
+            <TournamentList
+                getTournaments={getTournaments}
+                getMatches={getMatches}
+            />
         </>
     )
 }

@@ -6,7 +6,7 @@ import {matches} from "./MatchList.test";
 const tournament: Tournament = {
     id: 1,
     title: "Rodeo Regional #100",
-    date: new Date("2022-06-19"),
+    date: new Date("2022-06-19T06:00:00Z"),
     game_version: "3.0",
     tournament_organizer: "Javamorris"
 }
@@ -22,7 +22,7 @@ describe('TournamentTable', () => {
     }
 
     it('shows the tournament information and matches', async () => {
-        const infoString = '2022-06-19 | 3.0 | Javamorris';
+        const infoString = '2022-06-20 | 3.0 | Javamorris';
         renderTournamentTable( { tournament: tournament, getMatches: (_) => Promise.resolve(matches) });
         expect(screen.getByText('Rodeo Regional #100')).toBeDefined();
         expect(screen.getByText(infoString)).toBeDefined();
