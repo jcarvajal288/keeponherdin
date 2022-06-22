@@ -20,8 +20,12 @@ export const TournamentList = ({getTournaments, getMatches}: TournamentListProps
         <Stack
             direction='column'
         >
-            {tournaments.map((tournament: Tournament) => (
-                <TournamentTable tournament={tournament} getMatches={getMatches}/>
+            {tournaments.map((tournament: Tournament, index) => (
+                <TournamentTable
+                    key={index}
+                    tournament={tournament}
+                    getMatches={getMatches}
+                />
             ))}
         </Stack>
     )

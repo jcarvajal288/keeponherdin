@@ -10,14 +10,18 @@ export const MatchList = ({matches}: MatchListProps): ReactElement => {
 
     return (
         <Box
-            padding='50px'
+            paddingLeft='50px'
+            paddingRight='50px'
         >
             <Stack
                 direction='column'
                 divider={<Divider orientation='horizontal' flexItem />}
             >
-                {matches.map((match: Match) => (
-                    <MatchRow match={match} />
+                {matches.map((match: Match, index) => (
+                    <MatchRow
+                        key={index}
+                        match={match}
+                    />
                 ))}
             </Stack>
         </Box>

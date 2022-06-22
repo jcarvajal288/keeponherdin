@@ -25,7 +25,6 @@ export const TournamentTable = ({tournament, getMatches}: TournamentTableProps):
     }, [getMatches])
 
     const formatDate = (date: Date) => {
-        console.log(date);
         const isoDate = new Date(date);
         const year = isoDate.getFullYear();
         const month = (isoDate.getMonth()+1).toString().padStart(2, "00");
@@ -36,8 +35,9 @@ export const TournamentTable = ({tournament, getMatches}: TournamentTableProps):
     return (
         <>
             <Stack
-                direction='row'
+                direction='column'
                 data-testid={'tournament-table'}
+                paddingTop='30px'
             >
                 <Typography>{tournament.title}</Typography>
                 <Typography>
