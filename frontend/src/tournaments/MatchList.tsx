@@ -1,4 +1,4 @@
-import {ReactElement, useEffect, useState} from 'react'
+import {ReactElement} from 'react'
 import {Match, MatchRow} from "./MatchRow";
 import {Box, Divider, Stack} from "@mui/material";
 

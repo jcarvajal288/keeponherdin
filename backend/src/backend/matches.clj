@@ -69,3 +69,6 @@
   (let [conn (jdbc/get-datasource db/db-spec)]
     (db-select-all-matches conn)))
 
+(defn select-matches-by-tournament []
+  )
+

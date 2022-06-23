@@ -1,5 +1,5 @@
 (ns backend.handler
-  (:require [backend.matches :refer :all]
+  (:require [backend.matches :as ma]
             [backend.tournaments :as tn]
             [compojure.core :refer :all]
             [compojure.route :as route]
@@ -17,17 +17,18 @@
 
 ;;; Match routes ;;;
   (GET "/api/matches" []
-    (content-type (ok (select-all-matches)) "application/json"))
+    (content-type (ok (ma/select-all-matches)) "application/json"))
 
-  (GET "/api/matches/:id" [] "TODO: return single match")
+  (GET "/api/matches/:id" []
+    (content-type (ok (ma/select-matches-by-tournament)) "application/json"))
 
   (POST "/api/matches" request
     (try
       (-> (:body request)
-          (validate-insert-matches-body)
-          (labelled-vector-transform)
-          (insert-matches!)
-          (handle-insert-matches))
+          (ma/validate-insert-matches-body)
+          (ma/labelled-vector-transform)
+          (ma/insert-matches!)
+          (ma/handle-insert-matches))
     (catch IllegalArgumentException ex
       (content-type (bad-request (.getMessage ex)) "application/json"))
     (catch Exception ex

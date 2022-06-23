@@ -125,6 +125,14 @@
                          :body (ch/generate-string data/two-matches)
                          :headers {"Content-Type" "application/json"}}))))))
 
+(deftest select-matches-by-tournnament
+  (testing "200 - GET /api/matches/:id"
+    (with-redefs [select-matches-by-tournament (fn [] data/two-matches)]
+      (let [response (app (-> (mock/request :get "/api/matches/1")))]
+        (is (= response {:status 200
+                         :body (ch/generate-string data/two-matches)
+                         :headers {"Content-Type" "application/json"}}))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; INTEGRATION TESTS
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -141,3 +149,7 @@
       (is (= (:status post-response 201)))
       (is (= (count post-result-ids) (count expected-matches)))
       (is (= (map #(dissoc % :id) returned-matches) expected-matches)))))
+
+;(deftest filter-matches-by-tournament
+;  (testing "fetch only the matches associated with a particular tournament"
+;    ))
