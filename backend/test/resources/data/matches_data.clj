@@ -54,14 +54,14 @@
 
 (defn random-match
   ([] (random-match 1))
-  ([num_tournaments]
+  ([tournament]
     {:player1 (rand-nth player-names)
      :character1 (rand-nth characters)
      :player2 (rand-nth player-names)
      :character2 (rand-nth characters)
      :did_p1_win (even? (rand-int 2))
      :start_time (random-start-time)
-     :tournament_id (+ 1 (rand-int (- num_tournaments 1)))}))
+     :tournament_id tournament}))
 
 
 (defn random-matches
