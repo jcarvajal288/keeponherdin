@@ -18,6 +18,7 @@ export const TournamentList = ({getTournaments, getMatches}: TournamentListProps
 
     return(
         <Stack
+            sx={{marginTop: "20px"}}
             direction='column'
         >
             {tournaments.map((tournament: Tournament, index) => (
