@@ -2,6 +2,7 @@
   (:require [clojure.test :refer :all]
             [backend.handler :refer :all]
             [backend.matches :refer :all]
+            [backend.util :as util]
             [cheshire.core :as ch]
             [resources.data.matches-data :as data]
             [ring.mock.request :as mock]
@@ -123,3 +124,20 @@
         (is (= response {:status 200
                          :body (ch/generate-string data/two-matches)
                          :headers {"Content-Type" "application/json"}}))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+; INTEGRATION TESTS
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+(deftest insert-and-retrieve-matches
+  (testing "insert and fetch a list of random matches"
+    (let [expected-matches (data/random-matches 5 3)
+          post-response (app (-> (mock/request :post "/api/matches")
+                                 (mock/json-body expected-matches)))
+          post-result-ids (-> post-response (:body) (ch/parse-string true) (:ids))
+          get-response (app (-> (mock/request :get "/api/matches")))
+          all-matches (-> get-response (:body) (ch/parse-string true))
+          returned-matches (filter #(util/in? (:id %) post-result-ids) all-matches)]
+      (is (= (:status post-response 201)))
+      (is (= (count post-result-ids) (count expected-matches)))
+      (is (= (map #(dissoc % :id) returned-matches) expected-matches)))))
