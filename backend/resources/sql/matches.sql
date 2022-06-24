@@ -16,10 +16,10 @@ RETURNING id;
 -- :doc Get all matches
 SELECT * FROM matches;
 
--- :name db-get-match :? :1
+-- :name db-select-matches-for-tournament :? :*
 -- :doc retrieves a match record given the id
 SELECT * FROM matches
-WHERE id = :id;
+WHERE tournament_id = :tournament_id;
 
 -- :name db-delete-match! :! :n
 -- :doc deletes a user record given the id

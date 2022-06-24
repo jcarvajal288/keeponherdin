@@ -69,6 +69,7 @@
   (let [conn (jdbc/get-datasource db/db-spec)]
     (db-select-all-matches conn)))
 
-(defn select-matches-by-tournament []
-  )
+(defn select-matches-for-tournament [id]
+  (let [conn (jdbc/get-datasource db/db-spec)]
+    (db-select-matches-for-tournament conn {:tournament_id (Integer/parseInt id)})))
 

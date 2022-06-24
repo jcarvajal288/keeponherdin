@@ -129,7 +129,7 @@
 
 (deftest select-matches-by-tournnament
   (testing "200 - GET /api/matches/:id"
-    (with-redefs [select-matches-by-tournament (fn [] data/two-matches)]
+    (with-redefs [select-matches-for-tournament (fn [_] data/two-matches)]
       (let [response (app (-> (mock/request :get "/api/matches/1")))]
         (is (= response {:status 200
                          :body (ch/generate-string data/two-matches)
@@ -170,5 +170,7 @@
          t1-matches (data/random-matches 3 tournament1-id)
          t2-matches (data/random-matches 3 tournament2-id)
          _ (post-matches (concat t1-matches t2-matches))
-         returned-matches (:body (app (-> (mock/request :get (format "/api/matches/%d" tournament1-id)))))]
-      (is (= returned-matches t1-matches)))))
+         returned-matches (-> (app (-> (mock/request :get (format "/api/matches/%d" tournament1-id))))
+                              (:body)
+                              (ch/parse-string true))]
+      (is (= (map #(dissoc % :id) returned-matches) t1-matches)))))

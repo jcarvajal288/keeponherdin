@@ -19,8 +19,8 @@
   (GET "/api/matches" []
     (content-type (ok (ma/select-all-matches)) "application/json"))
 
-  (GET "/api/matches/:id" []
-    (content-type (ok (ma/select-matches-by-tournament)) "application/json"))
+  (GET "/api/matches/:id" [id]
+    (content-type (ok (ma/select-matches-for-tournament id)) "application/json"))
 
   (POST "/api/matches" request
     (try
