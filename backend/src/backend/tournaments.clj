@@ -50,3 +50,11 @@
 (defn select-all-tournaments []
   (let [conn (jdbc/get-datasource db/db-spec)]
     (db-select-all-tournaments conn)))
+
+(defn select-tournament-by-id [id]
+  {:title "Rodeo Regional #40"
+   :date "2022-05-23"
+   :game_version "3.0"
+   :tournament_organizer "Javamorris"
+   :vod_link "https://www.twitch.tv/videos/1134464994"
+   })

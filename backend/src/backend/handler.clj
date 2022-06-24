@@ -44,6 +44,10 @@
       (as-> result-set rs
             (content-type (ok rs) "application/json"))))
 
+  (GET "/api/tournaments/:id" [id]
+    (let [result (tn/select-tournament-by-id id)]
+      (content-type (ok result) "application/json")))
+
   (POST "/api/tournaments" request
     (let [body (:body request)]
       (try

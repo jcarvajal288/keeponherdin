@@ -39,6 +39,16 @@
                              :body "Tournament body is empty or malformed."
                              :headers {"Content-Type" "application/json"}})))))
 
+(deftest get-tournament
+  (testing "getting a tournament by id"
+    (with-redefs [select-tournament-by-id (fn [_] data/single-tournament)]
+      (let [response (app (-> (mock/request :get "/api/tournaments/1")))]
+        (is (= response {:status 200
+                         :body (ch/generate-string data/single-tournament)
+                         :headers {"Content-Type" "application/json"}}))))))
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; INTEGRATION TESTS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
