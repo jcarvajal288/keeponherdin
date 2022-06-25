@@ -143,7 +143,7 @@
   (app (-> (mock/request :post "/api/matches")
            (mock/json-body matches))))
 
-  (deftest insert-and-retrieve-matches
+(deftest insert-and-retrieve-matches
   (testing "insert and fetch a list of random matches"
     (let [expected-matches (data/random-matches 5 3)
           post-response (post-matches expected-matches)
@@ -158,10 +158,10 @@
 (deftest filter-matches-by-tournament
   (testing "fetch only the matches associated with a particular tournament"
     (let [tournament1-id (-> (data/random-tournament)
-                            (post-tournament)
-                            (:body)
-                            (ch/parse-string true)
-                            (:id))
+                             (post-tournament)
+                             (:body)
+                             (ch/parse-string true)
+                             (:id))
           tournament2-id (-> (data/random-tournament)
                              (post-tournament)
                              (:body)

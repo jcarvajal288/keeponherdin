@@ -58,15 +58,16 @@
     (let [expected-tournament (data/random-tournament)
           post-response (post-tournament expected-tournament)
           post-result-id (-> post-response (:body) (ch/parse-string true) (:id))
-          get-response (get-tournaments)
-          all-tournaments (-> get-response (:body) (ch/parse-string true))
-          returned-tournament (first (filter #(= post-result-id (:id %)) all-tournaments))]
-      (is (= (:status post-response) 201))
+          returned-response (app (-> (mock/request :get (format "/api/tournaments/%d" post-result-id))))
+          returned-tournament (-> returned-response (:body) (ch/parse-string true))]
+          (log/info returned-tournament)
       (is (number? post-result-id))
       (is (= (:headers post-response) {"Content-Type" "application/json"
                                        "Location" (format "http://localhost/api/tournaments/%d" post-result-id)}))
-      (is (= (:status get-response) 200))
+      (is (= (:status returned-response) 200))
       (is (= (:title returned-tournament) (:title expected-tournament)))
       (is (= (util/strip-date (:date returned-tournament)) (:date expected-tournament)))
       (is (= (:game_version returned-tournament) (:game_version expected-tournament)))
       (is (= (:tournament_organizer returned-tournament) (:tournament_organizer expected-tournament))))))
+
+
