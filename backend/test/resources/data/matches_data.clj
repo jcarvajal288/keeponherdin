@@ -72,6 +72,7 @@
 (def tournament-names ["Mad Cow Melee"
                        "The Fauna"
                        "Glue Cup"
+                       "Hoof to Floof"
                        "Rodeo Regional"
                        "Mexican Mash Series"
                        "Iron Cattle Tournament"

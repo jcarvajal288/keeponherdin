@@ -11,3 +11,7 @@ RETURNING id;
 -- :doc Get all tournaments
 SELECT * FROM tournaments;
 
+-- :name db-select-tournament :? :1
+-- :doc get tournament by id
+SELECT * FROM tournaments WHERE id = :id
+
