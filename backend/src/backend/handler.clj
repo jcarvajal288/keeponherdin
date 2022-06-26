@@ -68,6 +68,7 @@
   (json/wrap-json-body {:keywords? true})
   (json/wrap-json-response)
   (wrap-cors :access-control-allow-origin [#".*"]
+             :access-control-allow-headers [#".*"]
              :access-control-allow-methods [:get :put :post :delete])))
 
 (defn -main []
