@@ -6,7 +6,6 @@ import {Tournament} from "./tournaments/TournamentTable";
 type Api = {
     getMatches: () => Promise<Match[]>;
     getTournaments: () => Promise<Tournament[]>;
-    getTournamentById: (id: number) => Promise<Tournament>;
 }
 
 axios.defaults.baseURL = window.location.protocol + "//" + window.location.hostname + ":8000";

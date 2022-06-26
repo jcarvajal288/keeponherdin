@@ -16,12 +16,13 @@ RETURNING id;
 -- :doc Get all matches
 SELECT * FROM matches;
 
--- :name db-select-matches-for-tournament :? :*
--- :doc retrieves a match record given the id
-SELECT * FROM matches
-WHERE tournament_id = :tournament_id;
-
 -- :name db-delete-match! :! :n
 -- :doc deletes a user record given the id
 DELETE FROM matches
-WHERE id = :id
+WHERE id = :id;
+
+-- :name db-select-matches-by-tournament :? :*
+-- :doc returns matches grouped by tournament id and sorted by tournament date and match start time
+SELECT * FROM matches m
+JOIN tournaments t ON m.tournament_id = t.id
+ORDER BY t.date DESC, m.start_time LIMIT 50;

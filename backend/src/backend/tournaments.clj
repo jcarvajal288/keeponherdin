@@ -54,3 +54,24 @@
 (defn select-tournament-by-id [id]
   (let [conn (jdbc/get-datasource db/db-spec)]
     (db-select-tournament conn {:id (Integer/parseInt id)})))
+
+(defn get-all-tournaments []
+  (let [result-set (select-all-tournaments)]
+    (as-> result-set rs
+          (content-type (ok rs) "application/json"))))
+
+(defn get-tournament-by-id [request]
+  (let [result (select-tournament-by-id (:id (:params request)))]
+    (content-type (ok result) "application/json")))
+
+(defn post-tournament [request]
+  (let [body (:body request)]
+    (try
+      (-> body
+          (validate-body)
+          (insert-tournament!)
+          (handle-insert-result))
+      (catch IllegalArgumentException ex
+        (content-type (bad-request (.getMessage ex)) "application/json"))
+      (catch Exception ex
+        (log/info (.getMessage ex))))))

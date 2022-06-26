@@ -21,17 +21,17 @@
 ; CONTRACT TESTS
 ;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn get-tournaments []
+(defn mock-get-tournaments []
   (app (-> (mock/request :get "/api/tournaments"))))
 
-(defn post-tournament [tournament]
+(defn mock-post-tournament [tournament]
   (app (-> (mock/request :post "/api/tournaments")
            (mock/json-body tournament))))
 
 (deftest reject-malformed-tournaments
   (testing "reject tournaments that don't fit the spec"
-    (let [response (post-tournament data/malformed-tournament)
-          response-empty (post-tournament {})]
+    (let [response (mock-post-tournament data/malformed-tournament)
+          response-empty (mock-post-tournament {})]
       (is (= response {:status 400
                        :body "Tournament body is empty or malformed."
                        :headers {"Content-Type" "application/json"}}))
@@ -56,7 +56,7 @@
 (deftest insert-and-retrieve-one-tournament
   (testing "insert and fetch a random tournament"
     (let [expected-tournament (data/random-tournament)
-          post-response (post-tournament expected-tournament)
+          post-response (mock-post-tournament expected-tournament)
           post-result-id (-> post-response (:body) (ch/parse-string true) (:id))
           returned-response (app (-> (mock/request :get (format "/api/tournaments/%d" post-result-id))))
           returned-tournament (-> returned-response (:body) (ch/parse-string true))]

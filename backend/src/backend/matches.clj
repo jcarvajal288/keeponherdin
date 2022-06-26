@@ -69,7 +69,18 @@
   (let [conn (jdbc/get-datasource db/db-spec)]
     (db-select-all-matches conn)))
 
-(defn select-matches-for-tournament [id]
-  (let [conn (jdbc/get-datasource db/db-spec)]
-    (db-select-matches-for-tournament conn {:tournament_id (Integer/parseInt id)})))
+(defn get-all-matches []
+  (content-type (ok (select-all-matches)) "application/json"))
+
+(defn post-match [request]
+  (try
+    (-> (:body request)
+        (validate-insert-matches-body)
+        (labelled-vector-transform)
+        (insert-matches!)
+        (handle-insert-matches))
+    (catch IllegalArgumentException ex
+      (content-type (bad-request (.getMessage ex)) "application/json"))
+    (catch Exception ex
+      (content-type (internal-server-error (.getMessage ex)) "application/json"))))
 

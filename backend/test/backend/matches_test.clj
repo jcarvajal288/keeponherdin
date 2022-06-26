@@ -3,7 +3,7 @@
             [backend.handler :refer :all]
             [backend.matches :refer :all]
             [backend.matches :refer :all]
-            [backend.tournaments-test :refer [post-tournament]]
+            [backend.tournaments-test :refer [mock-post-tournament]]
             [backend.util :as util]
             [cheshire.core :as ch]
             [resources.data.matches-data :as data]
@@ -127,26 +127,18 @@
                          :body (ch/generate-string data/two-matches)
                          :headers {"Content-Type" "application/json"}}))))))
 
-(deftest select-matches-by-tournnament
-  (testing "200 - GET /api/matches/:id"
-    (with-redefs [select-matches-for-tournament (fn [_] data/two-matches)]
-      (let [response (app (-> (mock/request :get "/api/matches/1")))]
-        (is (= response {:status 200
-                         :body (ch/generate-string data/two-matches)
-                         :headers {"Content-Type" "application/json"}}))))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; INTEGRATION TESTS
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn post-matches [matches]
+(defn mock-post-matches [matches]
   (app (-> (mock/request :post "/api/matches")
            (mock/json-body matches))))
 
 (deftest insert-and-retrieve-matches
   (testing "insert and fetch a list of random matches"
     (let [expected-matches (data/random-matches 5 3)
-          post-response (post-matches expected-matches)
+          post-response (mock-post-matches expected-matches)
           post-result-ids (-> post-response (:body) (ch/parse-string true) (:ids))
           get-response (app (-> (mock/request :get "/api/matches")))
           all-matches (-> get-response (:body) (ch/parse-string true))
@@ -155,22 +147,3 @@
       (is (= (count post-result-ids) (count expected-matches)))
       (is (= (map #(dissoc % :id) returned-matches) expected-matches)))))
 
-(deftest filter-matches-by-tournament
-  (testing "fetch only the matches associated with a particular tournament"
-    (let [tournament1-id (-> (data/random-tournament)
-                             (post-tournament)
-                             (:body)
-                             (ch/parse-string true)
-                             (:id))
-          tournament2-id (-> (data/random-tournament)
-                             (post-tournament)
-                             (:body)
-                             (ch/parse-string true)
-                             (:id))
-         t1-matches (data/random-matches 3 tournament1-id)
-         t2-matches (data/random-matches 3 tournament2-id)
-         _ (post-matches (concat t1-matches t2-matches))
-         returned-matches (-> (app (-> (mock/request :get (format "/api/matches/%d" tournament1-id))))
-                              (:body)
-                              (ch/parse-string true))]
-      (is (= (map #(dissoc % :id) returned-matches) t1-matches)))))
