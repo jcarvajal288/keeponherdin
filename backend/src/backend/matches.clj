@@ -76,7 +76,10 @@
 (defn get-all-matches []
   (content-type (ok (select-all-matches)) "application/json"))
 
-(defn get-all-matches-by-tournament [])
+(defn get-all-matches-by-tournament []
+  (let [matches-by-tournament (select-all-matches-by-tournament)
+        grouped-matches (group-by :tournament_id matches-by-tournament)]
+    (content-type (ok grouped-matches) "application/json")))
 
 (defn post-match [request]
   (try
@@ -89,4 +92,11 @@
       (content-type (bad-request (.getMessage ex)) "application/json"))
     (catch Exception ex
       (content-type (internal-server-error (.getMessage ex)) "application/json"))))
+
+(defn route-get-api-matches [params]
+  (cond
+    (= params {})
+      (get-all-matches)
+    (= params {"sort" "tournament"})
+      (get-all-matches-by-tournament)))
 

@@ -8,12 +8,12 @@
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.json :as json]
-            [ring.util.http-response :refer :all]))
+            [ring.util.http-response :refer :all]
+            [taoensso.timbre :as log]))
 
 (defroutes app-routes
 
-  (GET "/api/matches" [] (ma/get-all-matches))
-  (GET "/api/matches?sort=tournament" [] (ma/get-all-matches-by-tournament))
+  (GET "/api/matches" {params :query-params} (ma/route-get-api-matches params))
   (POST "/api/matches" request (ma/post-match request))
 
   (GET "/api/tournaments" [] (tn/get-all-tournaments))
