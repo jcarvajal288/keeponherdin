@@ -111,8 +111,8 @@
                          :body (ch/generate-string [])
                          :headers {"Content-Type" "application/json"}}))))))
 
-(deftest select-one-matches
-  (testing "200 - GET /api/matches one matches"
+(deftest select-one-match
+  (testing "200 - GET /api/matches one match"
     (with-redefs [select-all-matches (fn [] data/single-match)]
       (let [response (app (-> (mock/request :get "/api/matches")))]
         (is (= response {:status 200
@@ -120,12 +120,21 @@
                          :headers {"Content-Type" "application/json"}}))))))
 
 (deftest select-two-matches
-  (testing "200 - GET /api/matches one matches"
+  (testing "200 - GET /api/matches two matches"
     (with-redefs [select-all-matches (fn [] data/two-matches)]
       (let [response (app (-> (mock/request :get "/api/matches")))]
         (is (= response {:status 200
                          :body (ch/generate-string data/two-matches)
                          :headers {"Content-Type" "application/json"}}))))))
+
+(deftest matches-sorted-by-tournament
+  (testing "Return a 2D list of matches grouped by tournament"
+    (with-redefs [select-all-matches-by-tournament (fn [] data/matches-by-tournament)]
+      (let [response (app (-> (mock/request :get "/api/matches?sort=tournament")))
+            body (:body response)]
+        (is (= response {:status 200
+                         :headers {"Content-Type" "application/json"}}))
+        (is (= (count body) 4))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; INTEGRATION TESTS

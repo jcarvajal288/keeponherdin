@@ -13,6 +13,7 @@
 (defroutes app-routes
 
   (GET "/api/matches" [] (ma/get-all-matches))
+  (GET "/api/matches?sort=tournament" [] (ma/get-all-matches-by-tournament))
   (POST "/api/matches" request (ma/post-match request))
 
   (GET "/api/tournaments" [] (tn/get-all-tournaments))

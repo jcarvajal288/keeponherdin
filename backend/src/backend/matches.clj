@@ -69,8 +69,14 @@
   (let [conn (jdbc/get-datasource db/db-spec)]
     (db-select-all-matches conn)))
 
+(defn select-all-matches-by-tournament []
+  (let [conn (jdbc/get-datasource db/db-spec)]
+    (db-select-all-matches-by-tournament conn)))
+
 (defn get-all-matches []
   (content-type (ok (select-all-matches)) "application/json"))
+
+(defn get-all-matches-by-tournament [])
 
 (defn post-match [request]
   (try

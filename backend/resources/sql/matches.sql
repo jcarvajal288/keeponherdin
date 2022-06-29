@@ -21,8 +21,8 @@ SELECT * FROM matches;
 DELETE FROM matches
 WHERE id = :id;
 
--- :name db-select-matches-by-tournament :? :*
+-- :name db-select-all-matches-by-tournament :? :*
 -- :doc returns matches grouped by tournament id and sorted by tournament date and match start time
-SELECT * FROM matches m
+SELECT m.* FROM matches m
 JOIN tournaments t ON m.tournament_id = t.id
 ORDER BY t.date DESC, m.start_time LIMIT 50;
