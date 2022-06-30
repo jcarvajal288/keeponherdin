@@ -37,6 +37,17 @@ export const useApi = (): Api => {
         [],
     )
 
+    const getTournament = useCallback(
+        (id: number): Promise<Tournament> =>
+            httpClient
+                .get(`/api/tournaments/${id}`)
+                .then((response: AxiosResponse) => {
+                    return response.data as Tournament
+                })
+                .catch(() => Promise.reject(null)),
+        [],
+    )
+
     return {
         getMatches,
         getTournaments

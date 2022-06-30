@@ -17,7 +17,7 @@ export type Match = {
     character2: string;
     did_p1_win: boolean;
     start_time: string;
-    tournamentId: number;
+    tournament_id: number;
 }
 
 export type MatchRowProps = {

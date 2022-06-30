@@ -5,16 +5,21 @@ import {Match} from "./MatchRow";
 
 export type TournamentListProps = {
     getTournaments: () => Promise<Tournament[]>;
-    getMatches: (tournamentId: number) => Promise<Match[]>;
+    getMatches: () => Promise<Match[]>;
 }
 
 export const TournamentList = ({getTournaments, getMatches}: TournamentListProps): ReactElement => {
 
     const [tournaments, setTournaments] = useState<Tournament[]>([]);
+    const [matches, setMatches] = useState<Match[]>([]);
 
     useEffect(() => {
         getTournaments().then(setTournaments)
     }, [getTournaments])
+
+    useEffect(() => {
+        getMatches().then(setMatches)
+    }, [getMatches])
 
     return(
         <Stack
@@ -25,7 +30,7 @@ export const TournamentList = ({getTournaments, getMatches}: TournamentListProps
                 <TournamentTable
                     key={index}
                     tournament={tournament}
-                    getMatches={getMatches}
+                    matches={matches}
                 />
             ))}
         </Stack>

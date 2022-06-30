@@ -13,16 +13,10 @@ export type Tournament = {
 
 export type TournamentTableProps = {
     tournament: Tournament;
-    getMatches: (tournamentId: number) => Promise<Match[]>;
+    matches: Match[];
 }
 
-export const TournamentTable = ({tournament, getMatches}: TournamentTableProps): ReactElement => {
-
-    const [matches, setMatches] = useState<Match[]>([]);
-
-    useEffect(() => {
-        getMatches(tournament.id).then(setMatches)
-    }, [getMatches])
+export const TournamentTable = ({tournament, matches}: TournamentTableProps): ReactElement => {
 
     const formatDate = (date: Date) => {
         const isoDate = new Date(date);

@@ -12,7 +12,8 @@ const matches: Match[] = [
         player2: "Oscar",
         character2: "Pom",
         did_p1_win: false,
-        start_time: "00:30:12"
+        start_time: "00:30:12",
+        tournament_id: 1
     },
     {
         player1: "Barlowe",
@@ -20,7 +21,8 @@ const matches: Match[] = [
         player2: "Amaron",
         character2: "Oleander",
         did_p1_win: true,
-        start_time: "00:45:32"
+        start_time: "00:45:32",
+        tournament_id: 1
     },
     {
         player1: "Fresh",
@@ -28,7 +30,8 @@ const matches: Match[] = [
         player2: "DigitalDog",
         character2: "Shanty",
         did_p1_win: true,
-        start_time: "01:05:32"
+        start_time: "01:05:32",
+        tournament_id: 1
     },
 ]
 

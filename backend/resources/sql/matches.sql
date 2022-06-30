@@ -14,7 +14,7 @@ RETURNING id;
 
 -- :name db-select-all-matches :? :*
 -- :doc Get all matches
-SELECT * FROM matches;
+SELECT * FROM matches LIMIT 50;
 
 -- :name db-delete-match! :! :n
 -- :doc deletes a user record given the id

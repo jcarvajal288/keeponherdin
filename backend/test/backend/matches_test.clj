@@ -132,7 +132,6 @@
     (with-redefs [select-all-matches-by-tournament (fn [] data/matches-by-tournament)]
       (let [response (app (-> (mock/request :get "/api/matches?sort=tournament")))
             body (ch/parse-string (:body response))]
-        (log/info body)
         (is (= (:status response) 200))
         (is (= (:headers response) {"Content-Type" "application/json"}))
         (is (= (count body) 4))
