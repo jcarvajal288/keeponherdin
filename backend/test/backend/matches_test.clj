@@ -131,14 +131,14 @@
   (testing "Return a 2D list of matches grouped by tournament"
     (with-redefs [select-all-matches-by-tournament (fn [] data/matches-by-tournament)]
       (let [response (app (-> (mock/request :get "/api/matches?sort=tournament")))
-            body (ch/parse-string (:body response))]
+            body (vec (ch/parse-string (:body response)))]
         (is (= (:status response) 200))
         (is (= (:headers response) {"Content-Type" "application/json"}))
         (is (= (count body) 4))
-        (is (= (count (get body "1")) 4))
-        (is (= (count (get body "2")) 1))
-        (is (= (count (get body "3")) 3))
-        (is (= (count (get body "4")) 2))))))
+        (is (= (count (get body 0)) 4))
+        (is (= (count (get body 1)) 1))
+        (is (= (count (get body 2)) 3))
+        (is (= (count (get body 3)) 2))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; INTEGRATION TESTS

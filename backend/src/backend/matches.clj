@@ -76,9 +76,16 @@
 (defn get-all-matches []
   (content-type (ok (select-all-matches)) "application/json"))
 
+(defn- transform-to-2d-vector [matches-by-tournament]
+  "groups a 1D vector of matches sorted by tournament id into a 2D vector
+   where each internal vector contains all matches with the same tournament id"
+  (let [tournament-ids (distinct (map #(:tournament_id %) matches-by-tournament))]
+    (letfn [(get-matches-for-id [id] (filter #(= (:tournament_id %) id) matches-by-tournament))]
+      (map get-matches-for-id tournament-ids))))
+
 (defn get-all-matches-by-tournament []
   (let [matches-by-tournament (select-all-matches-by-tournament)
-        grouped-matches (group-by :tournament_id matches-by-tournament)]
+        grouped-matches (transform-to-2d-vector matches-by-tournament)]
     (content-type (ok grouped-matches) "application/json")))
 
 (defn post-match [request]
