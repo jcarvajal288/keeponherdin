@@ -80,7 +80,8 @@
   "groups a 1D vector of matches sorted by tournament id into a 2D vector
    where each internal vector contains all matches with the same tournament id"
   (let [tournament-ids (distinct (map #(:tournament_id %) matches-by-tournament))]
-    (letfn [(get-matches-for-id [id] (filter #(= (:tournament_id %) id) matches-by-tournament))]
+    (letfn [(get-matches-for-id [id]
+              (filter #(= (:tournament_id %) id) matches-by-tournament))]
       (map get-matches-for-id tournament-ids))))
 
 (defn get-all-matches-by-tournament []

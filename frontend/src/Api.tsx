@@ -5,7 +5,8 @@ import {Tournament} from "./tournaments/TournamentTable";
 
 type Api = {
     getMatches: () => Promise<Match[]>;
-    getTournaments: () => Promise<Tournament[]>;
+    getMatchesByTournament: () => Promise<Match[][]>;
+    getTournament: (id: number) => Promise<Tournament | null>;
 }
 
 axios.defaults.baseURL = window.location.protocol + "//" + window.location.hostname + ":8000";
@@ -26,14 +27,14 @@ export const useApi = (): Api => {
         [],
     )
 
-    const getTournaments = useCallback(
-        (): Promise<Tournament[]> =>
+    const getMatchesByTournament = useCallback(
+        (): Promise<Match[][]> =>
             httpClient
-                .get('/api/tournaments')
+                .get('/api/matches?sort=tournament')
                 .then((response: AxiosResponse) => {
-                    return response.data as Tournament[];
+                    return response.data as Match[][];
                 })
-                .catch(() => Promise.resolve([])),
+                .catch(() => Promise.resolve([[]])),
         [],
     )
 
@@ -50,6 +51,7 @@ export const useApi = (): Api => {
 
     return {
         getMatches,
-        getTournaments
+        getMatchesByTournament,
+        getTournament
     }
 }

@@ -4,32 +4,27 @@ import {Tournament, TournamentTable} from "./TournamentTable";
 import {Match} from "./MatchRow";
 
 export type TournamentListProps = {
-    getTournaments: () => Promise<Tournament[]>;
-    getMatches: () => Promise<Match[]>;
+    getTournament: (id: number) => Promise<Tournament>;
+    getMatchesByTournament: () => Promise<Match[][]>;
 }
 
-export const TournamentList = ({getTournaments, getMatches}: TournamentListProps): ReactElement => {
+export const TournamentList = ({getTournament, getMatchesByTournament}: TournamentListProps): ReactElement => {
 
-    const [tournaments, setTournaments] = useState<Tournament[]>([]);
-    const [matches, setMatches] = useState<Match[]>([]);
-
-    useEffect(() => {
-        getTournaments().then(setTournaments)
-    }, [getTournaments])
+    const [matchesByTournament, setMatchesByTournament] = useState<Match[][]>([[]]);
 
     useEffect(() => {
-        getMatches().then(setMatches)
-    }, [getMatches])
+        getMatchesByTournament().then(setMatchesByTournament)
+    }, [getMatchesByTournament])
 
-    return(
+    return (
         <Stack
             sx={{marginTop: "20px"}}
             direction='column'
         >
-            {tournaments.map((tournament: Tournament, index) => (
+            {matchesByTournament.map((matches: Match[], index) => (
                 <TournamentTable
                     key={index}
-                    tournament={tournament}
+                    getTournament={getTournament}
                     matches={matches}
                 />
             ))}

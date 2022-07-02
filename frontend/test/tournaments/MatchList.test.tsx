@@ -16,7 +16,7 @@ export const matches: Match[] = [
         character2: "Pom",
         did_p1_win: false,
         start_time: "00:30:12",
-        tournamentId: 1
+        tournament_id: 1
     },
     {
         player1: "Barlowe",
@@ -25,7 +25,7 @@ export const matches: Match[] = [
         character2: "Oleander",
         did_p1_win: true,
         start_time: "00:45:32",
-        tournamentId: 1
+        tournament_id: 2
     },
     {
         player1: "Fresh",
@@ -34,7 +34,7 @@ export const matches: Match[] = [
         character2: "Shanty",
         did_p1_win: true,
         start_time: "01:05:32",
-        tournamentId: 1
+        tournament_id: 3
     },
 ]
 

@@ -2,6 +2,7 @@ import {Stack, Typography} from "@mui/material";
 import {ReactElement, useEffect, useState} from "react";
 import {Match} from "./MatchRow";
 import {MatchList} from "./MatchList";
+import {matches} from "../../test/tournaments/MatchList.test";
 
 export type Tournament = {
     id: number;
@@ -12,11 +13,22 @@ export type Tournament = {
 }
 
 export type TournamentTableProps = {
-    tournament: Tournament;
+    getTournament: (id: number) => Promise<Tournament | null>;
     matches: Match[];
 }
 
-export const TournamentTable = ({tournament, matches}: TournamentTableProps): ReactElement => {
+export const TournamentTable = ({getTournament, matches}: TournamentTableProps): ReactElement => {
+
+    const [tournament, setTournament] = useState<Tournament | null>(null);
+
+    useEffect(() => {
+        if (matches.length === 0) {
+            setTournament(null)
+        } else {
+            const id = matches[0].tournament_id;
+            getTournament(id).then(setTournament)
+        }
+    }, [matches])
 
     const formatDate = (date: Date) => {
         const isoDate = new Date(date);
@@ -26,6 +38,7 @@ export const TournamentTable = ({tournament, matches}: TournamentTableProps): Re
         return `${year}-${month}-${day}`
     }
 
+    if(!tournament) return (<></>);
     return (
         <>
             <Stack

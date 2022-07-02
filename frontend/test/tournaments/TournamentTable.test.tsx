@@ -13,20 +13,29 @@ const tournament: Tournament = {
 
 describe('TournamentTable', () => {
 
-    const renderTournamentTable = ({tournament, matches}: TournamentTableProps) => {
+    const renderTournamentTable = (props: Partial<TournamentTableProps>) => {
         return render(
             <TournamentTable
-                tournament={tournament}
-                matches={matches}/>
+                getTournament={(_: number) => {
+                    return Promise.resolve(tournament)
+                }}
+                matches={[]}
+                {...props}
+            />
         )
     }
 
     it('shows the tournament information and matches', async () => {
         const infoString = '2022-06-20 | 3.0 | Javamorris';
-        renderTournamentTable( { tournament: tournament, matches: matches });
+        renderTournamentTable({
+            getTournament: (_: number) => {
+                return Promise.resolve(tournament)
+            },
+            matches: matches
+        });
+        expect(await screen.findAllByTestId('match-row')).toHaveLength(matches.length);
         expect(screen.getByText('Rodeo Regional #100')).toBeDefined();
         expect(screen.getByText(infoString)).toBeDefined();
-        expect(await screen.findAllByTestId('match-row')).toHaveLength(matches.length);
         expect(screen.getByText("Vixy")).toBeDefined();
         expect(screen.getByText("Barlowe")).toBeDefined();
         expect(screen.getByText("Fresh")).toBeDefined();

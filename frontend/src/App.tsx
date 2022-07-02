@@ -5,14 +5,14 @@ import {HeaderBar} from "./HeaderBar";
 import {TournamentList} from "./tournaments/TournamentList";
 
 const App = (): ReactElement => {
-    const { getMatches, getTournaments} = useApi();
+    const { getMatchesByTournament, getTournament} = useApi();
 
     return (
         <>
             <HeaderBar/>
             <TournamentList
-                getTournaments={getTournaments}
-                getMatches={getMatches}
+                getTournament={getTournament}
+                getMatchesByTournament={getMatchesByTournament}
             />
         </>
     )
