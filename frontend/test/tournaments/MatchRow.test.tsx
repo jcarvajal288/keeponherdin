@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {render, screen, within} from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
 import { MatchRow, Match } from "../../src/tournaments/MatchRow";
 
 const testMatches: Match[] = [
@@ -10,7 +10,7 @@ const testMatches: Match[] = [
         character2: "Pom",
         did_p1_win: true,
         start_time: "00h45m32s",
-        tournamentId: 1
+        tournament_id: 1
     },
     {
         player1: "Barlowe",
@@ -19,7 +19,7 @@ const testMatches: Match[] = [
         character2: "Oleander",
         did_p1_win: false,
         start_time: "00h45m32s",
-        tournamentId: 1
+        tournament_id: 1
     },
 ]
 

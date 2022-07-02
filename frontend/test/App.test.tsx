@@ -9,6 +9,6 @@ describe('App', () => {
         render(<App/>)
         const addButton = screen.getByLabelText('add-tournament')
         await userEvent.click(addButton)
-        expect(await screen.getByText('Enter Link:')).toBeDefined()
+        expect(await screen.getByLabelText('Link')).toBeDefined()
     })
 })
