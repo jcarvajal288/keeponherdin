@@ -4,7 +4,7 @@ import {Tournament, TournamentTable} from "./TournamentTable";
 import {Match} from "./MatchRow";
 
 export type TournamentListProps = {
-    getTournament: (id: number) => Promise<Tournament>;
+    getTournament: (id: number) => Promise<Tournament | null>;
     getMatchesByTournament: () => Promise<Match[][]>;
 }
 
