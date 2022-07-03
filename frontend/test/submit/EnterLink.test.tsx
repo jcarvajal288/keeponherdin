@@ -17,4 +17,11 @@ describe('EnterLink', () => {
         await userEvent.click(screen.getByLabelText('Link'))
         expect(screen.getByText('https://www.youtube.com/watch?v=***********')).toBeDefined()
     })
+
+    // it('validates link on submission', async () => {
+    //     render(<EnterLink/>)
+    //     const badVideoLink = 'sdfgsdfgasdfasdf{enter}'
+    //     await userEvent.type(screen.getByLabelText('Link'), badVideoLink)
+    //     expect(screen.getByText('https://www.youtube.com/watch?v=***********')).toBeDefined()
+    // })
 })

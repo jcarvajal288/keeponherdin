@@ -14,4 +14,15 @@ describe('App', () => {
         await userEvent.click(screen.getByText(titleSlogan))
         expect(await screen.queryByLabelText('Link')).toBeNull()
     })
+
+    it('navigates through to the video details page', async () => {
+        render(<App/>)
+        const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
+        const addButton = screen.getByLabelText('add-tournament')
+        await userEvent.click(addButton)
+        const linkTextBox = screen.getByLabelText('Link')
+        expect(await linkTextBox).toBeDefined()
+        await userEvent.type(linkTextBox, videoUrl + '{enter}')
+        expect(await screen.getByLabelText('Title')).toBeDefined()
+    })
 })
