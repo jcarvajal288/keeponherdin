@@ -106,7 +106,10 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                     direction='row'
                     alignItems='center'
                 >
-                    <OndemandVideoIcon titleAccess='Go To VOD'/>
+                    <OndemandVideoIcon
+                        titleAccess='Go To VOD'
+                        color='primary'
+                    />
                 </Stack>
             </Stack>
         </>

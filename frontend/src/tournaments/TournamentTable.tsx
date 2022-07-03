@@ -46,10 +46,15 @@ export const TournamentTable = ({getTournament, matches}: TournamentTableProps):
                 data-testid={'tournament-table'}
                 paddingTop='30px'
             >
-                <Typography>{tournament.title}</Typography>
-                <Typography>
-                    {`${formatDate(tournament.date)} | ${tournament.game_version} | ${tournament.tournament_organizer}`}
-                </Typography>
+                <Stack
+                    direction='column'
+                    paddingLeft='50px'
+                >
+                    <Typography>{tournament.title}</Typography>
+                    <Typography>
+                        {`${formatDate(tournament.date)} | ${tournament.game_version} | ${tournament.tournament_organizer}`}
+                    </Typography>
+                </Stack>
                 <MatchList matches={matches} />
             </Stack>
         </>

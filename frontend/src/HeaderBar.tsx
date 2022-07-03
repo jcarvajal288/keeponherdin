@@ -5,12 +5,13 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import {Link as RouterLink} from 'react-router-dom';
 
 export const titleSlogan = "Can't Escape From Crossup Flop"
+export const headerBarHeight = "48px"
 
 export const HeaderBar = (): ReactElement => {
 
     return (
         <AppBar
-            sx={{backgroundColor: blue, height: "40px"}}
+            sx={{backgroundColor: blue, height: headerBarHeight}}
         >
             <Stack
                 direction='row'
@@ -41,7 +42,7 @@ export const HeaderBar = (): ReactElement => {
                         sx={{
                             color: '#FFFFFF',
                             marginTop: '3px',
-                            paddingLeft: '10px'
+                            paddingLeft: '20px'
                         }}
                     />
                 </RouterLink>

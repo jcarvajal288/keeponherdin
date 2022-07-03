@@ -2,6 +2,7 @@ import {ReactElement, useEffect, useState} from "react";
 import {Stack} from "@mui/material";
 import {Tournament, TournamentTable} from "./TournamentTable";
 import {Match} from "./MatchRow";
+import {headerBarHeight} from "../HeaderBar";
 
 export type TournamentListProps = {
     getTournament: (id: number) => Promise<Tournament | null>;
@@ -18,7 +19,7 @@ export const TournamentList = ({getTournament, getMatchesByTournament}: Tourname
 
     return (
         <Stack
-            sx={{marginTop: "20px"}}
+            sx={{marginTop: headerBarHeight}}
             direction='column'
         >
             {matchesByTournament.map((matches: Match[], index) => (
