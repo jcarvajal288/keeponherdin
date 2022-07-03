@@ -1,5 +1,5 @@
 import {ReactElement, useState} from "react";
-import {Stack, TextField, Typography} from "@mui/material";
+import {Paper, Stack, TextField, Typography} from "@mui/material";
 import { blue } from "@mui/material/colors";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 
@@ -11,30 +11,40 @@ export const EnterLink = (): ReactElement => {
     }
 
     return (
-        <Stack
-            sx={{marginTop: "60px"}}
-            direction='row'
-            alignItems='center'
-            paddingLeft='50px'
-            paddingRight='50px'
+        <Paper
+            elevation={1}
+            sx={{
+                width: '90%',
+                marginLeft: '5%',
+                marginTop: "60px",
+            }}
         >
-            <OndemandVideoIcon
-                color='primary'
+            <Stack
                 sx={{
-                    paddingRight: '10px',
+                    paddingLeft: '20px',
+                    paddingRight: '20px'
                 }}
-            />
-            <TextField
-                id='enter-vod-link'
-                label='Link'
-                onFocus={handleTouch}
-                helperText={touched ? 'https://www.youtube.com/watch?v=***********' : ' '}
-                variant='standard'
-                fullWidth
-                sx={{
-                    color: blue
-                }}
-            />
-        </Stack>
+                direction='row'
+                alignItems='center'
+            >
+                <OndemandVideoIcon
+                    color='primary'
+                    sx={{
+                        paddingRight: '10px',
+                    }}
+                />
+                <TextField
+                    id='enter-vod-link'
+                    label='Link'
+                    onFocus={handleTouch}
+                    helperText={touched ? 'https://www.youtube.com/watch?v=***********' : ' '}
+                    variant='standard'
+                    fullWidth
+                    sx={{
+                        color: blue
+                    }}
+                />
+            </Stack>
+        </Paper>
     )
 }
