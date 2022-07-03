@@ -1,5 +1,4 @@
 import {ReactElement} from "react";
-import {useNavigate} from "react-router-dom";
 import {AppBar, Stack, Typography} from "@mui/material";
 import { blue } from "@mui/material/colors";
 import AddBoxIcon from '@mui/icons-material/AddBox';
@@ -17,7 +16,7 @@ export const HeaderBar = (): ReactElement => {
                 height='100%'
             >
                 <Typography
-                    padding='20px'
+                    paddingLeft='20px'
                     fontSize='20px'
                     fontWeight='bold'
                 >
@@ -29,6 +28,12 @@ export const HeaderBar = (): ReactElement => {
                 >
                     <AddBoxIcon
                         aria-label='add-tournament'
+                        textDecoration='none'
+                        sx={{
+                            color: '#FFFFFF',
+                            marginTop: '3px',
+                            paddingLeft: '10px'
+                        }}
                     />
                 </RouterLink>
             </Stack>

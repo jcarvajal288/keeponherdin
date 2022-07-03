@@ -14,6 +14,7 @@ export const EnterLink = (): ReactElement => {
             sx={{marginTop: "60px"}}
             direction='row'
             alignItems='center'
+
         >
             <OndemandVideoIcon/>
             <TextField
