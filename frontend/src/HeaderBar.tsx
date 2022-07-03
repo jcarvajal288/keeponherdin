@@ -4,6 +4,8 @@ import { blue } from "@mui/material/colors";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import {Link as RouterLink} from 'react-router-dom';
 
+export const titleSlogan = "Can't Escape From Crossup Flop"
+
 export const HeaderBar = (): ReactElement => {
 
     return (
@@ -15,20 +17,27 @@ export const HeaderBar = (): ReactElement => {
                 alignItems='center'
                 height='100%'
             >
-                <Typography
-                    paddingLeft='20px'
-                    fontSize='20px'
-                    fontWeight='bold'
+                <RouterLink
+                    to='/'
+                    style={{ textDecoration: 'none' }}
                 >
-                    Can't Escape From Crossup Flop
-                </Typography>
+                    <Typography
+                        paddingLeft='20px'
+                        fontSize='20px'
+                        sx={{
+                            color: '#FFFFFF',
+                            fontWeight: 'bold'
+                        }}
+                    >
+                        {titleSlogan}
+                    </Typography>
+                </RouterLink>
                 <RouterLink
                     to='/add'
                     data-testid='add-tournament-button'
                 >
                     <AddBoxIcon
                         aria-label='add-tournament'
-                        textDecoration='none'
                         sx={{
                             color: '#FFFFFF',
                             marginTop: '3px',

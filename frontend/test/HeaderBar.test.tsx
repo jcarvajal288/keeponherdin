@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {render, screen} from "@testing-library/react";
-import {HeaderBar} from "../src/HeaderBar";
+import {HeaderBar, titleSlogan} from "../src/HeaderBar";
 import {MemoryRouter, Route, Routes} from "react-router-dom";
 
 describe('Header Bar', () =>  {
@@ -22,7 +22,7 @@ describe('Header Bar', () =>  {
 
     it('UI elements', () => {
         renderHeaderBar()
-        expect(screen.getByText("Can't Escape From Crossup Flop")).toBeDefined()
+        expect(screen.getByText(titleSlogan)).toBeDefined()
         expect(screen.getByLabelText('add-tournament')).toBeDefined()
     });
 
