@@ -20,7 +20,8 @@ export const EnterLink = (): ReactElement => {
                 id='enter-vod-link'
                 label='Link'
                 onFocus={handleTouch}
-                helperText={touched && 'https://www.youtube.com/watch?v=***********'}
+                helperText={touched ? 'https://www.youtube.com/watch?v=***********' : ' '}
+                variant='standard'
             />
         </Stack>
     )
