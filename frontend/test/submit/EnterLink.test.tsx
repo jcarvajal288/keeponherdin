@@ -5,23 +5,22 @@ import userEvent from "@testing-library/user-event";
 
 describe('EnterLink', () => {
 
+    const renderEnterLink = () => {
+        render(
+            <EnterLink setFormStep={() => {}}/>
+        )
+    }
+
     it('UI elements', () => {
-        render(<EnterLink/>)
+        renderEnterLink()
         expect(screen.getByTestId("OndemandVideoIcon")).toBeDefined()
         expect(screen.getByLabelText('Link')).toBeDefined()
     })
 
     it('displays helper text when the Link field is clicked', async () => {
-        render(<EnterLink/>)
+        renderEnterLink()
         expect(screen.queryByText('https://www.youtube.com/watch?v=***********')).toBeNull()
         await userEvent.click(screen.getByLabelText('Link'))
         expect(screen.getByText('https://www.youtube.com/watch?v=***********')).toBeDefined()
     })
-
-    // it('validates link on submission', async () => {
-    //     render(<EnterLink/>)
-    //     const badVideoLink = 'sdfgsdfgasdfasdf{enter}'
-    //     await userEvent.type(screen.getByLabelText('Link'), badVideoLink)
-    //     expect(screen.getByText('https://www.youtube.com/watch?v=***********')).toBeDefined()
-    // })
 })
