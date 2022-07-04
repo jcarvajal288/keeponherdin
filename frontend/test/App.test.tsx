@@ -23,6 +23,6 @@ describe('App', () => {
         const linkTextBox = screen.getByLabelText('Link')
         expect(await linkTextBox).toBeDefined()
         await userEvent.type(linkTextBox, videoUrl)
-        expect(await screen.findByText('Title')).toBeDefined()
+        expect(await screen.findByLabelText("Title")).toBeDefined();
     })
 })

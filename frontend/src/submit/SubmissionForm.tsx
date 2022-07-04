@@ -11,6 +11,8 @@ export const SubmissionForm = (): ReactElement => {
     return (
         <Box
             marginTop='60px'
+            width='90%'
+            marginLeft='5%'
         >
             {
                 ((formStep: string) => {
