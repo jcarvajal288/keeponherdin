@@ -9,6 +9,7 @@ import {Tournament} from "../tournaments/TournamentTable";
 
 export type VideoDetailsProps = {
     setFormStep: (nextStep: string) => void
+    setTournament: (tournament: Tournament) => void
 }
 
 type FormData = {
@@ -17,7 +18,7 @@ type FormData = {
     date: string;
 }
 
-export const VideoDetails = ({setFormStep}: VideoDetailsProps) => {
+export const VideoDetails = ({setFormStep, setTournament}: VideoDetailsProps) => {
 
     const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
     const notOnlyWhitespace = /.*\S.*/
@@ -63,6 +64,8 @@ export const VideoDetails = ({setFormStep}: VideoDetailsProps) => {
             date: new Date(Date.parse(validatedFormData.date!)),
             game_version: "3.0"
         }
+        setTournament(videoData)
+        setFormStep("Timestamps")
     }
 
     return (
@@ -163,6 +166,7 @@ export const VideoDetails = ({setFormStep}: VideoDetailsProps) => {
                     <Button
                         variant='contained'
                         startIcon={<ArrowRightAltIcon/>}
+                        type='submit'
                         disabled={!formState.isValid}
                     >
                         Next

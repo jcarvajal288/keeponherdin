@@ -33,12 +33,18 @@ describe('App', () => {
         const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
         const addButton = screen.getByLabelText('add-tournament')
         await userEvent.click(addButton)
+
         const linkTextBox = screen.getByLabelText('Link')
         expect(await linkTextBox).toBeDefined()
         await userEvent.type(linkTextBox, videoUrl)
-        const titleField = screen.findByLabelText("Title")
-        const channelField = screen.findByLabelText("Channel")
-        const dateField = screen.findByLabelText("Date")
-        //await userEvent.type(videoTitle)
+
+        const titleField = screen.getByLabelText("Title")
+        const channelField = screen.getByLabelText("Channel")
+        const dateField = screen.getByLabelText("Date")
+        await userEvent.type(titleField, 'asdf')
+        await userEvent.type(channelField, 'asdf')
+        await userEvent.type(dateField, '2022-11-11')
+        await userEvent.click(screen.getByRole("button", { name: 'Next'}))
+        expect(await screen.findByLabelText('Version')).toBeDefined()
     })
 })
