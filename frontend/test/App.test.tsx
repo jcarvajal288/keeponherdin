@@ -15,7 +15,7 @@ describe('App', () => {
         expect(await screen.queryByLabelText('Link')).toBeNull()
     })
 
-    it('navigates through to the video details page', async () => {
+    it('navigates through to the timestamps page', async () => {
         render(<App/>)
         const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
         const addButton = screen.getByLabelText('add-tournament')
@@ -23,6 +23,9 @@ describe('App', () => {
         const linkTextBox = screen.getByLabelText('Link')
         expect(await linkTextBox).toBeDefined()
         await userEvent.type(linkTextBox, videoUrl)
-        expect(await screen.findByLabelText("Title")).toBeDefined();
+        const titleField = screen.findByLabelText("Title")
+        const channelField = screen.findByLabelText("Channel")
+        const dateField = screen.findByLabelText("Date")
+        //await userEvent.type(videoTitle)
     })
 })
