@@ -15,6 +15,19 @@ describe('App', () => {
         expect(await screen.queryByLabelText('Link')).toBeNull()
     })
 
+    it('navigates to video details page and then starts over', async () => {
+        render(<App/>)
+        const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
+        const addButton = screen.getByLabelText('add-tournament')
+        await userEvent.click(addButton)
+        const linkTextBox = screen.getByLabelText('Link')
+        expect(await linkTextBox).toBeDefined()
+        await userEvent.type(linkTextBox, videoUrl)
+        expect(screen.findByLabelText("Title")).toBeDefined()
+        await userEvent.click(screen.getByRole("button", { name: 'Start Over'}))
+        expect(await screen.findByLabelText('Link')).toBeDefined()
+    })
+
     it('navigates through to the timestamps page', async () => {
         render(<App/>)
         const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'

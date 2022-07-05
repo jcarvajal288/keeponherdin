@@ -20,14 +20,21 @@ type FormData = {
 export const VideoDetails = ({setFormStep}: VideoDetailsProps) => {
 
     const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
+    const notOnlyWhitespace = /.*\S.*/
+
+    const handleStartOver = () => {
+        setFormStep("Enter Link")
+    }
 
     const videoDetailsSchema = yup
         .object({
             title: yup
                 .string()
+                .matches(notOnlyWhitespace, "required")
                 .required('required'),
             channel: yup
                 .string()
+                .matches(notOnlyWhitespace, "required")
                 .required('required'),
             date: yup
                 .string()
@@ -146,6 +153,7 @@ export const VideoDetails = ({setFormStep}: VideoDetailsProps) => {
                     <Button
                         variant='contained'
                         startIcon={<UndoIcon/>}
+                        onClick={handleStartOver}
                         sx={{
                             marginRight: '10px'
                         }}
