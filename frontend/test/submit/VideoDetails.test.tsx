@@ -7,7 +7,10 @@ import {act} from "react-dom/test-utils";
 describe('Video Details', () => {
 
     const renderVideoDetails = () => {
-        render(<VideoDetails setFormStep={() => {}}/>)
+        render(<VideoDetails
+            setFormStep={() => {}}
+            setTournament={() => {}}
+        />)
     }
 
     it('UI Elements', () => {

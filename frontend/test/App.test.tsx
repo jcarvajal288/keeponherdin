@@ -28,7 +28,7 @@ describe('App', () => {
         expect(await screen.findByLabelText('Link')).toBeDefined()
     })
 
-    it('navigates through to the timestamps page', async () => {
+    it('navigates through to the timestamps page and back', async () => {
         render(<App/>)
         const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
         const addButton = screen.getByLabelText('add-tournament')
@@ -46,5 +46,7 @@ describe('App', () => {
         await userEvent.type(dateField, '2022-11-11')
         await userEvent.click(screen.getByRole("button", { name: 'Next'}))
         expect(await screen.findByLabelText('Version')).toBeDefined()
+        await userEvent.click(screen.getByRole("button", { name: 'Start Over'}))
+        expect(await screen.findByLabelText('Link')).toBeDefined()
     })
 })
