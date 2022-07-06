@@ -19,9 +19,9 @@ export const Timestamps = ({setFormStep, tournament}: TimestampProps): ReactElem
 
     const emptyMatch: Match = {
         player1: "",
-        character1: "",
+        character1: "Arizona",
         player2: "",
-        character2: "",
+        character2: "Arizona",
         did_p1_win: true,
         start_time: "",
         tournament_id: -1
