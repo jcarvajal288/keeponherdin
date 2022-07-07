@@ -17,7 +17,7 @@ describe('TimestampRow', () => {
 
     const renderTimestampRow = () => {
         render(<TimestampRow
-            timestampId={0}
+            thisTimestampId={0}
             initialMatch={emptyMatch}
             timestamps={[]}
             setTimestamps={(_: Match[]) => {}}

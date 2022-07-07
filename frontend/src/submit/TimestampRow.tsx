@@ -8,14 +8,14 @@ import {Match} from "../tournaments/MatchRow";
 import {CharacterIcon} from "../tournaments/CharacterIcon";
 
 export type TimestampRowProps = {
-    timestampId: number
+    thisTimestampId: number
     initialMatch: Match
     timestamps: Match[]
     setTimestamps: (_: Match[]) => void
 }
 
 export const TimestampRow = ({
-        timestampId,
+        thisTimestampId,
         initialMatch,
         timestamps,
         setTimestamps
@@ -23,10 +23,13 @@ export const TimestampRow = ({
 
     const [ match, setMatch] = useState<Match>(initialMatch)
 
+    const duplicateThisRow = () => {
+        setTimestamps([...timestamps, Object.assign({}, timestamps[thisTimestampId])])
+    }
+
     const deleteThisRow = () => {
-        console.log('in delete')
         const newTimestamps = timestamps.filter(
-            timestamp => timestamp !== timestamps[timestampId]
+            timestamp => timestamp !== timestamps[thisTimestampId]
         )
         setTimestamps(newTimestamps)
     }
@@ -36,6 +39,7 @@ export const TimestampRow = ({
             direction='row'
             alignItems='center'
             justifyContent='space-between'
+            data-testid='timestamp-row'
         >
             <Box
                 width='10%'
@@ -45,8 +49,10 @@ export const TimestampRow = ({
             >
                 <TextField
                     label='Timestamp'
+                    name='Timestamp'
                     variant='standard'
                     defaultValue={match.start_time}
+                    onChange={(event) => match.start_time = event.target.value}
                 />
             </Box>
             <Box width='30%'>
@@ -54,6 +60,7 @@ export const TimestampRow = ({
                     label='Player 1'
                     variant='standard'
                     defaultValue={match.player1}
+                    onChange={(event) => match.player1 = event.target.value}
                     fullWidth
                 />
             </Box>
@@ -72,6 +79,7 @@ export const TimestampRow = ({
                     label='Player 2'
                     variant='standard'
                     defaultValue={match.player2}
+                    onChange={(event) => match.player2 = event.target.value}
                     fullWidth
                 />
             </Box>
@@ -83,10 +91,19 @@ export const TimestampRow = ({
             >
                 <OndemandVideoIcon/>
                 <SwapHorizIcon/>
-                <ContentCopyIcon/>
                 <IconButton
-                    title='Delete Timestamp'
-                    aria-label='Delete Timestamp'
+                    title='Duplicate'
+                    aria-label='Duplicate'
+                    onClick={duplicateThisRow}
+                    sx={{
+                        color: 'black'
+                    }}
+                >
+                    <ContentCopyIcon/>
+                </IconButton>
+                <IconButton
+                    title='Delete'
+                    aria-label='Delete'
                     onClick={deleteThisRow}
                     sx={{
                         color: 'black'

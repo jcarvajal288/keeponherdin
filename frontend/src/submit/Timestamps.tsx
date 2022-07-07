@@ -86,7 +86,7 @@ export const Timestamps = ({setFormStep, tournament}: TimestampProps): ReactElem
                     {timestamps.map((match: Match, index) => (
                         <TimestampRow
                             key={index}
-                            timestampId={index}
+                            thisTimestampId={index}
                             initialMatch={match}
                             timestamps={timestamps}
                             setTimestamps={setTimestamps}
