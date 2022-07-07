@@ -46,9 +46,11 @@ describe('Timestamps', () => {
         expect((versionField as HTMLInputElement).value).toEqual('3.0')
     })
 
-    it('can add a timestamp', async () => {
+    it('can add and delete a timestamp', async () => {
         renderTimestamps()
         await userEvent.click(screen.getByRole("button", { name: 'Add Match'}))
         expect(await screen.findByLabelText('Timestamp')).toBeDefined()
+        await userEvent.click(screen.getByLabelText('Delete Timestamp'))
+        expect(await screen.queryByLabelText('Timestamp')).toBeNull()
     })
 })

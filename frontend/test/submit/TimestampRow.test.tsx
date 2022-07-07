@@ -15,8 +15,17 @@ describe('TimestampRow', () => {
         tournament_id: -1
     }
 
+    const renderTimestampRow = () => {
+        render(<TimestampRow
+            timestampId={0}
+            initialMatch={emptyMatch}
+            timestamps={[]}
+            setTimestamps={(_: Match[]) => {}}
+        />)
+    }
+
     it('UI Elements', () => {
-        render(<TimestampRow initialMatch={emptyMatch}/>)
+        renderTimestampRow()
         expect(screen.getByLabelText('Timestamp')).toBeDefined()
         expect(screen.getByLabelText('Player 1')).toBeDefined()
         expect(screen.getByLabelText('Player 2')).toBeDefined()
