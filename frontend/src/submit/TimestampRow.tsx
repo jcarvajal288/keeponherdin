@@ -1,5 +1,16 @@
-import {ReactElement, useState} from "react";
-import {Box, IconButton, Stack, TextField, Typography} from "@mui/material";
+import React, {ReactElement, useState} from "react";
+import {
+    Box,
+    IconButton,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    MenuList,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -22,6 +33,15 @@ export const TimestampRow = ({
     }: TimestampRowProps): ReactElement => {
 
     const [ match, setMatch] = useState<Match>(initialMatch)
+
+    const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null)
+    const open = Boolean(anchorElement)
+    const handleCharacterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorElement(event.currentTarget)
+    }
+    const handleCharacterMenuClose = () => {
+        setAnchorElement(null)
+    }
 
     const duplicateThisRow = () => {
         setTimestamps([...timestamps, Object.assign({}, timestamps[thisTimestampId])])
@@ -70,9 +90,35 @@ export const TimestampRow = ({
                 justifyContent='center'
                 width='15%'
             >
-                <CharacterIcon character={match.character1}/>
+                <IconButton
+                    title='character1-select'
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup='true'
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleCharacterClick}
+                >
+                    <CharacterIcon character={match.character1}/>
+                </IconButton>
+                <CharacterMenu
+                    anchorElement={anchorElement}
+                    open={open}
+                    onClose={handleCharacterMenuClose}
+                />
                 <Typography>vs</Typography>
-                <CharacterIcon character={match.character2}/>
+                <IconButton
+                    title='character2-select'
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup='true'
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleCharacterClick}
+                >
+                    <CharacterIcon character={match.character2}/>
+                </IconButton>
+                <CharacterMenu
+                    anchorElement={anchorElement}
+                    open={open}
+                    onClose={handleCharacterMenuClose}
+                />
             </Stack>
             <Box width='30%'>
                 <TextField
@@ -113,5 +159,64 @@ export const TimestampRow = ({
                 </IconButton>
             </Stack>
         </Stack>
+    )
+}
+
+type CharacterMenuProps = {
+    anchorElement: null | HTMLElement
+    open: boolean
+    onClose: () => void
+}
+
+const CharacterMenu = ({anchorElement, open, onClose }: CharacterMenuProps): ReactElement => {
+    return (
+        <Menu
+            anchorEl={anchorElement}
+            open={open}
+            onClose={onClose}
+        >
+            <MenuItem>
+                <ListItemIcon>
+                    <CharacterIcon character='Arizona'/>   
+                </ListItemIcon>
+                <ListItemText>Arizona</ListItemText>
+            </MenuItem>
+            <MenuItem>
+                <ListItemIcon>
+                    <CharacterIcon character='Oleander'/>
+                </ListItemIcon>
+                <ListItemText>Oleander</ListItemText>
+            </MenuItem>
+            <MenuItem>
+                <ListItemIcon>
+                    <CharacterIcon character='Paprika'/>
+                </ListItemIcon>
+                <ListItemText>Paprika</ListItemText>
+            </MenuItem>
+            <MenuItem>
+                <ListItemIcon>
+                    <CharacterIcon character='Pom'/>
+                </ListItemIcon>
+                <ListItemText>Pom</ListItemText>
+            </MenuItem>
+            <MenuItem>
+                <ListItemIcon>
+                    <CharacterIcon character='Shanty'/>
+                </ListItemIcon>
+                <ListItemText>Shanty</ListItemText>
+            </MenuItem>
+            <MenuItem>
+                <ListItemIcon>
+                    <CharacterIcon character='Tianhuo'/>
+                </ListItemIcon>
+                <ListItemText>Tianhuo</ListItemText>
+            </MenuItem>
+            <MenuItem>
+                <ListItemIcon>
+                    <CharacterIcon character='Velvet'/>
+                </ListItemIcon>
+                <ListItemText>Velvet</ListItemText>
+            </MenuItem>
+        </Menu>
     )
 }
