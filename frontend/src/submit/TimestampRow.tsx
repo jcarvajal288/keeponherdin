@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from "react";
+import React, {Dispatch, ReactElement, SetStateAction, useState} from "react";
 import {
     Box,
     IconButton,
@@ -6,7 +6,6 @@ import {
     ListItemText,
     Menu,
     MenuItem,
-    MenuList,
     Stack,
     TextField,
     Typography
@@ -32,15 +31,23 @@ export const TimestampRow = ({
         setTimestamps
     }: TimestampRowProps): ReactElement => {
 
-    const [ match, setMatch] = useState<Match>(initialMatch)
+    const [ match, setMatch ] = useState<Match>(initialMatch)
 
-    const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null)
-    const open = Boolean(anchorElement)
-    const handleCharacterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorElement(event.currentTarget)
+    const [p1AnchorElement, setP1AnchorElement] = useState<null | HTMLElement>(null)
+    const [p2AnchorElement, setP2AnchorElement] = useState<null | HTMLElement>(null)
+    const openP1 = Boolean(p1AnchorElement)
+    const openP2 = Boolean(p2AnchorElement)
+    const handleP1CharacterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setP1AnchorElement(event.currentTarget)
     }
-    const handleCharacterMenuClose = () => {
-        setAnchorElement(null)
+    const handleP2CharacterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setP2AnchorElement(event.currentTarget)
+    }
+    const handleP1CharacterMenuClose = () => {
+        setP1AnchorElement(null)
+    }
+    const handleP2CharacterMenuClose = () => {
+        setP2AnchorElement(null)
     }
 
     const duplicateThisRow = () => {
@@ -92,32 +99,40 @@ export const TimestampRow = ({
             >
                 <IconButton
                     title='character1-select'
-                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-controls={openP1 ? 'basic-menu' : undefined}
                     aria-haspopup='true'
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleCharacterClick}
+                    aria-expanded={openP1? 'true' : undefined}
+                    onClick={handleP1CharacterClick}
                 >
                     <CharacterIcon character={match.character1}/>
                 </IconButton>
                 <CharacterMenu
-                    anchorElement={anchorElement}
-                    open={open}
-                    onClose={handleCharacterMenuClose}
+                    anchorElement={p1AnchorElement}
+                    setAnchorElement={setP1AnchorElement}
+                    open={openP1}
+                    onClose={handleP1CharacterMenuClose}
+                    setCharacter={(character: string) => {
+                        match.character1 = character
+                    }}
                 />
                 <Typography>vs</Typography>
                 <IconButton
                     title='character2-select'
-                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-controls={openP2 ? 'basic-menu' : undefined}
                     aria-haspopup='true'
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleCharacterClick}
+                    aria-expanded={openP2 ? 'true' : undefined}
+                    onClick={handleP2CharacterClick}
                 >
                     <CharacterIcon character={match.character2}/>
                 </IconButton>
                 <CharacterMenu
-                    anchorElement={anchorElement}
-                    open={open}
-                    onClose={handleCharacterMenuClose}
+                    anchorElement={p2AnchorElement}
+                    setAnchorElement={setP2AnchorElement}
+                    open={openP2}
+                    onClose={handleP2CharacterMenuClose}
+                    setCharacter={(character: string) => {
+                        match.character2 = character
+                    }}
                 />
             </Stack>
             <Box width='30%'>
@@ -164,54 +179,91 @@ export const TimestampRow = ({
 
 type CharacterMenuProps = {
     anchorElement: null | HTMLElement
+    setAnchorElement: Dispatch<SetStateAction<HTMLElement | null>>
     open: boolean
     onClose: () => void
+    setCharacter: (character: string) => void
 }
 
-const CharacterMenu = ({anchorElement, open, onClose }: CharacterMenuProps): ReactElement => {
+const CharacterMenu = ({anchorElement, setAnchorElement, open, onClose, setCharacter }: CharacterMenuProps): ReactElement => {
     return (
         <Menu
             anchorEl={anchorElement}
             open={open}
             onClose={onClose}
         >
-            <MenuItem>
+            <MenuItem
+                onClick={(_) => {
+                    setCharacter('Arizona')
+                    setAnchorElement(null)
+                }}
+            >
                 <ListItemIcon>
                     <CharacterIcon character='Arizona'/>   
                 </ListItemIcon>
                 <ListItemText>Arizona</ListItemText>
             </MenuItem>
-            <MenuItem>
+            <MenuItem
+                onClick={(_) => {
+                    setCharacter('Oleander')
+                    setAnchorElement(null)
+                }}
+            >
                 <ListItemIcon>
                     <CharacterIcon character='Oleander'/>
                 </ListItemIcon>
                 <ListItemText>Oleander</ListItemText>
             </MenuItem>
-            <MenuItem>
+            <MenuItem
+                onClick={(_) => {
+                    setCharacter('Paprika')
+                    setAnchorElement(null)
+                }}
+            >
                 <ListItemIcon>
                     <CharacterIcon character='Paprika'/>
                 </ListItemIcon>
                 <ListItemText>Paprika</ListItemText>
             </MenuItem>
-            <MenuItem>
+            <MenuItem
+                onClick={(_) => {
+                    setCharacter('Pom')
+                    setAnchorElement(null)
+                }}
+            >
                 <ListItemIcon>
                     <CharacterIcon character='Pom'/>
                 </ListItemIcon>
                 <ListItemText>Pom</ListItemText>
             </MenuItem>
-            <MenuItem>
+            <MenuItem
+                onClick={(_) => {
+                    setCharacter('Shanty')
+                    setAnchorElement(null)
+                }}
+            >
                 <ListItemIcon>
                     <CharacterIcon character='Shanty'/>
                 </ListItemIcon>
                 <ListItemText>Shanty</ListItemText>
             </MenuItem>
-            <MenuItem>
+            <MenuItem
+                onClick={(_) => {
+                    setCharacter('Tianhuo')
+                    setAnchorElement(null)
+                }}
+            >
                 <ListItemIcon>
                     <CharacterIcon character='Tianhuo'/>
                 </ListItemIcon>
                 <ListItemText>Tianhuo</ListItemText>
             </MenuItem>
-            <MenuItem>
+            <MenuItem
+                onClick={(_) => {
+                    setCharacter('Velvet')
+                    setAnchorElement(null)
+                }}
+            >
                 <ListItemIcon>
                     <CharacterIcon character='Velvet'/>
                 </ListItemIcon>
