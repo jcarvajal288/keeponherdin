@@ -97,4 +97,23 @@ describe('TimestampRow', () => {
         const character2select = screen.getByTitle('character2-select')
         expect(within(character2select).getByAltText('Velvet')).toBeDefined()
     })
+
+    it('swaps player 1 and player 2 when the Swap button is clicked', async () => {
+        renderTimestampRow({})
+        await userEvent.type(screen.getByLabelText('Player 1'), 'player1')
+        await userEvent.type(screen.getByLabelText('Player 2'), 'player2')
+        await userEvent.click(screen.getByTitle('character1-select'))
+        await userEvent.click(screen.getByRole('menuitem', { name: 'Paprika Paprika' }))
+        await userEvent.click(screen.getByTitle('character2-select'))
+        await userEvent.click(screen.getByRole('menuitem', { name: 'Pom Pom' }))
+        await userEvent.click(screen.getByLabelText('Swap Players'))
+
+        expect(screen.getByRole<HTMLInputElement>('textbox', { name: 'Player 1' }).value).toEqual('player2')
+        expect(screen.getByRole<HTMLInputElement>('textbox', { name: 'Player 2' }).value).toEqual('player1')
+
+        const character1select = screen.getByTitle('character1-select')
+        expect(within(character1select).getByAltText('Pom')).toBeDefined()
+        const character2select = screen.getByTitle('character2-select')
+        expect(within(character2select).getByAltText('Paprika')).toBeDefined()
+    })
 })

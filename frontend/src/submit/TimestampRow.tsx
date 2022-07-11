@@ -50,7 +50,22 @@ export const TimestampRow = ({
         setP2AnchorElement(null)
     }
 
+    const swapPlayers = () => {
+        console.log(match)
+        const newMatch = {
+            player1: match.player2,
+            character1: match.character2,
+            player2: match.player1,
+            character2: match.character1,
+            did_p1_win: match.did_p1_win,
+            start_time: match.start_time,
+            tournament_id: match.tournament_id
+        }
+        setMatch(newMatch)
+    }
+
     const duplicateThisRow = () => {
+        console.log(match)
         setTimestamps([...timestamps, Object.assign({}, timestamps[thisTimestampId])])
     }
 
@@ -85,9 +100,21 @@ export const TimestampRow = ({
             <Box width='30%'>
                 <TextField
                     label='Player 1'
+                    title='Player 1'
                     variant='standard'
-                    defaultValue={match.player1}
-                    onChange={(event) => match.player1 = event.target.value}
+                    value={match.player1}
+                    onChange={(event) => {
+                        const newMatch = {
+                            player1: event.target.value,
+                            character1: match.character1,
+                            player2: match.player2,
+                            character2: match.character2,
+                            did_p1_win: match.did_p1_win,
+                            start_time: match.start_time,
+                            tournament_id: match.tournament_id
+                        }
+                        setMatch(newMatch)
+                    }}
                     fullWidth
                 />
             </Box>
@@ -138,9 +165,21 @@ export const TimestampRow = ({
             <Box width='30%'>
                 <TextField
                     label='Player 2'
+                    title='Player 2'
                     variant='standard'
-                    defaultValue={match.player2}
-                    onChange={(event) => match.player2 = event.target.value}
+                    value={match.player2}
+                    onChange={(event) => {
+                        const newMatch = {
+                            player1: match.player1,
+                            character1: match.character1,
+                            player2: event.target.value,
+                            character2: match.character2,
+                            did_p1_win: match.did_p1_win,
+                            start_time: match.start_time,
+                            tournament_id: match.tournament_id
+                        }
+                        setMatch(newMatch)
+                    }}
                     fullWidth
                 />
             </Box>
@@ -151,7 +190,16 @@ export const TimestampRow = ({
                 width='15%'
             >
                 <OndemandVideoIcon/>
-                <SwapHorizIcon/>
+                <IconButton
+                    title='Swap Players'
+                    aria-label='Swap Players'
+                    onClick={swapPlayers}
+                    sx={{
+                        color: 'black'
+                    }}
+                >
+                    <SwapHorizIcon/>
+                </IconButton>
                 <IconButton
                     title='Duplicate'
                     aria-label='Duplicate'
