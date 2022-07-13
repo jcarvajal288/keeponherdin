@@ -65,8 +65,7 @@ export const TimestampRow = ({
     }
 
     const duplicateThisRow = () => {
-        console.log(match)
-        setTimestamps([...timestamps, Object.assign({}, timestamps[thisTimestampId])])
+        setTimestamps([...timestamps, match])
     }
 
     const deleteThisRow = () => {
