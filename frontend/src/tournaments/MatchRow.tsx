@@ -9,7 +9,7 @@ export type Match = {
     character1: string;
     player2: string;
     character2: string;
-    did_p1_win: boolean;
+    did_p1_win: boolean | null;
     start_time: string;
     tournament_id: number;
 }

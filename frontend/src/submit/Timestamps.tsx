@@ -22,7 +22,7 @@ export const Timestamps = ({setFormStep, tournament}: TimestampProps): ReactElem
         character1: "Arizona",
         player2: "",
         character2: "Arizona",
-        did_p1_win: true,
+        did_p1_win: null,
         start_time: "",
         tournament_id: -1
     }

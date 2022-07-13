@@ -51,15 +51,12 @@ export const TimestampRow = ({
     }
 
     const swapPlayers = () => {
-        console.log(match)
         const newMatch = {
+            ...match,
             player1: match.player2,
             character1: match.character2,
             player2: match.player1,
             character2: match.character1,
-            did_p1_win: match.did_p1_win,
-            start_time: match.start_time,
-            tournament_id: match.tournament_id
         }
         setMatch(newMatch)
     }
@@ -104,13 +101,8 @@ export const TimestampRow = ({
                     value={match.player1}
                     onChange={(event) => {
                         const newMatch = {
+                            ...match,
                             player1: event.target.value,
-                            character1: match.character1,
-                            player2: match.player2,
-                            character2: match.character2,
-                            did_p1_win: match.did_p1_win,
-                            start_time: match.start_time,
-                            tournament_id: match.tournament_id
                         }
                         setMatch(newMatch)
                     }}
@@ -169,13 +161,8 @@ export const TimestampRow = ({
                     value={match.player2}
                     onChange={(event) => {
                         const newMatch = {
-                            player1: match.player1,
-                            character1: match.character1,
+                            ...match,
                             player2: event.target.value,
-                            character2: match.character2,
-                            did_p1_win: match.did_p1_win,
-                            start_time: match.start_time,
-                            tournament_id: match.tournament_id
                         }
                         setMatch(newMatch)
                     }}
