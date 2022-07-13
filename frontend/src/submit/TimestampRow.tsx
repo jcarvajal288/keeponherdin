@@ -73,6 +73,13 @@ export const TimestampRow = ({
         setTimestamps(newTimestamps)
     }
 
+    const setPlayer1Win = (didP1Win: boolean) => {
+        setMatch({
+            ...match,
+            did_p1_win: didP1Win
+        })
+    }
+
     return (
         <Stack
             direction='row'
@@ -116,15 +123,30 @@ export const TimestampRow = ({
                 justifyContent='center'
                 width='20%'
             >
-                <EmojiEventsIcon
-                    titleAccess='Did Player 1 Win?'
-                    sx={{
-                        ...(match.did_p1_win
-                            ? { color: 'orange' }
-                            : { color: 'gray' }
-                        )
-                    }}
-                />
+                <IconButton
+                    onClick={(_event) => setPlayer1Win(true)}
+                >
+                    <EmojiEventsIcon
+                        titleAccess={
+                            ((did_p1_win: boolean | null) => {
+                                switch (did_p1_win) {
+                                    case true:
+                                        return "Player 1 Wins"
+                                    case false:
+                                        return "Player 1 Loses"
+                                    default:
+                                        return "Did Player 1 Win?"
+                                }
+                            })(match.did_p1_win)
+                        }
+                        sx={{
+                            ...(match.did_p1_win
+                                ? { color: 'orange' }
+                                : { color: 'gray' }
+                            )
+                        }}
+                    />
+                </IconButton>
                 <IconButton
                     title='character1-select'
                     aria-controls={openP1 ? 'basic-menu' : undefined}
@@ -168,15 +190,27 @@ export const TimestampRow = ({
                         match.character2 = character
                     }}
                 />
-                <EmojiEventsIcon
-                    titleAccess='Did Player 2 Win?'
-                    sx={{
-                        ...(match.did_p1_win !== true
-                                ? { color: 'gray' }
-                                : { color: 'orange' }
-                        )
-                    }}
-                />
+                <IconButton
+                    onClick={(_event) => setPlayer1Win(false)}
+                >
+                    <EmojiEventsIcon
+                        titleAccess={
+                            ((did_p1_win: boolean | null) => {
+                                switch(did_p1_win) {
+                                    case true: return "Player 2 Loses"
+                                    case false: return "Player 2 Wins"
+                                    default: return "Did Player 2 Win?"
+                                }
+                            })(match.did_p1_win)
+                        }
+                        sx={{
+                            ...(match.did_p1_win !== null && !match.did_p1_win
+                                    ? { color: 'orange' }
+                                    : { color: 'gray' }
+                            )
+                        }}
+                    />
+                </IconButton>
             </Stack>
             <Box width='30%'>
                 <TextField

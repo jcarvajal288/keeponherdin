@@ -3,7 +3,6 @@ import {render, screen, within} from "@testing-library/react";
 import {TimestampRow, TimestampRowProps} from "../../src/submit/TimestampRow";
 import {Match} from "../../src/tournaments/MatchRow";
 import userEvent from "@testing-library/user-event";
-import {TournamentTableProps} from "../../src/tournaments/TournamentTable";
 
 describe('TimestampRow', () => {
 
@@ -12,7 +11,7 @@ describe('TimestampRow', () => {
         character1: "",
         player2: "",
         character2: "",
-        did_p1_win: true,
+        did_p1_win: null,
         start_time: "",
         tournament_id: -1
     }
@@ -115,5 +114,17 @@ describe('TimestampRow', () => {
         expect(within(character1select).getByAltText('Pom')).toBeDefined()
         const character2select = screen.getByTitle('character2-select')
         expect(within(character2select).getByAltText('Paprika')).toBeDefined()
+    })
+
+    it('toggles did_p1_win when clicking the player trophy icons', async () => {
+        renderTimestampRow({})
+        expect(screen.getByTitle('Did Player 1 Win?')).toBeDefined()
+        expect(screen.getByTitle('Did Player 2 Win?')).toBeDefined()
+        await userEvent.click(screen.getByTitle('Did Player 1 Win?'))
+        expect(screen.getByTitle('Player 1 Wins')).toBeDefined()
+        expect(screen.getByTitle('Player 2 Loses')).toBeDefined()
+        await userEvent.click(screen.getByTitle('Player 2 Loses'))
+        expect(screen.getByTitle('Player 1 Loses')).toBeDefined()
+        expect(screen.getByTitle('Player 2 Wins')).toBeDefined()
     })
 })
