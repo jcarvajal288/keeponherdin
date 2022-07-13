@@ -1,4 +1,5 @@
 import React, {Dispatch, ReactElement, SetStateAction, useState} from "react";
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import {
     Box,
     IconButton,
@@ -113,14 +114,26 @@ export const TimestampRow = ({
                 direction='row'
                 alignItems='center'
                 justifyContent='center'
-                width='15%'
+                width='20%'
             >
+                <EmojiEventsIcon
+                    titleAccess='Did Player 1 Win?'
+                    sx={{
+                        ...(match.did_p1_win
+                            ? { color: 'orange' }
+                            : { color: 'gray' }
+                        )
+                    }}
+                />
                 <IconButton
                     title='character1-select'
                     aria-controls={openP1 ? 'basic-menu' : undefined}
                     aria-haspopup='true'
                     aria-expanded={openP1? 'true' : undefined}
                     onClick={handleP1CharacterClick}
+                    sx={{
+                        width: '25%'
+                    }}
                 >
                     <CharacterIcon character={match.character1}/>
                 </IconButton>
@@ -140,6 +153,9 @@ export const TimestampRow = ({
                     aria-haspopup='true'
                     aria-expanded={openP2 ? 'true' : undefined}
                     onClick={handleP2CharacterClick}
+                    sx={{
+                        width: '25%'
+                    }}
                 >
                     <CharacterIcon character={match.character2}/>
                 </IconButton>
@@ -150,6 +166,15 @@ export const TimestampRow = ({
                     onClose={handleP2CharacterMenuClose}
                     setCharacter={(character: string) => {
                         match.character2 = character
+                    }}
+                />
+                <EmojiEventsIcon
+                    titleAccess='Did Player 2 Win?'
+                    sx={{
+                        ...(match.did_p1_win !== true
+                                ? { color: 'gray' }
+                                : { color: 'orange' }
+                        )
                     }}
                 />
             </Stack>

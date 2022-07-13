@@ -48,7 +48,8 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                                 titleAccess='Player 1 Wins'
                                 sx={{color: 'orange'}}
                             />
-                            : <Box/>}
+                            : <Box/>
+                        }
                     </Stack>
                     <Stack direction='row' alignItems='center'>
                         <Typography>vs</Typography>
@@ -70,7 +71,8 @@ export const MatchRow = ({match}: MatchRowProps): ReactElement => {
                             : <EmojiEventsIcon
                                 titleAccess='Player 2 Wins'
                                 sx={{color: 'orange'}}
-                            />}
+                            />
+                        }
                     </Stack>
                 </Stack>
                 <Stack
