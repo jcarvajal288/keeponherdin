@@ -49,4 +49,23 @@ describe('App', () => {
         await userEvent.click(screen.getByRole("button", { name: 'Start Over'}))
         expect(await screen.findByLabelText('Link')).toBeDefined()
     })
+
+    it('vod icon links to vod at the correct time stamp', async () => {
+        render(<App/>)
+        const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
+        await userEvent.click(screen.getByLabelText('add-tournament'))
+        await userEvent.type(screen.getByLabelText('Link'), videoUrl)
+
+        await userEvent.type(screen.getByLabelText("Title"), 'asdf')
+        await userEvent.type(screen.getByLabelText("Channel"), 'asdf')
+        await userEvent.type(screen.getByLabelText("Date"), '2022-11-11')
+        await userEvent.click(screen.getByRole("button", { name: 'Next'}))
+
+        await userEvent.click(screen.getByRole("button", { name: 'Add Match'}))
+        await userEvent.type(await screen.findByLabelText('Timestamp'), '0h12m24s')
+        const timestampField = screen.getByLabelText('Timestamp')
+        expect((timestampField as HTMLInputElement).value).toEqual('0h12m24s')
+        expect((await screen.findByRole('link', { name: 'Go to VOD' })).getAttribute('href'))
+            .toEqual(`${videoUrl}?t=744`)
+    })
 })

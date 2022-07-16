@@ -8,7 +8,8 @@ const tournament: Tournament = {
     title: "Rodeo Regional #100",
     date: new Date("2022-06-19T06:00:00Z"),
     game_version: "3.0",
-    tournament_organizer: "Javamorris"
+    tournament_organizer: "Javamorris",
+    vod_link: "https://www.youtube.com/watch?v=Z5PsPVKZlmo"
 }
 
 describe('TournamentTable', () => {

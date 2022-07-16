@@ -90,6 +90,7 @@ export const Timestamps = ({setFormStep, tournament}: TimestampProps): ReactElem
                             initialMatch={match}
                             timestamps={timestamps}
                             setTimestamps={setTimestamps}
+                            tournament={tournament}
                         />
                     ))}
                 </Stack>

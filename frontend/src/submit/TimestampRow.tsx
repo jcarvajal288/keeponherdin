@@ -8,7 +8,7 @@ import {
     Menu,
     MenuItem,
     Stack,
-    TextField,
+    TextField, touchRippleClasses,
     Typography
 } from "@mui/material";
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
@@ -17,19 +17,22 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Match} from "../tournaments/MatchRow";
 import {CharacterIcon} from "../tournaments/CharacterIcon";
+import {Tournament} from "../tournaments/TournamentTable";
 
 export type TimestampRowProps = {
     thisTimestampId: number
     initialMatch: Match
     timestamps: Match[]
     setTimestamps: (_: Match[]) => void
+    tournament: Tournament
 }
 
 export const TimestampRow = ({
         thisTimestampId,
         initialMatch,
         timestamps,
-        setTimestamps
+        setTimestamps,
+        tournament
     }: TimestampRowProps): ReactElement => {
 
     const [ match, setMatch ] = useState<Match>(initialMatch)
@@ -80,6 +83,18 @@ export const TimestampRow = ({
         })
     }
 
+    const convertTimestampToSeconds = (timestamp: string): number => {
+        const h_index = timestamp.indexOf('h')
+        const m_index = timestamp.indexOf('m')
+        const s_index = timestamp.indexOf('s')
+        const hours = parseInt(timestamp.substring(0, h_index), 10)
+        const minutes = parseInt(timestamp.substring(h_index+1, m_index), 10)
+        const seconds = parseInt(timestamp.substring(m_index+1, s_index), 10)
+        return (hours * 3600) + (minutes * 60) + seconds
+    }
+
+    const fullVodUrl = `${tournament.vod_link}?t=${convertTimestampToSeconds(match.start_time)}`
+
     return (
         <Stack
             direction='row'
@@ -98,7 +113,13 @@ export const TimestampRow = ({
                     name='Timestamp'
                     variant='standard'
                     defaultValue={match.start_time}
-                    onChange={(event) => match.start_time = event.target.value}
+                    onChange={(event) => {
+                        const newMatch = {
+                            ...match,
+                            start_time: event.target.value
+                        }
+                        setMatch(newMatch)
+                    }}
                 />
             </Box>
             <Box width='30%'>
@@ -234,7 +255,14 @@ export const TimestampRow = ({
                 alignItems='center'
                 width='15%'
             >
-                <OndemandVideoIcon/>
+                <IconButton
+                    title='Go to VOD'
+                    aria-label='Go to VOD'
+                    target="_blank"
+                    href={fullVodUrl}
+                >
+                    <OndemandVideoIcon/>
+                </IconButton>
                 <IconButton
                     title='Swap Players'
                     aria-label='Swap Players'

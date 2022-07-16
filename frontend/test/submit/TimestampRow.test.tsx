@@ -3,6 +3,7 @@ import {render, screen, within} from "@testing-library/react";
 import {TimestampRow, TimestampRowProps} from "../../src/submit/TimestampRow";
 import {Match} from "../../src/tournaments/MatchRow";
 import userEvent from "@testing-library/user-event";
+import {Tournament} from "../../src/tournaments/TournamentTable";
 
 describe('TimestampRow', () => {
 
@@ -16,12 +17,22 @@ describe('TimestampRow', () => {
         tournament_id: -1
     }
 
+    const tournament: Tournament = {
+        id: 1,
+        title: "Rodeo Regional #100",
+        date: new Date("2022-06-19T06:00:00Z"),
+        game_version: "3.0",
+        tournament_organizer: "Javamorris",
+        vod_link: "https://www.youtube.com/watch?v=Z5PsPVKZlmo"
+    }
+
     const renderTimestampRow = (props: Partial<TimestampRowProps>) => {
         render(<TimestampRow
             thisTimestampId={0}
             initialMatch={emptyMatch}
             timestamps={[]}
             setTimestamps={(_: Match[]) => {}}
+            tournament={tournament}
             {...props}
         />)
     }

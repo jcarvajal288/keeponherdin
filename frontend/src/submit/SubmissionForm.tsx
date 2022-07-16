@@ -8,12 +8,14 @@ import {Timestamps} from "./Timestamps";
 export const SubmissionForm = (): ReactElement => {
 
     const [formStep, setFormStep] = useState<string>("Enter Link");
+    const [vodLink, setVodLink] = useState<string>("")
     const [tournament, setTournament] = useState<Tournament>({
         id: -1,
         title: "",
         date: new Date(),
         game_version: "3.0",
-        tournament_organizer: ""
+        tournament_organizer: "",
+        vod_link: ""
     })
 
     return (
@@ -26,11 +28,15 @@ export const SubmissionForm = (): ReactElement => {
                 ((formStep: string) => {
                     switch (formStep) {
                         case "Enter Link":
-                            return <EnterLink setFormStep={setFormStep}/>
+                            return <EnterLink
+                                setFormStep={setFormStep}
+                                setVodLink={setVodLink}
+                            />
                         case "Video Details":
                             return <VideoDetails
                                 setFormStep={setFormStep}
                                 setTournament={setTournament}
+                                vodLink={vodLink}
                             />
                         case "Timestamps":
                             return <Timestamps
@@ -38,7 +44,10 @@ export const SubmissionForm = (): ReactElement => {
                                 tournament={tournament}
                             />
                         default:
-                            return <EnterLink setFormStep={setFormStep}/>
+                            return <EnterLink
+                                setFormStep={setFormStep}
+                                setVodLink={setVodLink}
+                            />
                     }
                 })(formStep)
             }

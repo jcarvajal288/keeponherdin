@@ -10,6 +10,7 @@ describe('Video Details', () => {
         render(<VideoDetails
             setFormStep={() => {}}
             setTournament={() => {}}
+            vodLink=''
         />)
     }
 

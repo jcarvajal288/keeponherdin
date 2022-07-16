@@ -2,7 +2,6 @@ import {Stack, Typography} from "@mui/material";
 import {ReactElement, useEffect, useState} from "react";
 import {Match} from "./MatchRow";
 import {MatchList} from "./MatchList";
-import {matches} from "../../test/tournaments/MatchList.test";
 
 export type Tournament = {
     id: number;
@@ -10,6 +9,7 @@ export type Tournament = {
     date: Date;
     game_version: string;
     tournament_organizer: string;
+    vod_link: string;
 }
 
 export type TournamentTableProps = {
