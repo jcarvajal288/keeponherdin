@@ -1,4 +1,4 @@
-export const Characters = [
+export const TFH_Characters = [
     "Arizona",
     "Oleander",
     "Paprika",

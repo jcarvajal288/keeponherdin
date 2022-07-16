@@ -18,6 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {Match} from "../tournaments/MatchRow";
 import {CharacterIcon} from "../tournaments/CharacterIcon";
 import {Tournament} from "../tournaments/TournamentTable";
+import {TFH_Characters} from "../tfhData";
 
 export type TimestampRowProps = {
     thisTimestampId: number
@@ -313,83 +314,20 @@ const CharacterMenu = ({anchorElement, setAnchorElement, open, onClose, setChara
             open={open}
             onClose={onClose}
         >
-            <MenuItem
-                onClick={(_) => {
-                    setCharacter('Arizona')
-                    setAnchorElement(null)
-                }}
-            >
-                <ListItemIcon>
-                    <CharacterIcon character='Arizona'/>   
-                </ListItemIcon>
-                <ListItemText>Arizona</ListItemText>
-            </MenuItem>
-            <MenuItem
-                onClick={(_) => {
-                    setCharacter('Oleander')
-                    setAnchorElement(null)
-                }}
-            >
-                <ListItemIcon>
-                    <CharacterIcon character='Oleander'/>
-                </ListItemIcon>
-                <ListItemText>Oleander</ListItemText>
-            </MenuItem>
-            <MenuItem
-                onClick={(_) => {
-                    setCharacter('Paprika')
-                    setAnchorElement(null)
-                }}
-            >
-                <ListItemIcon>
-                    <CharacterIcon character='Paprika'/>
-                </ListItemIcon>
-                <ListItemText>Paprika</ListItemText>
-            </MenuItem>
-            <MenuItem
-                onClick={(_) => {
-                    setCharacter('Pom')
-                    setAnchorElement(null)
-                }}
-            >
-                <ListItemIcon>
-                    <CharacterIcon character='Pom'/>
-                </ListItemIcon>
-                <ListItemText>Pom</ListItemText>
-            </MenuItem>
-            <MenuItem
-                onClick={(_) => {
-                    setCharacter('Shanty')
-                    setAnchorElement(null)
-                }}
-            >
-                <ListItemIcon>
-                    <CharacterIcon character='Shanty'/>
-                </ListItemIcon>
-                <ListItemText>Shanty</ListItemText>
-            </MenuItem>
-            <MenuItem
-                onClick={(_) => {
-                    setCharacter('Tianhuo')
-                    setAnchorElement(null)
-                }}
-            >
-                <ListItemIcon>
-                    <CharacterIcon character='Tianhuo'/>
-                </ListItemIcon>
-                <ListItemText>Tianhuo</ListItemText>
-            </MenuItem>
-            <MenuItem
-                onClick={(_) => {
-                    setCharacter('Velvet')
-                    setAnchorElement(null)
-                }}
-            >
-                <ListItemIcon>
-                    <CharacterIcon character='Velvet'/>
-                </ListItemIcon>
-                <ListItemText>Velvet</ListItemText>
-            </MenuItem>
+            {TFH_Characters.map((characterName: string, index: number) => (
+                <MenuItem
+                    key={index}
+                    onClick={(_) => {
+                        setCharacter(characterName)
+                        setAnchorElement(null)
+                    }}
+                >
+                    <ListItemIcon>
+                        <CharacterIcon character={characterName}/>
+                    </ListItemIcon>
+                    <ListItemText>{characterName}</ListItemText>
+                </MenuItem>
+            ))}
         </Menu>
     )
 }
