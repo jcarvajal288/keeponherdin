@@ -3,6 +3,7 @@ import {render, screen, within} from "@testing-library/react";
 import {Timestamps} from "../../src/submit/Timestamps";
 import {Tournament} from "../../src/tournaments/TournamentTable";
 import userEvent from "@testing-library/user-event";
+import {TFH_Versions} from "../../src/tfhData";
 
 /**
  * @vitest-environment jsdom
@@ -24,6 +25,7 @@ describe('Timestamps', () => {
             <Timestamps
                 setFormStep={() => {}}
                 tournament={tournament}
+                setTournament={(_tournament) => {}}
             />
         )
     }
@@ -33,7 +35,7 @@ describe('Timestamps', () => {
         const titleField = screen.getByLabelText('Title');
         const channelField = screen.getByLabelText('Channel');
         const dateField = screen.getByLabelText('Date');
-        const versionField = screen.getByLabelText('Version');
+        const versionField = screen.getByRole('button', { name: TFH_Versions[0] })
         expect(screen.getByRole("button", { name: 'Start Over'})).toBeDefined();
         expect(screen.getByRole("button", { name: 'Add Match'})).toBeDefined();
         expect(screen.getByRole("button", { name: 'Save'})).toBeDefined();
@@ -44,7 +46,16 @@ describe('Timestamps', () => {
         expect(dateField).toBeDefined()
         expect((dateField as HTMLInputElement).value).toEqual('2022-06-20')
         expect(versionField).toBeDefined()
-        expect((versionField as HTMLInputElement).value).toEqual('3.0')
+        expect(versionField).toBeDefined()
+    })
+
+    it('can pick a predefined game version', async () => {
+        renderTimestamps()
+        expect(screen.queryByRole('menuitem', { name: '2.0' })).toBeNull()
+        await userEvent.click(screen.getByRole('button', { name: TFH_Versions[0] }))
+        TFH_Versions.map(async (version) => {
+            expect(await screen.findByRole('option', { name: version })).toBeDefined()
+        })
     })
 
     it('can add and delete a timestamp', async () => {

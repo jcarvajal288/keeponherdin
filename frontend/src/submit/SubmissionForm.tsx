@@ -42,6 +42,7 @@ export const SubmissionForm = (): ReactElement => {
                             return <Timestamps
                                 setFormStep={setFormStep}
                                 tournament={tournament}
+                                setTournament={setTournament}
                             />
                         default:
                             return <EnterLink

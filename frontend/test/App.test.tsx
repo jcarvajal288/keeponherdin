@@ -3,6 +3,7 @@ import {render, screen} from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import App from "../src/App";
 import { titleSlogan } from "../src/HeaderBar";
+import {TFH_Versions} from "../src/tfhData";
 
 describe('App', () => {
 
@@ -45,7 +46,7 @@ describe('App', () => {
         await userEvent.type(channelField, 'asdf')
         await userEvent.type(dateField, '2022-11-11')
         await userEvent.click(screen.getByRole("button", { name: 'Next'}))
-        expect(await screen.findByLabelText('Version')).toBeDefined()
+        expect(await screen.findByRole('button', { name: TFH_Versions[0] })).toBeDefined()
         await userEvent.click(screen.getByRole("button", { name: 'Start Over'}))
         expect(await screen.findByLabelText('Link')).toBeDefined()
     })

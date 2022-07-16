@@ -1,5 +1,5 @@
 import {ReactElement, useState} from "react";
-import {Button, Paper, Stack, TextField} from "@mui/material";
+import {Button, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField} from "@mui/material";
 import {Tournament} from "../tournaments/TournamentTable";
 import UndoIcon from "@mui/icons-material/Undo";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
@@ -7,13 +7,15 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Match} from "../tournaments/MatchRow";
 import {TimestampRow} from "./TimestampRow";
+import {TFH_Versions} from "../tfhData";
 
 type TimestampProps = {
     setFormStep: (nextStep: string) => void
     tournament: Tournament
+    setTournament: (tournament: Tournament) => void
 }
 
-export const Timestamps = ({setFormStep, tournament}: TimestampProps): ReactElement => {
+export const Timestamps = ({setFormStep, tournament, setTournament}: TimestampProps): ReactElement => {
 
     const [timestamps, setTimestamps] = useState<Match[]>([])
 
@@ -74,12 +76,33 @@ export const Timestamps = ({setFormStep, tournament}: TimestampProps): ReactElem
                         marginBottom: '10px'
                     }}
                 />
-                <TextField
-                    variant='standard'
-                    label='Version'
-                    defaultValue="3.0"
+                <FormControl
                     fullWidth
-                />
+                    variant='standard'
+                >
+                    <InputLabel>Version</InputLabel>
+                    <Select
+                        value={0}
+                        title="Version"
+                        label="Version"
+                        defaultValue={0}
+                        onChange={(event) => {
+                            setTournament({
+                                ...tournament,
+                                game_version: TFH_Versions[event.target.value as number]
+                            })
+                        }}
+                    >
+                        {TFH_Versions.map((version: string, index: number) => (
+                            <MenuItem
+                                key={index}
+                                value={index}
+                            >
+                                {`${version}`}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <Stack
                     direction='column'
                 >
