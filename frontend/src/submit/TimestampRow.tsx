@@ -261,6 +261,10 @@ export const TimestampRow = ({
                     aria-label='Go to VOD'
                     target="_blank"
                     href={fullVodUrl}
+                    sx={{
+                        color: 'black',
+                        width: "25%"
+                    }}
                 >
                     <OndemandVideoIcon/>
                 </IconButton>
@@ -269,7 +273,8 @@ export const TimestampRow = ({
                     aria-label='Swap Players'
                     onClick={swapPlayers}
                     sx={{
-                        color: 'black'
+                        color: 'black',
+                        width: "25%"
                     }}
                 >
                     <SwapHorizIcon/>
@@ -279,7 +284,8 @@ export const TimestampRow = ({
                     aria-label='Duplicate'
                     onClick={duplicateThisRow}
                     sx={{
-                        color: 'black'
+                        color: 'black',
+                        width: "25%"
                     }}
                 >
                     <ContentCopyIcon/>
@@ -289,7 +295,8 @@ export const TimestampRow = ({
                     aria-label='Delete'
                     onClick={deleteThisRow}
                     sx={{
-                        color: 'black'
+                        color: 'black',
+                        width: "25%"
                     }}
                 >
                     <DeleteIcon/>
