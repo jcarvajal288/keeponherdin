@@ -7,7 +7,10 @@ describe('EnterLink', () => {
 
     const renderEnterLink = () => {
         render(
-            <EnterLink setFormStep={() => {}}/>
+            <EnterLink
+                setFormStep={() => {}}
+                setVodLink={(_vodLink: string) => {}}
+            />
         )
     }
 

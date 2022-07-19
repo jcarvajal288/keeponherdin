@@ -38,6 +38,8 @@ export const TimestampRow = ({
 
     const [ match, setMatch ] = useState<Match>(initialMatch)
 
+    const startTimeRegex = /^(\d+h)?[0-5]\dm[0-5]\ds$/
+
     const [p1AnchorElement, setP1AnchorElement] = useState<null | HTMLElement>(null)
     const [p2AnchorElement, setP2AnchorElement] = useState<null | HTMLElement>(null)
     const openP1 = Boolean(p1AnchorElement)
@@ -102,9 +104,12 @@ export const TimestampRow = ({
             alignItems='center'
             justifyContent='space-between'
             data-testid='timestamp-row'
+            sx={{
+                marginTop: '5px'
+            }}
         >
             <Box
-                width='10%'
+                width='11%'
                 sx={{
                     marginRight: '5px'
                 }}
@@ -114,6 +119,8 @@ export const TimestampRow = ({
                     name='Timestamp'
                     variant='standard'
                     defaultValue={match.start_time}
+                    error={match.start_time !== '' && !startTimeRegex.exec(match.start_time)}
+                    helperText='**h**m**s'
                     onChange={(event) => {
                         const newMatch = {
                             ...match,
@@ -129,6 +136,7 @@ export const TimestampRow = ({
                     title='Player 1'
                     variant='standard'
                     value={match.player1}
+                    helperText=' '
                     onChange={(event) => {
                         const newMatch = {
                             ...match,
@@ -239,6 +247,7 @@ export const TimestampRow = ({
                     label='Player 2'
                     title='Player 2'
                     variant='standard'
+                    helperText=' '
                     value={match.player2}
                     onChange={(event) => {
                         const newMatch = {

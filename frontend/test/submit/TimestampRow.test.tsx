@@ -4,6 +4,7 @@ import {TimestampRow, TimestampRowProps} from "../../src/submit/TimestampRow";
 import {Match} from "../../src/tournaments/MatchRow";
 import userEvent from "@testing-library/user-event";
 import {Tournament} from "../../src/tournaments/TournamentTable";
+import {act} from "react-dom/test-utils";
 
 describe('TimestampRow', () => {
 
@@ -137,5 +138,25 @@ describe('TimestampRow', () => {
         await userEvent.click(screen.getByTitle('Player 2 Loses'))
         expect(screen.getByTitle('Player 1 Loses')).toBeDefined()
         expect(screen.getByTitle('Player 2 Wins')).toBeDefined()
+    })
+
+    describe('Validation', () => {
+
+        it('displays helper text for an invalid timestamp', async () => {
+            renderTimestampRow({})
+            const timestampField = screen.getByLabelText('Timestamp')
+            await userEvent.type(timestampField, ' ')
+            await act(() => timestampField.blur())
+            expect(timestampField.getAttribute('aria-invalid')).toEqual('true')
+
+            await userEvent.clear(timestampField)
+            await userEvent.type(timestampField, 'asdfasdf')
+            await act(() => timestampField.blur())
+            expect(timestampField.getAttribute('aria-invalid')).toEqual('true')
+
+            await userEvent.clear(timestampField)
+            await act(() => timestampField.blur())
+            expect(timestampField.getAttribute('aria-invalid')).toEqual('false')
+        })
     })
 })
