@@ -12,8 +12,8 @@
 
 (deftest return-all-players
   (testing "200 - GET /api/players"
-    (with-redefs [get-all-players (fn [] data/player-names)]
-      (let [response (app (-> (mock/request :get "api/players")))]
+    (with-redefs [select-all-players (fn [] data/player-names)]
+      (let [response (app (-> (mock/request :get "/api/players")))]
         (is (= response {:status 200
                          :body (ch/generate-string data/player-names)
                          :headers {"Content-Type" "application/json"}}))))))

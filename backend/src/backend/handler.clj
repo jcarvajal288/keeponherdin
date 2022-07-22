@@ -14,16 +14,16 @@
 
 (defroutes app-routes
 
-  (GET "/api/matches" {params :query-params} (ma/route-get-api-matches params))
-  (POST "/api/matches" request (ma/post-match request))
+   (GET "/api/matches" {params :query-params} (ma/route-get-api-matches params))
+   (POST "/api/matches" request (ma/post-match request))
 
-  (GET "/api/tournaments" [] (tn/get-all-tournaments))
-  (GET "/api/tournaments/:id" request (tn/get-tournament-by-id request))
-  (POST "/api/tournaments" request (tn/post-tournament request))
+   (GET "/api/tournaments" [] (tn/get-all-tournaments))
+   (GET "/api/tournaments/:id" request (tn/get-tournament-by-id request))
+   (POST "/api/tournaments" request (tn/post-tournament request))
 
-  (GET "/api/players/" [] (pl/get-all-players))
+   (GET "/api/players" [] (pl/get-all-players))
 
-  (route/not-found "Not Found"))
+   (route/not-found "Not Found"))
 
 (def app
   (-> app-routes
