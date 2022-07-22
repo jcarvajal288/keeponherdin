@@ -1,5 +1,6 @@
 (ns backend.handler
   (:require [backend.matches :as ma]
+            [backend.players :as pl]
             [backend.tournaments :as tn]
             [compojure.core :refer :all]
             [compojure.route :as route]
@@ -19,6 +20,8 @@
   (GET "/api/tournaments" [] (tn/get-all-tournaments))
   (GET "/api/tournaments/:id" request (tn/get-tournament-by-id request))
   (POST "/api/tournaments" request (tn/post-tournament request))
+
+  (GET "/api/players/" [] (pl/get-all-players))
 
   (route/not-found "Not Found"))
 

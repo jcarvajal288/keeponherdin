@@ -3,7 +3,6 @@
             [backend.handler :refer :all]
             [backend.matches :refer :all]
             [backend.matches :refer :all]
-            [backend.tournaments-test :refer [mock-post-tournament]]
             [backend.util :as util]
             [cheshire.core :as ch]
             [resources.data.matches-data :as data]
