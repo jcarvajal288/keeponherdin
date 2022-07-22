@@ -1,11 +1,15 @@
-import {ReactElement, useEffect, useState} from "react";
+import {ReactElement, useState} from "react";
 import {Tournament} from "../tournaments/TournamentTable";
 import {EnterLink} from "./EnterLink";
 import {VideoDetails} from "./VideoDetails";
 import {Box} from "@mui/material";
 import {Timestamps} from "./Timestamps";
 
-export const SubmissionForm = (): ReactElement => {
+type SubmissionFormProps = {
+    getPlayerList: () => Promise<string[]>
+}
+
+export const SubmissionForm = ({ getPlayerList }: SubmissionFormProps): ReactElement => {
 
     const [formStep, setFormStep] = useState<string>("Enter Link");
     const [vodLink, setVodLink] = useState<string>("")
@@ -43,6 +47,7 @@ export const SubmissionForm = (): ReactElement => {
                                 setFormStep={setFormStep}
                                 tournament={tournament}
                                 setTournament={setTournament}
+                                getPlayerList={getPlayerList}
                             />
                         default:
                             return <EnterLink

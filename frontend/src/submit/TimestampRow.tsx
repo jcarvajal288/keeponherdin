@@ -1,6 +1,7 @@
 import React, {Dispatch, ReactElement, SetStateAction, useState} from "react";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import {
+    Autocomplete,
     Box,
     IconButton,
     ListItemIcon,
@@ -8,7 +9,7 @@ import {
     Menu,
     MenuItem,
     Stack,
-    TextField, touchRippleClasses,
+    TextField,
     Typography
 } from "@mui/material";
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
@@ -26,6 +27,7 @@ export type TimestampRowProps = {
     timestamps: Match[]
     setTimestamps: (_: Match[]) => void
     tournament: Tournament
+    playerList: string[]
 }
 
 export const TimestampRow = ({
@@ -33,7 +35,8 @@ export const TimestampRow = ({
         initialMatch,
         timestamps,
         setTimestamps,
-        tournament
+        tournament,
+        playerList
     }: TimestampRowProps): ReactElement => {
 
     const [ match, setMatch ] = useState<Match>(initialMatch)
@@ -44,6 +47,7 @@ export const TimestampRow = ({
     const [p2AnchorElement, setP2AnchorElement] = useState<null | HTMLElement>(null)
     const openP1 = Boolean(p1AnchorElement)
     const openP2 = Boolean(p2AnchorElement)
+
     const handleP1CharacterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setP1AnchorElement(event.currentTarget)
     }
@@ -131,21 +135,33 @@ export const TimestampRow = ({
                 />
             </Box>
             <Box width='30%'>
-                <TextField
-                    label='Player 1'
-                    title='Player 1'
-                    variant='standard'
-                    value={match.player1}
-                    helperText=' '
-                    onChange={(event) => {
-                        const newMatch = {
-                            ...match,
-                            player1: event.target.value,
-                        }
-                        setMatch(newMatch)
-                    }}
-                    fullWidth
-                />
+                <Autocomplete
+                    data-testid='player1-textfield'
+                    autoComplete
+                    includeInputInList
+                    freeSolo
+                    options={playerList}
+                    renderInput={(params) => {
+                        return (
+                            <TextField
+                                {...params}
+                                label='Player 1'
+                                title='Player 1'
+                                variant='standard'
+                                value={match.player1}
+                                helperText=' '
+                                onChange={(event) => {
+                                    const newMatch = {
+                                        ...match,
+                                        player1: event.target.value,
+                                    }
+                                    setMatch(newMatch)
+                                }}
+                                fullWidth
+                            />
+                        )
+                    }
+                }/>
             </Box>
             <Stack
                 direction='row'
@@ -243,21 +259,32 @@ export const TimestampRow = ({
                 </IconButton>
             </Stack>
             <Box width='30%'>
-                <TextField
-                    label='Player 2'
-                    title='Player 2'
-                    variant='standard'
-                    helperText=' '
-                    value={match.player2}
-                    onChange={(event) => {
-                        const newMatch = {
-                            ...match,
-                            player2: event.target.value,
-                        }
-                        setMatch(newMatch)
-                    }}
-                    fullWidth
-                />
+                <Autocomplete
+                    autoComplete
+                    includeInputInList
+                    freeSolo
+                    options={playerList}
+                    renderInput={(params) => {
+                        return (
+                            <TextField
+                                {...params}
+                                label='Player 2'
+                                title='Player 2'
+                                variant='standard'
+                                value={match.player2}
+                                helperText=' '
+                                onChange={(event) => {
+                                    const newMatch = {
+                                        ...match,
+                                        player2: event.target.value,
+                                    }
+                                    setMatch(newMatch)
+                                }}
+                                fullWidth
+                            />
+                        )
+                    }
+                }/>
             </Box>
             <Stack
                 direction='row'

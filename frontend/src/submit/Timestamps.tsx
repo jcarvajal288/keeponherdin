@@ -1,4 +1,4 @@
-import {ReactElement, useState} from "react";
+import {ReactElement, useEffect, useState} from "react";
 import {Button, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField} from "@mui/material";
 import {Tournament} from "../tournaments/TournamentTable";
 import UndoIcon from "@mui/icons-material/Undo";
@@ -13,11 +13,18 @@ type TimestampProps = {
     setFormStep: (nextStep: string) => void
     tournament: Tournament
     setTournament: (tournament: Tournament) => void
+    getPlayerList: () => Promise<string[]>
 }
 
-export const Timestamps = ({setFormStep, tournament, setTournament}: TimestampProps): ReactElement => {
+export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerList}: TimestampProps): ReactElement => {
 
     const [timestamps, setTimestamps] = useState<Match[]>([])
+
+    const [playerList, setPlayerList] = useState<string[]>([])
+
+    useEffect(() => {
+        getPlayerList().then(setPlayerList)
+    }, [getPlayerList])
 
     const emptyMatch: Match = {
         player1: "",
@@ -114,6 +121,7 @@ export const Timestamps = ({setFormStep, tournament, setTournament}: TimestampPr
                             timestamps={timestamps}
                             setTimestamps={setTimestamps}
                             tournament={tournament}
+                            playerList={playerList}
                         />
                     ))}
                 </Stack>

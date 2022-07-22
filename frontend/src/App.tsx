@@ -8,7 +8,7 @@ import {EnterLink} from "./submit/EnterLink";
 import {SubmissionForm} from "./submit/SubmissionForm";
 
 const App = (): ReactElement => {
-    const { getMatchesByTournament, getTournament} = useApi();
+    const { getMatchesByTournament, getTournament, getPlayerList} = useApi();
 
     return (
         <>
@@ -27,7 +27,9 @@ const App = (): ReactElement => {
                     <Route
                         path='/add'
                         element={
-                            <SubmissionForm/>
+                            <SubmissionForm
+                                getPlayerList={getPlayerList}
+                            />
                         }
                     />
                 </Routes>

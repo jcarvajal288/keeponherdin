@@ -34,6 +34,7 @@ describe('TimestampRow', () => {
             timestamps={[]}
             setTimestamps={(_: Match[]) => {}}
             tournament={tournament}
+            playerList={[]}
             {...props}
         />)
     }
@@ -119,7 +120,7 @@ describe('TimestampRow', () => {
         await userEvent.click(screen.getByRole('menuitem', { name: 'Pom Pom' }))
         await userEvent.click(screen.getByLabelText('Swap Players'))
 
-        expect(screen.getByRole<HTMLInputElement>('textbox', { name: 'Player 1' }).value).toEqual('player2')
+        expect(screen.getByRole<HTMLInputElement>('combobox', { name: 'Player 1' }).value).toEqual('player2')
         expect(screen.getByRole<HTMLInputElement>('textbox', { name: 'Player 2' }).value).toEqual('player1')
 
         const character1select = screen.getByTitle('character1-select')
@@ -139,6 +140,27 @@ describe('TimestampRow', () => {
         expect(screen.getByTitle('Player 1 Loses')).toBeDefined()
         expect(screen.getByTitle('Player 2 Wins')).toBeDefined()
     })
+
+    it('shows a list of existing players when the user enters a player name', async () => {
+        const playerList = [
+            'a',
+            'ab',
+            'abc',
+            'eee',
+        ]
+        renderTimestampRow({
+            playerList: playerList
+        })
+        const player1Field = screen.getByLabelText('Player 1')
+        await userEvent.click(player1Field)
+        await expectPlayerNamesToExist(playerList)
+    })
+
+    const expectPlayerNamesToExist = async (playerList: string[]) => {
+        for (const player of playerList) {
+            expect(await screen.findByText(player)).toBeDefined()
+        }
+    }
 
     describe('Validation', () => {
 

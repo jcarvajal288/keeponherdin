@@ -26,6 +26,7 @@ describe('Timestamps', () => {
                 setFormStep={() => {}}
                 tournament={tournament}
                 setTournament={(_tournament) => {}}
+                getPlayerList={() => Promise.resolve([])}
             />
         )
     }
@@ -72,14 +73,15 @@ describe('Timestamps', () => {
         expect(await screen.findByLabelText('Timestamp')).toBeDefined()
 
         await userEvent.type(screen.getByLabelText('Timestamp'), '00h12m12s')
-        await userEvent.type(screen.getByLabelText('Player 1'), 'player 1')
-        await userEvent.type(screen.getByLabelText('Player 2'), 'player 2')
+        await userEvent.type(screen.getByTestId('player1-textfield'), 'player 1')
+        await userEvent.type(screen.getByRole('combobox', { name: 'Player 2'}), 'player 2')
 
         await userEvent.click(screen.getByLabelText('Duplicate'))
         const timestamps = await screen.findAllByTestId('timestamp-row')
         expect(timestamps).toHaveLength(2)
+
         expect(within(timestamps[1]).getByLabelText<HTMLInputElement>('Timestamp').value).toEqual('00h12m12s')
-        expect(within(timestamps[1]).getByLabelText<HTMLInputElement>('Player 1').value).toEqual('player 1')
-        expect(within(timestamps[1]).getByLabelText<HTMLInputElement>('Player 2').value).toEqual('player 2')
+        expect(within(timestamps[1]).getByRole<HTMLInputElement>('combobox', { name: 'Player 1' }).value).toEqual('player 1')
+        expect(within(timestamps[1]).getByRole<HTMLInputElement>('combobox', { name: 'Player 2' }).value).toEqual('player 2')
     })
 })
