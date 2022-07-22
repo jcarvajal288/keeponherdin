@@ -137,31 +137,31 @@ export const TimestampRow = ({
             <Box width='30%'>
                 <Autocomplete
                     data-testid='player1-textfield'
-                    autoComplete
-                    includeInputInList
-                    freeSolo
                     options={playerList}
+                    freeSolo
+                    value={match.player1}
+                    onInputChange={(event, value) => {
+                        if (event?.type === "change") {
+                            setMatch({
+                                ...match,
+                                player1: value
+                            })
+                        }
+                    }}
                     renderInput={(params) => {
                         return (
                             <TextField
                                 {...params}
                                 label='Player 1'
-                                title='Player 1'
                                 variant='standard'
-                                value={match.player1}
                                 helperText=' '
-                                onChange={(event) => {
-                                    const newMatch = {
-                                        ...match,
-                                        player1: event.target.value,
-                                    }
-                                    setMatch(newMatch)
+                                inputProps={{
+                                    ...params.inputProps
                                 }}
-                                fullWidth
                             />
                         )
-                    }
-                }/>
+                    }}
+                />
             </Box>
             <Stack
                 direction='row'
@@ -260,31 +260,32 @@ export const TimestampRow = ({
             </Stack>
             <Box width='30%'>
                 <Autocomplete
-                    autoComplete
-                    includeInputInList
-                    freeSolo
+                    data-testid='player2-textfield'
                     options={playerList}
+                    freeSolo
+                    value={match.player2}
+                    onInputChange={(event, value) => {
+                        if (event?.type === "change") {
+                            setMatch({
+                                ...match,
+                                player2: value
+                            })
+                        }
+                    }}
                     renderInput={(params) => {
                         return (
                             <TextField
                                 {...params}
                                 label='Player 2'
-                                title='Player 2'
                                 variant='standard'
-                                value={match.player2}
                                 helperText=' '
-                                onChange={(event) => {
-                                    const newMatch = {
-                                        ...match,
-                                        player2: event.target.value,
-                                    }
-                                    setMatch(newMatch)
+                                inputProps={{
+                                    ...params.inputProps
                                 }}
-                                fullWidth
                             />
                         )
-                    }
-                }/>
+                    }}
+                />
             </Box>
             <Stack
                 direction='row'

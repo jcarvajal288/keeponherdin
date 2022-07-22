@@ -121,7 +121,7 @@ describe('TimestampRow', () => {
         await userEvent.click(screen.getByLabelText('Swap Players'))
 
         expect(screen.getByRole<HTMLInputElement>('combobox', { name: 'Player 1' }).value).toEqual('player2')
-        expect(screen.getByRole<HTMLInputElement>('textbox', { name: 'Player 2' }).value).toEqual('player1')
+        expect(screen.getByRole<HTMLInputElement>('combobox', { name: 'Player 2' }).value).toEqual('player1')
 
         const character1select = screen.getByTitle('character1-select')
         expect(within(character1select).getByAltText('Pom')).toBeDefined()
