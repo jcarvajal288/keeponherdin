@@ -139,7 +139,7 @@ export const TimestampRow = ({
                     data-testid='player1-textfield'
                     options={playerList}
                     freeSolo
-                    value={match.player1}
+                    value={match.player1 || ''}
                     onInputChange={(event, value) => {
                         if (event?.type === "change") {
                             setMatch({
@@ -155,9 +155,6 @@ export const TimestampRow = ({
                                 label='Player 1'
                                 variant='standard'
                                 helperText=' '
-                                inputProps={{
-                                    ...params.inputProps
-                                }}
                             />
                         )
                     }}
@@ -263,7 +260,7 @@ export const TimestampRow = ({
                     data-testid='player2-textfield'
                     options={playerList}
                     freeSolo
-                    value={match.player2}
+                    value={match.player2 || ''}
                     onInputChange={(event, value) => {
                         if (event?.type === "change") {
                             setMatch({
@@ -279,9 +276,6 @@ export const TimestampRow = ({
                                 label='Player 2'
                                 variant='standard'
                                 helperText=' '
-                                inputProps={{
-                                    ...params.inputProps
-                                }}
                             />
                         )
                     }}

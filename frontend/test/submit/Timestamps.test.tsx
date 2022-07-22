@@ -4,6 +4,7 @@ import {Timestamps} from "../../src/submit/Timestamps";
 import {Tournament} from "../../src/tournaments/TournamentTable";
 import userEvent from "@testing-library/user-event";
 import {TFH_Versions} from "../../src/tfhData";
+import {act} from "react-dom/test-utils";
 
 /**
  * @vitest-environment jsdom
