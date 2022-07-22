@@ -32,25 +32,6 @@ describe('Timestamps', () => {
         )
     }
 
-    it('UI Elements start with values from previous step', () => {
-        renderTimestamps()
-        const titleField = screen.getByLabelText('Title');
-        const channelField = screen.getByLabelText('Channel');
-        const dateField = screen.getByLabelText('Date');
-        const versionField = screen.getByRole('button', { name: TFH_Versions[0] })
-        expect(screen.getByRole("button", { name: 'Start Over'})).toBeDefined();
-        expect(screen.getByRole("button", { name: 'Add Match'})).toBeDefined();
-        expect(screen.getByRole("button", { name: 'Save'})).toBeDefined();
-        expect(screen.getByRole("button", { name: 'Delete'})).toBeDefined();
-        expect((titleField as HTMLInputElement).value).toEqual('Rodeo Regional #100')
-        expect(channelField).toBeDefined()
-        expect((channelField as HTMLInputElement).value).toEqual('Javamorris')
-        expect(dateField).toBeDefined()
-        expect((dateField as HTMLInputElement).value).toEqual('2022-06-20')
-        expect(versionField).toBeDefined()
-        expect(versionField).toBeDefined()
-    })
-
     it('can pick a predefined game version', async () => {
         renderTimestamps()
         expect(screen.queryByRole('menuitem', { name: '2.0' })).toBeNull()
@@ -84,5 +65,23 @@ describe('Timestamps', () => {
         expect(within(timestamps[1]).getByLabelText<HTMLInputElement>('Timestamp').value).toEqual('00h12m12s')
         expect(within(timestamps[1]).getByRole<HTMLInputElement>('combobox', { name: 'Player 1' }).value).toEqual('player 1')
         expect(within(timestamps[1]).getByRole<HTMLInputElement>('combobox', { name: 'Player 2' }).value).toEqual('player 2')
+    })
+
+    it('UI Elements start with values from previous step', async () => {
+        renderTimestamps()
+        const titleField = screen.getByLabelText('Title');
+        const channelField = screen.getByLabelText('Channel');
+        const dateField = screen.getByLabelText('Date');
+        const versionField = screen.getByRole('button', { name: TFH_Versions[0] })
+        expect(screen.getByRole("button", { name: 'Start Over'})).toBeDefined();
+        expect(screen.getByRole("button", { name: 'Add Match'})).toBeDefined();
+        expect(screen.getByRole("button", { name: 'Save'})).toBeDefined();
+        expect(screen.getByRole("button", { name: 'Delete'})).toBeDefined();
+        expect((titleField as HTMLInputElement).value).toEqual('Rodeo Regional #100')
+        expect(channelField).toBeDefined()
+        expect((channelField as HTMLInputElement).value).toEqual('Javamorris')
+        expect(dateField).toBeDefined()
+        expect((dateField as HTMLInputElement).value).toEqual('2022-06-20')
+        expect(versionField).toBeDefined()
     })
 })
