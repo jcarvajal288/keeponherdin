@@ -174,3 +174,6 @@
     :start_time "0h51m28s"
     :tournament_id 4}
    ])
+
+(defn rand-str [len]
+  (apply str (take len (repeatedly #(char (+ (rand 26) 65))))))
