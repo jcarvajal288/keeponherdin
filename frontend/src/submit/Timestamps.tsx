@@ -1,5 +1,5 @@
 import {ReactElement, useEffect, useState} from "react";
-import {Button, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField} from "@mui/material";
+import {Button, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography} from "@mui/material";
 import {Tournament} from "../tournaments/TournamentTable";
 import UndoIcon from "@mui/icons-material/Undo";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
@@ -8,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {Match} from "../tournaments/MatchRow";
 import {TimestampRow} from "./TimestampRow";
 import {TFH_Versions} from "../tfhData";
+import {GenericModal} from "../GenericModal";
 
 type TimestampProps = {
     setFormStep: (nextStep: string) => void
@@ -21,6 +22,8 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
     const [timestamps, setTimestamps] = useState<Match[]>([])
 
     const [playerList, setPlayerList] = useState<string[]>([])
+
+    const [validationErrorDialogOpen, setValidationErrorDialogOpen] = useState<boolean>(false)
 
     useEffect(() => {
         getPlayerList().then(setPlayerList)
@@ -45,6 +48,14 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
 
     const addNewTimestamp = () => {
         setTimestamps([...timestamps, Object.assign({}, emptyMatch)])
+    }
+
+    const validateTournament = () => {
+        setValidationErrorDialogOpen(true)
+    }
+
+    const initiateSave = () => {
+        validateTournament()
     }
 
     return (
@@ -154,6 +165,7 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
                     <Button
                         variant='contained'
                         startIcon={<SaveIcon/>}
+                        onClick={initiateSave}
                         sx={{
                             marginRight: '10px'
                         }}
@@ -168,6 +180,16 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
                     </Button>
                 </Stack>
             </Paper>
+            {validationErrorDialogOpen && (
+                <GenericModal>
+                    <Typography
+                        variant='h4'
+                        color='error'
+                    >
+                        Validation Errors
+                    </Typography>
+                </GenericModal>
+            )}
         </Stack>
     )
 }

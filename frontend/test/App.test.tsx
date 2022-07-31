@@ -69,4 +69,20 @@ describe('App', () => {
         expect((await screen.findByRole('link', { name: 'Go to VOD' })).getAttribute('href'))
             .toEqual(`${videoUrl}?t=744`)
     })
+
+    it('Rejects saving an incomplete tournament', async () => {
+        render(<App/>)
+        const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
+        await userEvent.click(screen.getByLabelText('add-tournament'))
+        await userEvent.type(screen.getByLabelText('Link'), videoUrl)
+
+        await userEvent.type(screen.getByLabelText("Title"), 'title')
+        await userEvent.type(screen.getByLabelText("Channel"), 'channel')
+        await userEvent.type(screen.getByLabelText("Date"), '2022-11-11')
+        await userEvent.click(screen.getByRole("button", { name: 'Next'}))
+
+        await userEvent.click(screen.getByRole("button", { name: 'Add Match'}))
+        await userEvent.click(screen.getByRole("button", { name: 'Save'}))
+        expect(await screen.findByText('Validation Errors')).toBeDefined()
+    })
 })
