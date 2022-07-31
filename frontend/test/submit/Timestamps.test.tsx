@@ -5,6 +5,7 @@ import {Tournament} from "../../src/tournaments/TournamentTable";
 import userEvent from "@testing-library/user-event";
 import {TFH_Versions} from "../../src/tfhData";
 import {act} from "react-dom/test-utils";
+import App from "../../src/App";
 
 /**
  * @vitest-environment jsdom
@@ -83,5 +84,14 @@ describe('Timestamps', () => {
         expect(dateField).toBeDefined()
         expect((dateField as HTMLInputElement).value).toEqual('2022-06-20')
         expect(versionField).toBeDefined()
+    })
+
+    it('Rejects saving a tournament with no matches and can close error modal', async () => {
+        renderTimestamps()
+        await userEvent.click(screen.getByRole('button', { name: 'Save'}))
+        expect(await screen.findByText('Validation Errors')).toBeDefined()
+        expect(await screen.findByText('Tournament needs at least one match')).toBeDefined()
+        await userEvent.click(screen.getByRole('button', { name: 'Ok' }))
+        expect(await screen.queryByText('Validation Errors')).toBeNull()
     })
 })

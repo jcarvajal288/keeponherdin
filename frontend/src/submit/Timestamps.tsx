@@ -25,6 +25,8 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
 
     const [validationErrorDialogOpen, setValidationErrorDialogOpen] = useState<boolean>(false)
 
+    const [validationErrors, setValidationErrors] = useState<string[]>([])
+
     useEffect(() => {
         getPlayerList().then(setPlayerList)
     }, [getPlayerList])
@@ -51,6 +53,7 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
     }
 
     const validateTournament = () => {
+        setValidationErrors(['Tournament needs at least one match'])
         setValidationErrorDialogOpen(true)
     }
 
@@ -182,12 +185,33 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
             </Paper>
             {validationErrorDialogOpen && (
                 <GenericModal>
-                    <Typography
-                        variant='h4'
-                        color='error'
+                    <Stack
+                        direction='column'
                     >
-                        Validation Errors
-                    </Typography>
+                        <Typography
+                            variant='h5'
+                            color='error'
+                        >
+                            Validation Errors
+                        </Typography>
+                        {validationErrors.map((error: string, index) => (
+                            <Typography
+                                key={index}
+                            >
+                                {error}
+                            </Typography>
+                        ))}
+                        <Button
+                            sx={{
+                                fontWeight: '700',
+                                fontSize: '16px',
+                                alignSelf: 'end'
+                            }}
+                            onClick={() => setValidationErrorDialogOpen(false)}
+                        >
+                            Ok
+                        </Button>
+                    </Stack>
                 </GenericModal>
             )}
         </Stack>
