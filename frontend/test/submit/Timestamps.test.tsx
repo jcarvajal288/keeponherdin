@@ -86,12 +86,22 @@ describe('Timestamps', () => {
         expect(versionField).toBeDefined()
     })
 
-    it('Rejects saving a tournament with no matches and can close error modal', async () => {
+    it('Rejects a tournament with no matches and can close error modal', async () => {
         renderTimestamps()
-        await userEvent.click(screen.getByRole('button', { name: 'Save'}))
+        await userEvent.click(screen.getByRole('button', { name: 'Save' }))
         expect(await screen.findByText('Validation Errors')).toBeDefined()
         expect(await screen.findByText('Tournament needs at least one match')).toBeDefined()
         await userEvent.click(screen.getByRole('button', { name: 'Ok' }))
         expect(await screen.queryByText('Validation Errors')).toBeNull()
+    })
+
+    it('Rejects a tournament with one empty match and shows correct validation errors', async () => {
+        renderTimestamps()
+        await userEvent.click(screen.getByRole('button', { name: 'Add Match' }))
+        await userEvent.click(screen.getByRole('button', { name: 'Save' }))
+        expect(await screen.findByText('Match 1 - Timestamp is required.')).toBeDefined()
+        expect(await screen.findByText('Match 1 - Player 1 is required.')).toBeDefined()
+        expect(await screen.findByText('Match 1 - Winner not set (click grey trophy icons).')).toBeDefined()
+        expect(await screen.findByText('Match 1 - Player 2 is required.')).toBeDefined()
     })
 })

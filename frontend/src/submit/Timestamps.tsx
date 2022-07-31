@@ -52,9 +52,38 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
         setTimestamps([...timestamps, Object.assign({}, emptyMatch)])
     }
 
+    const validateTimestamp = (timestamp: Match, matchNum: number): string[] => {
+        const validateStartTime = (start_time: string): string => {
+            return `Match ${matchNum} - Timestamp is required.`
+        }
+
+        const validatePlayer = (playerName: string, playerDesignation: string): string => {
+            return `Match ${matchNum} - ${playerDesignation} is required.`
+        }
+
+        const validateDidP1Win = (did_P1_win: boolean | null): string => {
+            return `Match ${matchNum} - Winner not set (click grey trophy icons).`
+        }
+
+        return [
+            validateStartTime(timestamp.start_time),
+            validatePlayer(timestamp.player1, 'Player 1'),
+            validateDidP1Win(timestamp.did_p1_win),
+            validatePlayer(timestamp.player2, 'Player 2')
+        ]
+    }
+
     const validateTournament = () => {
-        setValidationErrors(['Tournament needs at least one match'])
-        setValidationErrorDialogOpen(true)
+        if (timestamps.length === 0) {
+            setValidationErrors(['Tournament needs at least one match'])
+            setValidationErrorDialogOpen(true)
+        } else {
+            const newValidationErrors: string[] = timestamps.flatMap<string>((timestamp, index) => {
+                return validateTimestamp(timestamp, index + 1)
+            })
+            setValidationErrors(newValidationErrors)
+            setValidationErrorDialogOpen(newValidationErrors.length > 0)
+        }
     }
 
     const initiateSave = () => {
