@@ -6,7 +6,7 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Match} from "../tournaments/MatchRow";
-import {TimestampRow} from "./TimestampRow";
+import {startTimeRegex, TimestampRow} from "./TimestampRow";
 import {TFH_Versions} from "../tfhData";
 import {GenericModal} from "../GenericModal";
 
@@ -54,15 +54,23 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
 
     const validateTimestamp = (timestamp: Match, matchNum: number): string[] => {
         const validateStartTime = (start_time: string): string => {
-            return `Match ${matchNum} - Timestamp is required.`
+            if (start_time.length === 0)
+                return `Match ${matchNum} - Timestamp is required.`
+            else if (!startTimeRegex.exec(start_time))
+                return `Match ${matchNum} - Timestamp format is incorrect.`
+            else return ''
         }
 
         const validatePlayer = (playerName: string, playerDesignation: string): string => {
-            return `Match ${matchNum} - ${playerDesignation} is required.`
+            if (playerName.length === 0)
+                return `Match ${matchNum} - ${playerDesignation} is required.`
+            else return ''
         }
 
         const validateDidP1Win = (did_P1_win: boolean | null): string => {
-            return `Match ${matchNum} - Winner not set (click grey trophy icons).`
+            if (did_P1_win === null)
+                return `Match ${matchNum} - Winner not set (click grey trophy icons).`
+            else return ''
         }
 
         return [
@@ -80,7 +88,7 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
         } else {
             const newValidationErrors: string[] = timestamps.flatMap<string>((timestamp, index) => {
                 return validateTimestamp(timestamp, index + 1)
-            })
+            }).filter((error) => error !== '')
             setValidationErrors(newValidationErrors)
             setValidationErrorDialogOpen(newValidationErrors.length > 0)
         }
@@ -225,6 +233,7 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
                         </Typography>
                         {validationErrors.map((error: string, index) => (
                             <Typography
+                                data-testid='validation-error'
                                 key={index}
                             >
                                 {error}

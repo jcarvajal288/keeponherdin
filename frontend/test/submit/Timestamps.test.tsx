@@ -104,4 +104,26 @@ describe('Timestamps', () => {
         expect(await screen.findByText('Match 1 - Winner not set (click grey trophy icons).')).toBeDefined()
         expect(await screen.findByText('Match 1 - Player 2 is required.')).toBeDefined()
     })
+
+    it('Rejects a tournament with two invalid matches', async () => {
+        renderTimestamps()
+        await userEvent.click(screen.getByRole('button', { name: 'Add Match' }))
+        await userEvent.click(screen.getByRole('button', { name: 'Add Match' }))
+        const timestamps = await screen.findAllByTestId('timestamp-row')
+        expect(timestamps).toHaveLength(2)
+
+        await userEvent.type(within(timestamps[0]).getByLabelText('Timestamp'), 'asdf')
+        await userEvent.type(within(timestamps[0]).getByTestId('player1-textfield'), 'player 1')
+        await userEvent.click(within(timestamps[0]).getByTitle('Did Player 1 Win?'))
+
+        await userEvent.type(within(timestamps[1]).getByLabelText('Timestamp'), '01h23m45s')
+        await userEvent.type(within(timestamps[1]).getByTestId('player2-textfield'), 'player 2')
+
+        await userEvent.click(screen.getByRole('button', { name: 'Save' }))
+        expect(await screen.findAllByTestId('validation-error')).toHaveLength(4)
+        expect(await screen.findByText('Match 1 - Timestamp format is incorrect.')).toBeDefined()
+        expect(await screen.findByText('Match 1 - Player 2 is required.')).toBeDefined()
+        expect(await screen.findByText('Match 2 - Player 1 is required.')).toBeDefined()
+        expect(await screen.findByText('Match 2 - Winner not set (click grey trophy icons).')).toBeDefined()
+    })
 })

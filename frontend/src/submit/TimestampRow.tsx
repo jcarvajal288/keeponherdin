@@ -20,6 +20,7 @@ import {Match} from "../tournaments/MatchRow";
 import {CharacterIcon} from "../tournaments/CharacterIcon";
 import {Tournament} from "../tournaments/TournamentTable";
 import {TFH_Characters} from "../tfhData";
+import equal from "fast-deep-equal/es6/react";
 
 export type TimestampRowProps = {
     thisTimestampId: number
@@ -29,6 +30,8 @@ export type TimestampRowProps = {
     tournament: Tournament
     playerList: string[]
 }
+
+export const startTimeRegex = /^(\d+h)?[0-5]\dm[0-5]\ds$/
 
 export const TimestampRow = ({
         thisTimestampId,
@@ -40,8 +43,6 @@ export const TimestampRow = ({
     }: TimestampRowProps): ReactElement => {
 
     const [ match, setMatch ] = useState<Match>(initialMatch)
-
-    const startTimeRegex = /^(\d+h)?[0-5]\dm[0-5]\ds$/
 
     const [p1AnchorElement, setP1AnchorElement] = useState<null | HTMLElement>(null)
     const [p2AnchorElement, setP2AnchorElement] = useState<null | HTMLElement>(null)
@@ -61,6 +62,13 @@ export const TimestampRow = ({
         setP2AnchorElement(null)
     }
 
+    const updateMatch = (newMatch: Match): void => {
+        const oldMatchIndex = timestamps.findIndex((m: Match) => equal(m, match))
+        setMatch(newMatch)
+        timestamps.splice(oldMatchIndex, 1, newMatch)
+        setTimestamps(timestamps)
+    }
+
     const swapPlayers = () => {
         const newMatch = {
             ...match,
@@ -69,7 +77,7 @@ export const TimestampRow = ({
             player2: match.player1,
             character2: match.character1,
         }
-        setMatch(newMatch)
+        updateMatch(newMatch)
     }
 
     const duplicateThisRow = () => {
@@ -84,7 +92,7 @@ export const TimestampRow = ({
     }
 
     const setPlayer1Win = (didP1Win: boolean) => {
-        setMatch({
+        updateMatch({
             ...match,
             did_p1_win: didP1Win
         })
@@ -130,7 +138,7 @@ export const TimestampRow = ({
                             ...match,
                             start_time: event.target.value
                         }
-                        setMatch(newMatch)
+                        updateMatch(newMatch)
                     }}
                 />
             </Box>
@@ -142,7 +150,7 @@ export const TimestampRow = ({
                     value={match.player1 || ''}
                     onInputChange={(event, value) => {
                         if (event?.type === "change") {
-                            setMatch({
+                            updateMatch({
                                 ...match,
                                 player1: value
                             })
@@ -263,7 +271,7 @@ export const TimestampRow = ({
                     value={match.player2 || ''}
                     onInputChange={(event, value) => {
                         if (event?.type === "change") {
-                            setMatch({
+                            updateMatch({
                                 ...match,
                                 player2: value
                             })
