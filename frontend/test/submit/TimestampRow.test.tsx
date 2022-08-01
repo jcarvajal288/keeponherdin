@@ -133,6 +133,15 @@ describe('TimestampRow', () => {
         expect(screen.getByTitle('Player 2 Wins')).toBeDefined()
     })
 
+    it('correctly swaps when did_p1_win is not set', async () => {
+        renderTimestampRow({})
+        expect(screen.getByTitle('Did Player 1 Win?')).toBeDefined()
+        expect(screen.getByTitle('Did Player 2 Win?')).toBeDefined()
+        await userEvent.click(screen.getByLabelText('Swap Players'))
+        expect(screen.getByTitle('Did Player 1 Win?')).toBeDefined()
+        expect(screen.getByTitle('Did Player 2 Win?')).toBeDefined()
+    })
+
     it('toggles did_p1_win when clicking the player trophy icons', async () => {
         renderTimestampRow({})
         expect(screen.getByTitle('Did Player 1 Win?')).toBeDefined()

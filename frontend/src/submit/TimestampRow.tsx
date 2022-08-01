@@ -74,7 +74,7 @@ export const TimestampRow = ({
             ...match,
             player1: match.player2,
             character1: match.character2,
-            did_p1_win: !match.did_p1_win,
+            did_p1_win: match.did_p1_win === null ? null : !match.did_p1_win,
             player2: match.player1,
             character2: match.character1,
         })
