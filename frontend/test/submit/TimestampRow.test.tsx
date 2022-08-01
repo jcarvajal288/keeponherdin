@@ -114,6 +114,7 @@ describe('TimestampRow', () => {
         renderTimestampRow({})
         await userEvent.type(screen.getByLabelText('Player 1'), 'player1')
         await userEvent.type(screen.getByLabelText('Player 2'), 'player2')
+        await userEvent.click(screen.getByTitle('Did Player 1 Win?'))
         await userEvent.click(screen.getByTitle('character1-select'))
         await userEvent.click(screen.getByRole('menuitem', { name: 'Paprika Paprika' }))
         await userEvent.click(screen.getByTitle('character2-select'))
@@ -127,6 +128,9 @@ describe('TimestampRow', () => {
         expect(within(character1select).getByAltText('Pom')).toBeDefined()
         const character2select = screen.getByTitle('character2-select')
         expect(within(character2select).getByAltText('Paprika')).toBeDefined()
+
+        expect(screen.getByTitle('Player 1 Loses')).toBeDefined()
+        expect(screen.getByTitle('Player 2 Wins')).toBeDefined()
     })
 
     it('toggles did_p1_win when clicking the player trophy icons', async () => {

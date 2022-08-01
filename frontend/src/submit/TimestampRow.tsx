@@ -70,14 +70,14 @@ export const TimestampRow = ({
     }
 
     const swapPlayers = () => {
-        const newMatch = {
+        updateMatch({
             ...match,
             player1: match.player2,
             character1: match.character2,
+            did_p1_win: !match.did_p1_win,
             player2: match.player1,
             character2: match.character1,
-        }
-        updateMatch(newMatch)
+        })
     }
 
     const duplicateThisRow = () => {
@@ -85,10 +85,9 @@ export const TimestampRow = ({
     }
 
     const deleteThisRow = () => {
-        const newTimestamps = timestamps.filter(
+        setTimestamps(timestamps.filter(
             timestamp => timestamp !== timestamps[thisTimestampId]
-        )
-        setTimestamps(newTimestamps)
+        ))
     }
 
     const setPlayer1Win = (didP1Win: boolean) => {
