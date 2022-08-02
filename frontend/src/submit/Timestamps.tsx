@@ -160,21 +160,20 @@ export const Timestamps = ({
                 >
                     <InputLabel>Version</InputLabel>
                     <Select
-                        value={0}
                         title="Version"
                         label="Version"
-                        defaultValue={0}
+                        value={tournament.game_version}
                         onChange={(event) => {
                             setTournament({
                                 ...tournament,
-                                game_version: TFH_Versions[event.target.value as number]
+                                game_version: event.target.value
                             })
                         }}
                     >
                         {TFH_Versions.map((version: string, index: number) => (
                             <MenuItem
                                 key={index}
-                                value={index}
+                                value={version}
                             >
                                 {`${version}`}
                             </MenuItem>

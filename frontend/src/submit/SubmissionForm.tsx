@@ -5,6 +5,7 @@ import {VideoDetails} from "./VideoDetails";
 import {Box} from "@mui/material";
 import {Timestamps} from "./Timestamps";
 import {Match} from "../tournaments/MatchRow";
+import {TFH_Versions} from "../tfhData";
 
 type SubmissionFormProps = {
     getPlayerList: () => Promise<string[]>
@@ -20,7 +21,7 @@ export const SubmissionForm = ({ getPlayerList, saveTournament, saveTimestamps }
         id: -1,
         title: "",
         date: new Date(),
-        game_version: "3.0",
+        game_version: TFH_Versions[0],
         tournament_organizer: "",
         vod_link: ""
     })

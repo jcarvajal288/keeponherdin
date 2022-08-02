@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {Controller, useForm} from 'react-hook-form'
 import {Tournament} from "../tournaments/TournamentTable";
+import {TFH_Versions} from "../tfhData";
 
 export type VideoDetailsProps = {
     setFormStep: (nextStep: string) => void
@@ -63,7 +64,7 @@ export const VideoDetails = ({setFormStep, setTournament, vodLink}: VideoDetails
             title: (validatedFormData.title as string).trim(),
             tournament_organizer: (validatedFormData.channel as string).trim(),
             date: new Date(Date.parse(validatedFormData.date!)),
-            game_version: "3.0",
+            game_version: TFH_Versions[0],
             vod_link: vodLink
         }
         setTournament(videoData)

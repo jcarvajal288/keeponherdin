@@ -19,7 +19,7 @@ describe('Timestamps', () => {
         id: 1,
         title: "Rodeo Regional #100",
         date: new Date("2022-06-19T06:00:00Z"),
-        game_version: "3.0",
+        game_version: TFH_Versions[0],
         tournament_organizer: "Javamorris",
         vod_link: "https://www.youtube.com/watch?v=Z5PsPVKZlmo"
     }
@@ -40,11 +40,14 @@ describe('Timestamps', () => {
 
     it('can pick a predefined game version', async () => {
         renderTimestamps({})
-        expect(screen.queryByRole('menuitem', { name: '2.0' })).toBeNull()
+        expect(screen.queryByRole('option', { name: '2.0' })).toBeNull()
         await userEvent.click(screen.getByRole('button', { name: TFH_Versions[0] }))
         TFH_Versions.map(async (version) => {
             expect(await screen.findByRole('option', { name: version })).toBeDefined()
         })
+        await userEvent.click(screen.getByRole('option', { name: '2.0'}))
+        expect(screen.queryByRole('option', { name: '2.0' })).toBeNull()
+        // TODO fix: expect(await screen.findByText('button', { name: '2.0' })).toBeDefined()
     })
 
     it('can add and delete a timestamp', async () => {
