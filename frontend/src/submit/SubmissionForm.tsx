@@ -4,13 +4,15 @@ import {EnterLink} from "./EnterLink";
 import {VideoDetails} from "./VideoDetails";
 import {Box} from "@mui/material";
 import {Timestamps} from "./Timestamps";
+import {Match} from "../tournaments/MatchRow";
 
 type SubmissionFormProps = {
     getPlayerList: () => Promise<string[]>
     saveTournament: (tournament: Tournament) => Promise<void>
+    saveTimestamps: (timestamps: Match[]) => Promise<void>
 }
 
-export const SubmissionForm = ({ getPlayerList, saveTournament }: SubmissionFormProps): ReactElement => {
+export const SubmissionForm = ({ getPlayerList, saveTournament, saveTimestamps }: SubmissionFormProps): ReactElement => {
 
     const [formStep, setFormStep] = useState<string>("Enter Link");
     const [vodLink, setVodLink] = useState<string>("")
@@ -50,6 +52,7 @@ export const SubmissionForm = ({ getPlayerList, saveTournament }: SubmissionForm
                                 setTournament={setTournament}
                                 getPlayerList={getPlayerList}
                                 saveTournament={saveTournament}
+                                saveTimestamps={saveTimestamps}
                             />
                         default:
                             return <EnterLink

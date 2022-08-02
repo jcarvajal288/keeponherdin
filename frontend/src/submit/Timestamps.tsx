@@ -16,6 +16,7 @@ export type TimestampsProps = {
     setTournament: (tournament: Tournament) => void
     getPlayerList: () => Promise<string[]>
     saveTournament: (tournament: Tournament) => Promise<void>
+    saveTimestamps: (timestamps: Match[]) => Promise<void>
 }
 
 export const Timestamps = ({
@@ -23,7 +24,8 @@ export const Timestamps = ({
     tournament,
     setTournament,
     getPlayerList,
-    saveTournament
+    saveTournament,
+    saveTimestamps
 }: TimestampsProps): ReactElement => {
 
     const [timestamps, setTimestamps] = useState<Match[]>([])
@@ -107,6 +109,12 @@ export const Timestamps = ({
     const initiateSave = async () => {
         if (validateTournament()) {
             await saveTournament(tournament)
+            await saveTimestamps(timestamps.map((timestamp: Match) => {
+                return {
+                    ...timestamp,
+                    tournament_id: tournament.id
+                }
+            }))
         }
     }
 

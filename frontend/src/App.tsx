@@ -11,7 +11,8 @@ const App = (): ReactElement => {
         getMatchesByTournament,
         getTournament,
         getPlayerList,
-        saveTournament
+        saveTournament,
+        saveTimestamps
     } = useApi();
 
     return (
@@ -34,6 +35,7 @@ const App = (): ReactElement => {
                             <SubmissionForm
                                 getPlayerList={getPlayerList}
                                 saveTournament={saveTournament}
+                                saveTimestamps={saveTimestamps}
                             />
                         }
                     />

@@ -9,6 +9,7 @@ type Api = {
     getTournament: (id: number) => Promise<Tournament | null>
     getPlayerList: () => Promise<string[]>
     saveTournament: (tournament: Tournament) => Promise<void>
+    saveTimestamps: (timestamps: Match[]) => Promise<void>
 }
 
 axios.defaults.baseURL = `${window.location.protocol}//${window.location.hostname}:8000`
@@ -71,11 +72,21 @@ export const useApi = (): Api => {
         [],
     )
 
+    const saveTimestamps = useCallback(
+        (timestamps: Match[]): Promise<void> =>
+            httpClient
+                .post('api/matches', timestamps)
+                .then((_) => Promise.resolve())
+                .catch((error: AxiosError) => Promise.reject(error)),
+        [],
+    )
+
     return {
         getMatches,
         getMatchesByTournament,
         getTournament,
         getPlayerList,
-        saveTournament
+        saveTournament,
+        saveTimestamps
     }
 }

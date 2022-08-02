@@ -7,6 +7,7 @@ import {TFH_Versions} from "../../src/tfhData";
 import {act} from "react-dom/test-utils";
 import App from "../../src/App";
 import {TimestampRowProps} from "../../src/submit/TimestampRow";
+import {Match} from "../../src/tournaments/MatchRow";
 
 /**
  * @vitest-environment jsdom
@@ -31,13 +32,14 @@ describe('Timestamps', () => {
                 setTournament={(_tournament) => {}}
                 getPlayerList={() => Promise.resolve([])}
                 saveTournament={() => Promise.resolve()}
+                saveTimestamps={() => Promise.resolve()}
                 {...props}
             />
         )
     }
 
     it('can pick a predefined game version', async () => {
-        renderTimestamps()
+        renderTimestamps({})
         expect(screen.queryByRole('menuitem', { name: '2.0' })).toBeNull()
         await userEvent.click(screen.getByRole('button', { name: TFH_Versions[0] }))
         TFH_Versions.map(async (version) => {
@@ -46,7 +48,7 @@ describe('Timestamps', () => {
     })
 
     it('can add and delete a timestamp', async () => {
-        renderTimestamps()
+        renderTimestamps({})
         await userEvent.click(screen.getByRole("button", { name: 'Add Match'}))
         expect(await screen.findByLabelText('Timestamp')).toBeDefined()
         await userEvent.click(screen.getByLabelText('Delete'))
@@ -54,7 +56,7 @@ describe('Timestamps', () => {
     })
 
     it('can duplicate a timestamp', async () => {
-        renderTimestamps()
+        renderTimestamps({})
         await userEvent.click(screen.getByRole("button", { name: 'Add Match'}))
         expect(await screen.findByLabelText('Timestamp')).toBeDefined()
 
@@ -72,7 +74,7 @@ describe('Timestamps', () => {
     })
 
     it('UI Elements start with values from previous step', async () => {
-        renderTimestamps()
+        renderTimestamps({})
         const titleField = screen.getByLabelText('Title');
         const channelField = screen.getByLabelText('Channel');
         const dateField = screen.getByLabelText('Date');
@@ -90,7 +92,7 @@ describe('Timestamps', () => {
     })
 
     it('rejects a tournament with no matches and can close error modal', async () => {
-        renderTimestamps()
+        renderTimestamps({})
         await userEvent.click(screen.getByRole('button', { name: 'Save' }))
         expect(await screen.findByText('Validation Errors')).toBeDefined()
         expect(await screen.findByText('Tournament needs at least one match')).toBeDefined()
@@ -99,7 +101,7 @@ describe('Timestamps', () => {
     })
 
     it('rejects a tournament with one empty match and shows correct validation errors', async () => {
-        renderTimestamps()
+        renderTimestamps({})
         await userEvent.click(screen.getByRole('button', { name: 'Add Match' }))
         await userEvent.click(screen.getByRole('button', { name: 'Save' }))
         expect(await screen.findByText('Match 1 - Timestamp is required.')).toBeDefined()
@@ -109,7 +111,7 @@ describe('Timestamps', () => {
     })
 
     it('rejects a tournament with two invalid matches', async () => {
-        renderTimestamps()
+        renderTimestamps({})
         await userEvent.click(screen.getByRole('button', { name: 'Add Match' }))
         await userEvent.click(screen.getByRole('button', { name: 'Add Match' }))
         const timestamps = await screen.findAllByTestId('timestamp-row')
@@ -131,15 +133,26 @@ describe('Timestamps', () => {
     })
 
 
-    it('calls the save api call when saving a tournament', async () => {
+    it('calls the save api calls when saving a tournament', async () => {
         const saveTournamentSpy = vi.fn()
+        const saveTimestampsSpy = vi.fn()
+        const match: Match = {
+            player1: "player1",
+            character1: "Paprika",
+            player2: "player2",
+            character2: "Pom",
+            did_p1_win: true,
+            start_time: "0h12m24s",
+            tournament_id: tournament.id
+        }
         renderTimestamps({
-            saveTournament: saveTournamentSpy
+            saveTournament: saveTournamentSpy,
+            saveTimestamps: saveTimestampsSpy
         })
         await userEvent.click(screen.getByRole("button", { name: 'Add Match'}))
         await userEvent.type(await screen.findByLabelText('Timestamp'), '0h12m24s')
-        await userEvent.type(screen.getByLabelText('Player 1'), 'player1')
-        await userEvent.type(screen.getByLabelText('Player 2'), 'player2')
+        await userEvent.type(screen.getByLabelText('Player 1'), match.player1)
+        await userEvent.type(screen.getByLabelText('Player 2'), match.player2)
         await userEvent.click(screen.getByTitle('Did Player 1 Win?'))
         await userEvent.click(screen.getByTitle('character1-select'))
         await userEvent.click(screen.getByRole('menuitem', { name: 'Paprika Paprika' }))
@@ -148,6 +161,7 @@ describe('Timestamps', () => {
 
         await userEvent.click(screen.getByRole('button', { name: 'Save' }))
         expect(await screen.queryByTestId('validation-error')).toBeNull()
-        expect(saveTournamentSpy).toHaveBeenCalledOnce()
+        expect(saveTournamentSpy).toHaveBeenCalledWith(tournament)
+        expect(saveTimestampsSpy).toHaveBeenCalledWith([match])
     })
 })
