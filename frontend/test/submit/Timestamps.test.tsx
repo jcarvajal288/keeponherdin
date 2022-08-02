@@ -1,11 +1,12 @@
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import {render, screen, within} from "@testing-library/react";
-import {Timestamps} from "../../src/submit/Timestamps";
+import {Timestamps, TimestampsProps} from "../../src/submit/Timestamps";
 import {Tournament} from "../../src/tournaments/TournamentTable";
 import userEvent from "@testing-library/user-event";
 import {TFH_Versions} from "../../src/tfhData";
 import {act} from "react-dom/test-utils";
 import App from "../../src/App";
+import {TimestampRowProps} from "../../src/submit/TimestampRow";
 
 /**
  * @vitest-environment jsdom
@@ -22,13 +23,15 @@ describe('Timestamps', () => {
         vod_link: "https://www.youtube.com/watch?v=Z5PsPVKZlmo"
     }
 
-    const renderTimestamps = () => {
+    const renderTimestamps = (props: Partial<TimestampsProps>) => {
         render(
             <Timestamps
                 setFormStep={() => {}}
                 tournament={tournament}
                 setTournament={(_tournament) => {}}
                 getPlayerList={() => Promise.resolve([])}
+                saveTournament={() => Promise.resolve()}
+                {...props}
             />
         )
     }
@@ -86,7 +89,7 @@ describe('Timestamps', () => {
         expect(versionField).toBeDefined()
     })
 
-    it('Rejects a tournament with no matches and can close error modal', async () => {
+    it('rejects a tournament with no matches and can close error modal', async () => {
         renderTimestamps()
         await userEvent.click(screen.getByRole('button', { name: 'Save' }))
         expect(await screen.findByText('Validation Errors')).toBeDefined()
@@ -95,7 +98,7 @@ describe('Timestamps', () => {
         expect(await screen.queryByText('Validation Errors')).toBeNull()
     })
 
-    it('Rejects a tournament with one empty match and shows correct validation errors', async () => {
+    it('rejects a tournament with one empty match and shows correct validation errors', async () => {
         renderTimestamps()
         await userEvent.click(screen.getByRole('button', { name: 'Add Match' }))
         await userEvent.click(screen.getByRole('button', { name: 'Save' }))
@@ -105,7 +108,7 @@ describe('Timestamps', () => {
         expect(await screen.findByText('Match 1 - Player 2 is required.')).toBeDefined()
     })
 
-    it('Rejects a tournament with two invalid matches', async () => {
+    it('rejects a tournament with two invalid matches', async () => {
         renderTimestamps()
         await userEvent.click(screen.getByRole('button', { name: 'Add Match' }))
         await userEvent.click(screen.getByRole('button', { name: 'Add Match' }))
@@ -125,5 +128,26 @@ describe('Timestamps', () => {
         expect(await screen.findByText('Match 1 - Player 2 is required.')).toBeDefined()
         expect(await screen.findByText('Match 2 - Player 1 is required.')).toBeDefined()
         expect(await screen.findByText('Match 2 - Winner not set (click grey trophy icons).')).toBeDefined()
+    })
+
+
+    it('calls the save api call when saving a tournament', async () => {
+        const saveTournamentSpy = vi.fn()
+        renderTimestamps({
+            saveTournament: saveTournamentSpy
+        })
+        await userEvent.click(screen.getByRole("button", { name: 'Add Match'}))
+        await userEvent.type(await screen.findByLabelText('Timestamp'), '0h12m24s')
+        await userEvent.type(screen.getByLabelText('Player 1'), 'player1')
+        await userEvent.type(screen.getByLabelText('Player 2'), 'player2')
+        await userEvent.click(screen.getByTitle('Did Player 1 Win?'))
+        await userEvent.click(screen.getByTitle('character1-select'))
+        await userEvent.click(screen.getByRole('menuitem', { name: 'Paprika Paprika' }))
+        await userEvent.click(screen.getByTitle('character2-select'))
+        await userEvent.click(screen.getByRole('menuitem', { name: 'Pom Pom' }))
+
+        await userEvent.click(screen.getByRole('button', { name: 'Save' }))
+        expect(await screen.queryByTestId('validation-error')).toBeNull()
+        expect(saveTournamentSpy).toHaveBeenCalledOnce()
     })
 })

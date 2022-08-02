@@ -4,11 +4,15 @@ import './App.css'
 import {useApi} from "./Api";
 import {HeaderBar} from "./HeaderBar";
 import {TournamentList} from "./tournaments/TournamentList";
-import {EnterLink} from "./submit/EnterLink";
 import {SubmissionForm} from "./submit/SubmissionForm";
 
 const App = (): ReactElement => {
-    const { getMatchesByTournament, getTournament, getPlayerList} = useApi();
+    const {
+        getMatchesByTournament,
+        getTournament,
+        getPlayerList,
+        saveTournament
+    } = useApi();
 
     return (
         <>
@@ -29,6 +33,7 @@ const App = (): ReactElement => {
                         element={
                             <SubmissionForm
                                 getPlayerList={getPlayerList}
+                                saveTournament={saveTournament}
                             />
                         }
                     />

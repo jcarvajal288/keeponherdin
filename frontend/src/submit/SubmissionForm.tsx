@@ -7,9 +7,10 @@ import {Timestamps} from "./Timestamps";
 
 type SubmissionFormProps = {
     getPlayerList: () => Promise<string[]>
+    saveTournament: (tournament: Tournament) => Promise<void>
 }
 
-export const SubmissionForm = ({ getPlayerList }: SubmissionFormProps): ReactElement => {
+export const SubmissionForm = ({ getPlayerList, saveTournament }: SubmissionFormProps): ReactElement => {
 
     const [formStep, setFormStep] = useState<string>("Enter Link");
     const [vodLink, setVodLink] = useState<string>("")
@@ -48,6 +49,7 @@ export const SubmissionForm = ({ getPlayerList }: SubmissionFormProps): ReactEle
                                 tournament={tournament}
                                 setTournament={setTournament}
                                 getPlayerList={getPlayerList}
+                                saveTournament={saveTournament}
                             />
                         default:
                             return <EnterLink

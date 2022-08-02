@@ -10,14 +10,21 @@ import {startTimeRegex, TimestampRow} from "./TimestampRow";
 import {TFH_Versions} from "../tfhData";
 import {GenericModal} from "../GenericModal";
 
-type TimestampProps = {
+export type TimestampsProps = {
     setFormStep: (nextStep: string) => void
     tournament: Tournament
     setTournament: (tournament: Tournament) => void
     getPlayerList: () => Promise<string[]>
+    saveTournament: (tournament: Tournament) => Promise<void>
 }
 
-export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerList}: TimestampProps): ReactElement => {
+export const Timestamps = ({
+    setFormStep,
+    tournament,
+    setTournament,
+    getPlayerList,
+    saveTournament
+}: TimestampsProps): ReactElement => {
 
     const [timestamps, setTimestamps] = useState<Match[]>([])
 
@@ -81,21 +88,26 @@ export const Timestamps = ({setFormStep, tournament, setTournament, getPlayerLis
         ]
     }
 
-    const validateTournament = () => {
+    const validateTournament = (): boolean => {
         if (timestamps.length === 0) {
             setValidationErrors(['Tournament needs at least one match'])
             setValidationErrorDialogOpen(true)
+            return false
         } else {
             const newValidationErrors: string[] = timestamps.flatMap<string>((timestamp, index) => {
                 return validateTimestamp(timestamp, index + 1)
             }).filter((error) => error !== '')
             setValidationErrors(newValidationErrors)
-            setValidationErrorDialogOpen(newValidationErrors.length > 0)
+            const validationFailed = newValidationErrors.length > 0
+            setValidationErrorDialogOpen(validationFailed)
+            return !validationFailed
         }
     }
 
-    const initiateSave = () => {
-        validateTournament()
+    const initiateSave = async () => {
+        if (validateTournament()) {
+            await saveTournament(tournament)
+        }
     }
 
     return (
