@@ -158,10 +158,14 @@ export const Timestamps = ({
                     fullWidth
                     variant='standard'
                 >
-                    <InputLabel>Version</InputLabel>
+                    <InputLabel
+                        id='version-label'
+                    >
+                        Version
+                    </InputLabel>
                     <Select
                         title="Version"
-                        label="Version"
+                        aria-labelledby={'version-label'}
                         value={tournament.game_version}
                         onChange={(event) => {
                             setTournament({

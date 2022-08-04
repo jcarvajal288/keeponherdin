@@ -73,4 +73,18 @@ describe('App', () => {
         expect((await screen.findByRole('link', { name: 'Go to VOD' })).getAttribute('href'))
             .toEqual(`${videoUrl}?t=744`)
     })
+
+
+    it('can pick a predefined game version', async () => {
+        render(<App/>)
+        const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
+        await navigateToTimestampsScreen(videoUrl);
+
+        await userEvent.click(screen.getByRole('button', { name: TFH_Versions[0] }))
+        TFH_Versions.map(async (version) => {
+            expect(await screen.findByRole('option', { name: version })).toBeDefined()
+        })
+        await userEvent.click(screen.getByRole('option', { name: '2.0'}))
+        expect(await screen.findByRole('button', { name: '2.0' })).toBeDefined()
+    })
 })
