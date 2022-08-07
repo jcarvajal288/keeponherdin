@@ -11,7 +11,7 @@
 
 (deftest test-filter-column-name
   (testing "filter-column-name"
-    (let [data [{:x "a"} {:x "b"}]
+    (let [data [{:name "a"} {:name "b"}]
           fcn #'backend.players/filter-column-name
           result (fcn data)]
       (is (= result ["a" "b"])))))
@@ -22,7 +22,7 @@
 
 (deftest return-all-players
   (testing "200 - GET /api/players"
-    (with-redefs [select-all-players (fn [] data/player-names)]
+    (with-redefs [select-all-players (fn [] data/keyed-player-names)]
       (let [response (app (-> (mock/request :get "/api/players")))]
         (is (= response {:status 200
                          :body (ch/generate-string data/player-names)
@@ -42,5 +42,6 @@
           get-response (app (-> (mock/request :get "/api/players")))
           player-list (-> get-response (:body) (ch/parse-string true))
           player-freqs (frequencies player-list)]
+      (log/info player-freqs)
       (is (= (get player-freqs player1-name) 1))
       (is (= (get player-freqs player2-name) 1)))))

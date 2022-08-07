@@ -41,6 +41,8 @@
                    "Mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"
                    ])
 
+(def keyed-player-names (map #(hash-map :name %) player-names))
+
 (def characters ["Velvet"
                  "Oleander"
                  "Tianhuo"

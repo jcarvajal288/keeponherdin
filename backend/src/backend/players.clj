@@ -20,4 +20,4 @@
 
 (defn get-all-players []
   (let [result (filter-column-name (select-all-players))]
-  (content-type (ok result) "application/json")))
+    (content-type (ok result) "application/json")))
