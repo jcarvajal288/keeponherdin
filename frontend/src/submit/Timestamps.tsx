@@ -9,6 +9,7 @@ import {Match} from "../tournaments/MatchRow";
 import {startTimeRegex, TimestampRow} from "./TimestampRow";
 import {TFH_Versions} from "../tfhData";
 import {GenericModal} from "../GenericModal";
+import {useNavigate} from "react-router-dom";
 
 export type TimestampsProps = {
     setFormStep: (nextStep: string) => void
@@ -35,6 +36,8 @@ export const Timestamps = ({
     const [validationErrorDialogOpen, setValidationErrorDialogOpen] = useState<boolean>(false)
 
     const [validationErrors, setValidationErrors] = useState<string[]>([])
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         getPlayerList().then(setPlayerList)
@@ -115,6 +118,8 @@ export const Timestamps = ({
                     tournament_id: tournament.id
                 }
             }))
+            console.log('before navigate')
+            navigate('/')
         }
     }
 

@@ -5,6 +5,7 @@ import {Tournament} from "../../src/tournaments/TournamentTable";
 import userEvent from "@testing-library/user-event";
 import {TFH_Versions} from "../../src/tfhData";
 import {Match} from "../../src/tournaments/MatchRow";
+import {BrowserRouter} from "react-router-dom";
 
 /**
  * @vitest-environment jsdom
@@ -23,15 +24,17 @@ describe('Timestamps', () => {
 
     const renderTimestamps = (props: Partial<TimestampsProps>) => {
         render(
-            <Timestamps
-                setFormStep={() => {}}
-                tournament={tournament}
-                setTournament={(_tournament) => {}}
-                getPlayerList={() => Promise.resolve([])}
-                saveTournament={() => Promise.resolve()}
-                saveTimestamps={() => Promise.resolve()}
-                {...props}
-            />
+            <BrowserRouter>
+                <Timestamps
+                    setFormStep={() => {}}
+                    tournament={tournament}
+                    setTournament={(_tournament) => {}}
+                    getPlayerList={() => Promise.resolve([])}
+                    saveTournament={() => Promise.resolve()}
+                    saveTimestamps={() => Promise.resolve()}
+                    {...props}
+                />
+            </BrowserRouter>
         )
     }
 
@@ -129,7 +132,7 @@ describe('Timestamps', () => {
     })
 
 
-    it('calls the save api calls when saving a tournament', async () => {
+    it('calls the save api endpoints when saving a tournament and then returns to home page', async () => {
         const saveTournamentSpy = vi.fn()
         const saveTimestampsSpy = vi.fn()
         const match: Match = {
@@ -159,5 +162,6 @@ describe('Timestamps', () => {
         expect(await screen.queryByTestId('validation-error')).toBeNull()
         expect(saveTournamentSpy).toHaveBeenCalledWith(tournament)
         expect(saveTimestampsSpy).toHaveBeenCalledWith([match])
+        expect(screen.queryByRole("button", { name: 'Add Match'})).toBeNull() // navigate back to main page
     })
 })
