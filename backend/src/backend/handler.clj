@@ -27,12 +27,11 @@
 
 (def app
   (-> app-routes
-  (wrap-defaults api-defaults)
-  (json/wrap-json-body {:keywords? true})
-  (json/wrap-json-response)
-  (wrap-cors :access-control-allow-origin [#".*"]
-             :access-control-allow-headers [#".*"]
-             :access-control-allow-methods [:get :put :post :delete])))
+    (wrap-defaults api-defaults)
+    (json/wrap-json-body {:keywords? true})
+    (json/wrap-json-response)
+    (wrap-cors :access-control-allow-origin [#".*"]
+               :access-control-allow-methods [:get :put :post :delete :options])))
 
 (defn -main []
-  (run-jetty app {:port (or (env :ring-port) 8000)}))
+  (run-jetty app {:port (or (Integer/parseInt (env :ring-port)) 8000)}))

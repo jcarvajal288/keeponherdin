@@ -1,5 +1,5 @@
 import {ReactElement, useEffect, useState} from "react";
-import {Stack} from "@mui/material";
+import {Stack, Typography} from "@mui/material";
 import {Tournament, TournamentTable} from "./TournamentTable";
 import {Match} from "./MatchRow";
 import {headerBarHeight} from "../HeaderBar";
@@ -22,6 +22,7 @@ export const TournamentList = ({getTournament, getMatchesByTournament}: Tourname
             sx={{marginTop: headerBarHeight}}
             direction='column'
         >
+            <Typography>Home Page</Typography>
             {matchesByTournament.map((matches: Match[], index) => (
                 <TournamentTable
                     key={index}

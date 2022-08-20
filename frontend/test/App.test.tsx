@@ -74,7 +74,6 @@ describe('App', () => {
             .toEqual(`${videoUrl}?t=744`)
     })
 
-
     it('can pick a predefined game version', async () => {
         render(<App/>)
         const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
@@ -87,4 +86,24 @@ describe('App', () => {
         await userEvent.click(screen.getByRole('option', { name: '2.0'}))
         expect(await screen.findByRole('button', { name: '2.0' })).toBeDefined()
     })
+
+    it('routes back to the tournament list after successfully saving a tournament', async () => {
+        render(<App/>)
+        const videoUrl = 'https://www.youtube.com/watch?v=Z5PsPVKZlmo'
+        await navigateToTimestampsScreen(videoUrl);
+
+        await userEvent.click(screen.getByRole("button", { name: 'Add Match'}))
+        await userEvent.type(await screen.findByLabelText('Timestamp'), '0h12m24s')
+        await userEvent.type(screen.getByLabelText('Player 1'), 'player1')
+        await userEvent.type(screen.getByLabelText('Player 2'), 'player2')
+        await userEvent.click(screen.getByTitle('Did Player 1 Win?'))
+        await userEvent.click(screen.getByTitle('character1-select'))
+        await userEvent.click(screen.getByRole('menuitem', { name: 'Paprika Paprika' }))
+        await userEvent.click(screen.getByTitle('character2-select'))
+        await userEvent.click(screen.getByRole('menuitem', { name: 'Pom Pom' }))
+
+        await userEvent.click(screen.getByRole('button', { name: 'Save' }))
+        expect(await screen.queryByTestId('validation-error')).toBeNull()
+        expect(await screen.findByText('Home Page')).toBeDefined()
+    }, 10000)
 })

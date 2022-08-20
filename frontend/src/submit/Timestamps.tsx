@@ -16,7 +16,7 @@ export type TimestampsProps = {
     tournament: Tournament
     setTournament: (tournament: Tournament) => void
     getPlayerList: () => Promise<string[]>
-    saveTournament: (tournament: Tournament) => Promise<void>
+    saveTournament: (tournament: Tournament) => Promise<{ id: number }>
     saveTimestamps: (timestamps: Match[]) => Promise<void>
 }
 
@@ -111,14 +111,13 @@ export const Timestamps = ({
 
     const initiateSave = async () => {
         if (validateTournament()) {
-            await saveTournament(tournament)
+            const saveTournamentResult = await saveTournament(tournament)
             await saveTimestamps(timestamps.map((timestamp: Match) => {
                 return {
                     ...timestamp,
-                    tournament_id: tournament.id
+                    tournament_id: saveTournamentResult.id
                 }
             }))
-            console.log('before navigate')
             navigate('/')
         }
     }

@@ -9,7 +9,7 @@ import {TFH_Versions} from "../tfhData";
 
 type SubmissionFormProps = {
     getPlayerList: () => Promise<string[]>
-    saveTournament: (tournament: Tournament) => Promise<void>
+    saveTournament: (tournament: Tournament) => Promise<{ id: number }>
     saveTimestamps: (timestamps: Match[]) => Promise<void>
 }
 

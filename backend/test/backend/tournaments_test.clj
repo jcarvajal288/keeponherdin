@@ -60,7 +60,6 @@
           post-result-id (-> post-response (:body) (ch/parse-string true) (:id))
           returned-response (app (-> (mock/request :get (format "/api/tournaments/%d" post-result-id))))
           returned-tournament (-> returned-response (:body) (ch/parse-string true))]
-          (log/info returned-tournament)
       (is (number? post-result-id))
       (is (= (:headers post-response) {"Content-Type" "application/json"
                                        "Location" (format "http://localhost/api/tournaments/%d" post-result-id)}))

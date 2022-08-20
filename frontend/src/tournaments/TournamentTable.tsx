@@ -17,6 +17,14 @@ export type TournamentTableProps = {
     matches: Match[];
 }
 
+export const formatDate = (date: Date) => {
+    const isoDate = new Date(date);
+    const year = isoDate.getFullYear();
+    const month = (isoDate.getMonth()+1).toString().padStart(2, "00");
+    const day = (isoDate.getDate()+1).toString().padStart(2, "00");
+    return `${year}-${month}-${day}`
+}
+
 export const TournamentTable = ({getTournament, matches}: TournamentTableProps): ReactElement => {
 
     const [tournament, setTournament] = useState<Tournament | null>(null);
@@ -29,14 +37,6 @@ export const TournamentTable = ({getTournament, matches}: TournamentTableProps):
             getTournament(id).then(setTournament)
         }
     }, [matches])
-
-    const formatDate = (date: Date) => {
-        const isoDate = new Date(date);
-        const year = isoDate.getFullYear();
-        const month = (isoDate.getMonth()+1).toString().padStart(2, "00");
-        const day = (isoDate.getDate()+1).toString().padStart(2, "00");
-        return `${year}-${month}-${day}`
-    }
 
     if(!tournament) return (<></>);
     return (

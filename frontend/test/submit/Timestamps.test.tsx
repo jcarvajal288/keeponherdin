@@ -30,7 +30,7 @@ describe('Timestamps', () => {
                     tournament={tournament}
                     setTournament={(_tournament) => {}}
                     getPlayerList={() => Promise.resolve([])}
-                    saveTournament={() => Promise.resolve()}
+                    saveTournament={() => Promise.resolve({ id: -1 })}
                     saveTimestamps={() => Promise.resolve()}
                     {...props}
                 />
@@ -131,9 +131,8 @@ describe('Timestamps', () => {
         expect(await screen.findByText('Match 2 - Winner not set (click grey trophy icons).')).toBeDefined()
     })
 
-
-    it('calls the save api endpoints when saving a tournament and then returns to home page', async () => {
-        const saveTournamentSpy = vi.fn()
+    it('calls the save api endpoints when saving a tournament', async () => {
+        const saveTournamentSpy = vi.fn(() => Promise.resolve({ id: 24 }))
         const saveTimestampsSpy = vi.fn()
         const match: Match = {
             player1: "player1",
@@ -142,7 +141,7 @@ describe('Timestamps', () => {
             character2: "Pom",
             did_p1_win: true,
             start_time: "0h12m24s",
-            tournament_id: tournament.id
+            tournament_id: 24
         }
         renderTimestamps({
             saveTournament: saveTournamentSpy,
@@ -162,6 +161,5 @@ describe('Timestamps', () => {
         expect(await screen.queryByTestId('validation-error')).toBeNull()
         expect(saveTournamentSpy).toHaveBeenCalledWith(tournament)
         expect(saveTimestampsSpy).toHaveBeenCalledWith([match])
-        expect(screen.queryByRole("button", { name: 'Add Match'})).toBeNull() // navigate back to main page
     })
 })
