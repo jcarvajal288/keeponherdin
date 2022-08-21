@@ -42,6 +42,5 @@
           get-response (app (-> (mock/request :get "/api/players")))
           player-list (-> get-response (:body) (ch/parse-string true))
           player-freqs (frequencies player-list)]
-      (log/info player-freqs)
       (is (= (get player-freqs player1-name) 1))
       (is (= (get player-freqs player2-name) 1)))))
