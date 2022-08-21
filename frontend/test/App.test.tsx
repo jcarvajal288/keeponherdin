@@ -1,11 +1,33 @@
-import {describe, expect, it} from "vitest";
+import {afterAll, afterEach, beforeAll, describe, expect, it} from "vitest";
 import {render, screen} from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import App from "../src/App";
-import { titleSlogan } from "../src/HeaderBar";
+import {titleSlogan} from "../src/HeaderBar";
 import {TFH_Versions} from "../src/tfhData";
+import {setupServer} from "msw/node";
+import {rest} from 'msw'
 
 describe('App', () => {
+
+    const mockServer = setupServer(
+        rest.get('http://localhost:8000/api/matches', (req, res, ctx) => res(ctx.json([]))),
+        rest.get('http://localhost:8000/api/players', (req, res, ctx) => res(ctx.json([]))),
+        rest.get('http://localhost:8000/api/players', (req, res, ctx) => res(ctx.json([]))),
+        rest.post('http://localhost:8000/api/tournaments', (req, res, ctx) => res(ctx.json({}))),
+        rest.post('http://localhost:8000/api/matches', (req, res, ctx) => res(ctx.json({}))),
+    )
+
+    beforeAll(() => {
+        mockServer.listen()
+    })
+
+    afterEach(() => {
+        mockServer.resetHandlers()
+    })
+
+    afterAll(() => {
+        mockServer.close()
+    })
 
     it('navigates to `enter link` page and back to home', async () => {
         render(<App/>)

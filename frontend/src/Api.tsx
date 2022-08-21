@@ -73,7 +73,7 @@ export const useApi = (): Api => {
     const saveTournament = useCallback(
         (tournament: Tournament): Promise<{ id: number }> =>
             httpClient
-                .post('api/tournaments', serializeTournament(tournament))
+                .post('/api/tournaments', serializeTournament(tournament))
                 .then((response) => Promise.resolve(response.data))
                 .catch((error: AxiosError) => Promise.reject(error)),
         [],
@@ -82,7 +82,7 @@ export const useApi = (): Api => {
     const saveTimestamps = useCallback(
         (timestamps: Match[]): Promise<void> =>
             httpClient
-                .post('api/matches', timestamps)
+                .post('/api/matches', timestamps)
                 .then((_) => Promise.resolve())
                 .catch((error: AxiosError) => Promise.reject(error)),
         [],
