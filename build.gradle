@@ -37,7 +37,7 @@ task buildAllContainers {
 }
 
 task pushBackend {
-    dependsOn tasks.buildAllContainers
+    dependsOn tasks.buildBackendContainer
     doLast {
         exec {
             commandLine 'docker', 'tag', 'keeponherdin-backend:latest', DOCKER_REPO_URL + 'keeponherdin-backend:latest'
@@ -49,7 +49,7 @@ task pushBackend {
 }
 
 task pushFrontend {
-    dependsOn tasks.buildAllContainers
+    dependsOn tasks.buildFrontendContainer
     doLast {
         exec {
             commandLine 'docker', 'tag', 'keeponherdin-frontend:latest', DOCKER_REPO_URL + 'keeponherdin-frontend:latest'
@@ -65,14 +65,25 @@ task pushAll {
     dependsOn tasks.pushFrontend
 }
 
-task deployAll {
-//    dependsOn tasks.pushAll
+task deployBackend {
+    dependsOn tasks.pushBackend
     doLast {
-//        exec {
-//            commandLine 'gcloud', 'run', 'deploy', 'keeponherdin-frontend', '--image', DOCKER_REPO_URL + 'keeponherdin-frontend', '--region', 'us-central1', '--port', '8080', '--allow-unauthenticated'
-//        }
         exec {
             commandLine 'gcloud', 'run', 'deploy', 'keeponherdin-backend', '--image', DOCKER_REPO_URL + 'keeponherdin-backend', '--region', 'us-central1', '--port', '8000', '--allow-unauthenticated'
         }
     }
+}
+
+task deployFrontend {
+    dependsOn tasks.pushFrontend
+    doLast {
+        exec {
+            commandLine 'gcloud', 'run', 'deploy', 'keeponherdin-frontend', '--image', DOCKER_REPO_URL + 'keeponherdin-frontend', '--region', 'us-central1', '--port', '80', '--allow-unauthenticated'
+        }
+    }
+}
+
+task deployAll {
+    dependsOn tasks.deployFrontend
+    dependsOn tasks.deployBackend
 }
