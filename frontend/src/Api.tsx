@@ -2,6 +2,7 @@ import {Match} from "./tournaments/MatchRow";
 import {useCallback} from "react";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {formatDate, Tournament} from "./tournaments/TournamentTable";
+import { GoogleAuth } from "google-auth-library";
 
 type Api = {
     getMatches: () => Promise<Match[]>
@@ -20,32 +21,60 @@ const serializeTournament = (tournament: Tournament) => {
 }
 
 axios.defaults.baseURL = `${window.location.protocol}//${window.location.hostname}:8000`
+
+const fetchAuthToken = async (url: string) => {
+    const audience = 'https://keeponherdin-backend-4yoikpttcq-uc.a.run.app'
+    console.log('asdf')
+    // const {GoogleAuth} = require('google-auth-library')
+    console.log('qwer')
+    const auth = new GoogleAuth();
+    const client = await auth.getIdTokenClient(audience)
+    const fullUrl = audience + url
+    const res = await client.request({url: fullUrl})
+    return res.data
+}
+
+const httpClient2 = (url: string) => {
+    return axios.create({
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${fetchAuthToken(url)}`
+        }
+    });
+}
+
 const httpClient = axios.create({
-    headers: { Accept: 'application/json' }
-});
+        headers: {
+            Accept: 'application/json',
+        }
+    });
 
 export const useApi = (): Api => {
 
     const getMatches = useCallback(
-        (): Promise<Match[]> =>
-            httpClient
-                .get('/api/matches')
+        (): Promise<Match[]> => {
+            const url = '/api/matches'
+            return httpClient2(url)
+                .get(url)
                 .then((response: AxiosResponse) => {
                     return response.data as Match[];
                 })
-                .catch(() => Promise.resolve([])),
-        [],
+                .catch(() => Promise.resolve([]))
+        },
+        []
     )
 
     const getMatchesByTournament = useCallback(
-        (): Promise<Match[][]> =>
-            httpClient
+        (): Promise<Match[][]> => {
+            const url = '/api/matches'
+            return httpClient2(url)
                 .get('/api/matches?sort=tournament')
                 .then((response: AxiosResponse) => {
                     return response.data as Match[][];
                 })
-                .catch(() => Promise.resolve([[]])),
-        [],
+                .catch(() => Promise.resolve([[]]))
+        },
+        []
     )
 
     const getTournament = useCallback(
@@ -74,7 +103,7 @@ export const useApi = (): Api => {
         (tournament: Tournament): Promise<{ id: number }> =>
             httpClient
                 .post('/api/tournaments', serializeTournament(tournament))
-                .then((response) => Promise.resolve(response.data))
+                .then((response: AxiosResponse) => Promise.resolve(response.data))
                 .catch((error: AxiosError) => Promise.reject(error)),
         [],
     )
@@ -83,7 +112,7 @@ export const useApi = (): Api => {
         (timestamps: Match[]): Promise<void> =>
             httpClient
                 .post('/api/matches', timestamps)
-                .then((_) => Promise.resolve())
+                .then((_: AxiosResponse) => Promise.resolve())
                 .catch((error: AxiosError) => Promise.reject(error)),
         [],
     )
