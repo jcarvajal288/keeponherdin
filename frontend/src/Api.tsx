@@ -28,7 +28,7 @@ const googleClient = axios.create({
 })
 
 const fetchAuthToken = async () => {
-    const audience = 'https://keeponherdin-backend-4yoikpttcq-uc.a.run.app'
+    const audience = import.meta.env.VITE_FRONTEND_HOSTNAME
     const url = `https://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=${audience}`
     const token = googleClient
         .get(url)
