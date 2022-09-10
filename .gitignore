@@ -6,7 +6,7 @@ backend/.nrepl-port
 backend/profiles.clj
 backend/.lein-env
 backend/.lein-failures
-.env
+.env*
 *.jar
 *.class
 /.lein-*

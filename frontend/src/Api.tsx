@@ -19,7 +19,7 @@ const serializeTournament = (tournament: Tournament) => {
     }
 }
 
-axios.defaults.baseURL = `${window.location.protocol}//${window.location.hostname}:8000`
+axios.defaults.baseURL = `${window.location.protocol}//${import.meta.env.VITE_BACKEND_HOSTNAME}:8000`
 
 const googleClient = axios.create({
     headers: {
