@@ -2,7 +2,6 @@ import {Match} from "./tournaments/MatchRow";
 import {useCallback} from "react";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {formatDate, Tournament} from "./tournaments/TournamentTable";
-import { GoogleAuth } from "google-auth-library";
 
 type Api = {
     getMatches: () => Promise<Match[]>
@@ -22,30 +21,35 @@ const serializeTournament = (tournament: Tournament) => {
 
 axios.defaults.baseURL = `${window.location.protocol}//${window.location.hostname}:8000`
 
-const fetchAuthToken = async (url: string) => {
-    const audience = 'https://keeponherdin-backend-4yoikpttcq-uc.a.run.app'
-    console.log('asdf')
-    // const {GoogleAuth} = require('google-auth-library')
-    console.log('qwer')
-    const auth = new GoogleAuth();
-    const client = await auth.getIdTokenClient(audience)
-    const fullUrl = audience + url
-    const res = await client.request({url: fullUrl})
-    return res.data
-}
+const googleClient = axios.create({
+    headers: {
+        'Metadata-Flavor': 'Google'
+    }
+})
 
-const httpClient2 = (url: string) => {
-    return axios.create({
-        headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${fetchAuthToken(url)}`
-        }
-    });
+const fetchAuthToken = async () => {
+    const audience = 'https://keeponherdin-backend-4yoikpttcq-uc.a.run.app'
+    const url = `https://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=${audience}`
+    const token = googleClient
+        .get(url)
+        .then((response: AxiosResponse) => {
+            return response.data
+        })
+        .catch(() => 'token fetch failed')
+    console.log(token)
+    return token
+    // // const {GoogleAuth} = require('google-auth-library')
+    // const auth = new GoogleAuth();
+    // const client = await auth.getIdTokenClient(audience)
+    // const fullUrl = audience + url
+    // const res = await client.request({url: fullUrl})
+    // return res.data
 }
 
 const httpClient = axios.create({
         headers: {
             Accept: 'application/json',
+            Authorization: `Bearer ${fetchAuthToken()}`
         }
     });
 
@@ -54,7 +58,7 @@ export const useApi = (): Api => {
     const getMatches = useCallback(
         (): Promise<Match[]> => {
             const url = '/api/matches'
-            return httpClient2(url)
+            return httpClient
                 .get(url)
                 .then((response: AxiosResponse) => {
                     return response.data as Match[];
@@ -66,8 +70,7 @@ export const useApi = (): Api => {
 
     const getMatchesByTournament = useCallback(
         (): Promise<Match[][]> => {
-            const url = '/api/matches'
-            return httpClient2(url)
+            return httpClient
                 .get('/api/matches?sort=tournament')
                 .then((response: AxiosResponse) => {
                     return response.data as Match[][];
