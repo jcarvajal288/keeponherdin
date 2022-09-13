@@ -3,6 +3,10 @@ import {useCallback} from "react";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {formatDate, Tournament} from "./tournaments/TournamentTable";
 
+const {GoogleAuth} = require('./google-auth-library')
+// import {GoogleAuth} from "./google-auth-library.js"
+const auth = new GoogleAuth();
+
 type Api = {
     getMatches: () => Promise<Match[]>
     getMatchesByTournament: () => Promise<Match[][]>
@@ -29,18 +33,19 @@ const googleClient = axios.create({
 
 const fetchAuthToken = async () => {
     const audience = import.meta.env.VITE_FRONTEND_HOSTNAME
-    const url = `https://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=${audience}`
-    const token = googleClient
-        .get(url)
-        .then((response: AxiosResponse) => {
-            return response.data
-        })
-        .catch(() => 'token fetch failed')
-    console.log(token)
-    return token
-    // // const {GoogleAuth} = require('google-auth-library')
-    // const auth = new GoogleAuth();
-    // const client = await auth.getIdTokenClient(audience)
+    // const url = `https://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=${audience}`
+    // const token = googleClient
+    //     .get(url)
+    //     .then((response: AxiosResponse) => {
+    //         return response.data
+    //     })
+    //     .catch(() => 'token fetch failed')
+    // console.log(token)
+    // return token
+    const client = await auth.getIdTokenClient(audience)
+    const clientHeaders = await client.getRequestHeaders()
+    console.log(clientHeaders)
+    return clientHeaders['Authorization']
     // const fullUrl = audience + url
     // const res = await client.request({url: fullUrl})
     // return res.data
