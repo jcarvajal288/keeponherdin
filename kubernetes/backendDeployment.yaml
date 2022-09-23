@@ -1,7 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: koh-backend
+  name: keeponherdin-backend
+  labels:
+    app: keeponherdin-backend
 spec:
   replicas: 1
   template:
@@ -12,9 +14,12 @@ spec:
       containers:
         - name: keeponherdin-backend
           image: us-central1-docker.pkg.dev/keeponherdin/keeponherdin-docker-repo/keeponherdin-backend:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8000
+          env:
+            - name: PORT
+              value: "8000"
   selector:
     matchLabels:
       app: keeponherdin
