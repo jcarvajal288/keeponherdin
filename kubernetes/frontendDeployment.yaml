@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: koh-frontend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: keeponherdin
+    spec:
+      containers:
+        - name: keeponherdin-frontend
+          image: us-central1-docker.pkg.dev/keeponherdin/keeponherdin-docker-repo/keeponherdin-frontend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+  selector:
+    matchLabels:
+      app: keeponherdin
