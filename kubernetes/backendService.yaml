@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: keeponherdin-backend
   labels:
-    app: keeponherdin-backend
+    app: keeponherdin
 spec:
   type: LoadBalancer
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       targetPort: 8000
   selector:
-    app: keeponherdin-backend
+    app: keeponherdin

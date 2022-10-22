@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: keeponherdin-backend
   labels:
-    app: keeponherdin-backend
+    app: keeponherdin
 spec:
   replicas: 1
   template:

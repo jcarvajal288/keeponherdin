@@ -60,9 +60,17 @@
     (as-> result-set rs
           (content-type (ok rs) "application/json"))))
 
+;(defn get-tournament-by-id [request]
+;  (let [result (select-tournament-by-id (:id (:params request)))]
+;    (content-type (ok result) "application/json")))
+
 (defn get-tournament-by-id [request]
-  (let [result (select-tournament-by-id (:id (:params request)))]
-    (content-type (ok result) "application/json")))
+    (content-type (ok {:title "Rodeo Regional #40"
+                       :date "2022-05-23"
+                       :game_version "3.0"
+                       :tournament_organizer "Javamorris"
+                       :vod_link "https://www.twitch.tv/videos/1134464994"
+                       }) "application/json"))
 
 (defn post-tournament [request]
   (let [body (:body request)]

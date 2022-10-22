@@ -69,9 +69,19 @@
   (let [conn (jdbc/get-datasource db/db-spec)]
     (db-select-all-matches conn)))
 
-(defn select-all-matches-by-tournament []
-  (let [conn (jdbc/get-datasource db/db-spec)]
-    (db-select-all-matches-by-tournament conn)))
+(defn test-endpoint []
+  (let [single-match {:player1  "Vixy"
+                      :character1 "Velvet"
+                      :player2    "Oscar"
+                      :character2 "Pom"
+                      :did_p1_win false
+                      :start_time "00h45m32s"
+                      :tournament_id 1}]
+    (content-type (ok single-match) "application/json")))
+
+(defn select-all-matches-by-tournament [] (test-endpoint))
+  ;(let [conn (jdbc/get-datasource db/db-spec)]
+  ;  (db-select-all-matches-by-tournament conn)))
 
 (defn get-all-matches []
   (content-type (ok (select-all-matches)) "application/json"))
@@ -87,6 +97,7 @@
 (defn get-all-matches-by-tournament []
   (let [matches-by-tournament (select-all-matches-by-tournament)
         grouped-matches (transform-to-2d-vector matches-by-tournament)]
+    (log/info grouped-matches)
     (content-type (ok grouped-matches) "application/json")))
 
 (defn post-match [request]
@@ -102,6 +113,7 @@
       (content-type (internal-server-error (.getMessage ex)) "application/json"))))
 
 (defn route-get-api-matches [params]
+  (log/info "in matches endpoint")
   (cond
     (= params {})
       (get-all-matches)

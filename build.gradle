@@ -71,6 +71,12 @@ task deployBackend {
         exec {
             commandLine 'gcloud', 'run', 'deploy', 'keeponherdin-backend', '--image', DOCKER_REPO_URL + 'keeponherdin-backend', '--region', 'us-central1', '--port', '8000', '--allow-unauthenticated'
         }
+        exec {
+            commandLine 'kubectl', 'scale', '--replicas=0', 'deployment', 'keeponherdin-backend'
+        }
+        exec {
+            commandLine 'kubectl', 'scale', '--replicas=1', 'deployment', 'keeponherdin-backend'
+        }
     }
 }
 
@@ -79,6 +85,12 @@ task deployFrontend {
     doLast {
         exec {
             commandLine 'gcloud', 'run', 'deploy', 'keeponherdin-frontend', '--image', DOCKER_REPO_URL + 'keeponherdin-frontend', '--region', 'us-central1', '--port', '80', '--allow-unauthenticated'
+        }
+        exec {
+            commandLine 'kubectl', 'scale', '--replicas=0', 'deployment', 'keeponherdin-frontend'
+        }
+        exec {
+            commandLine 'kubectl', 'scale', '--replicas=1', 'deployment', 'keeponherdin-frontend'
         }
     }
 }
