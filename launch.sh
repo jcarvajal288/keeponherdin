@@ -1,4 +1,6 @@
 #!/bin/bash
 
-java -jar backend.jar &
-yarn dev
+echo 'starting script'
+nginx
+java -jar backend.jar
+echo 'ending script'
